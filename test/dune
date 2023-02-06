@@ -1,2 +1,3 @@
 (test
- (name lalala))
+ (name runtests)
+ (libraries lalala ounit2))
