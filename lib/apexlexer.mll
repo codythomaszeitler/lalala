@@ -11,7 +11,6 @@ let next_line lexbuf =
     }
 }
 
-
 let digit = ['0'-'9']
 let int = '-'? digit+  (* regex for integers *)
 
@@ -22,3 +21,4 @@ rule read_token =
     | "-" { MINUS }
     | "*" { MULT }
     | "/" { DIV }
+    | "abstract" {ABSTRACT}
