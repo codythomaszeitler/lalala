@@ -1,4 +1,8 @@
 /* File parser.mly */
+%{
+open Ast
+%}
+
 %token <int> INT
 %token PLUS
 %token MINUS
@@ -7,13 +11,14 @@
 %token ABSTRACT
 %token AFTER
 %token EOL
+%type <Ast.expr> main
 %start main
-%type <int> main
 
 %%
+expr:  i = INT { Int i }
+
 main: 
-    expr EOL {$1}
+    e = expr; {e}
 ;
 
-expr:   INT {$1};
 %%

@@ -2,6 +2,7 @@ open OUnit2
 open Lalala.Apexlexer
 open Lalala.Apexparser
 open Lexing
+open Lalala.Ast
 
 let tests =
   "test suite for apex lexer"
@@ -41,6 +42,10 @@ let tests =
            let expected = AFTER in
            let actual = read_token buffer in
            assert_equal expected actual );
+         ( "parse addition ast" >:: fun _ ->
+           let buffer = from_string "2\n" in
+           let ast = main read_token buffer in
+           assert_equal (Int 2) ast );
        ]
 
 let _ = run_test_tt_main tests
