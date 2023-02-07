@@ -22,3 +22,4 @@ rule read_token =
     | "*" { MULT }
     | "/" { DIV }
     | "abstract" {ABSTRACT}
+    | "after" {AFTER}

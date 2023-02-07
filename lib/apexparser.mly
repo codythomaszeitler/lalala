@@ -5,6 +5,7 @@
 %token MULT
 %token DIV
 %token ABSTRACT
+%token AFTER
 %token EOL
 %start main
 %type <int> main

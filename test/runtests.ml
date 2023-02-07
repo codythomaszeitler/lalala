@@ -31,9 +31,14 @@ let tests =
            let expected = DIV in
            let actual = read_token buffer in
            assert_equal expected actual );
-         ( "parse abstract keyword" >:: fun _ ->
+         ( "parse abstract token" >:: fun _ ->
            let buffer = from_string "abstract" in
            let expected = ABSTRACT in
+           let actual = read_token buffer in
+           assert_equal expected actual );
+         ( "parse after token" >:: fun _ ->
+           let buffer = from_string "after" in
+           let expected = AFTER in
            let actual = read_token buffer in
            assert_equal expected actual );
        ]
