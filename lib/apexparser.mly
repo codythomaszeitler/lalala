@@ -3,6 +3,7 @@
 %token PLUS
 %token MINUS
 %token MULT
+%token DIV
 %token EOL
 %start main
 %type <int> main

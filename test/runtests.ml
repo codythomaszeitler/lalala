@@ -26,6 +26,11 @@ let tests =
            let expected = MULT in
            let actual = read_token buffer in
            assert_equal expected actual );
+         ( "parse division sign" >:: fun _ ->
+           let buffer = from_string "/" in
+           let expected = DIV in
+           let actual = read_token buffer in
+           assert_equal expected actual );
        ]
 
 let _ = run_test_tt_main tests

@@ -21,3 +21,4 @@ rule read_token =
     | "+" { PLUS }
     | "-" { MINUS }
     | "*" { MULT }
+    | "/" { DIV }
