@@ -18,3 +18,5 @@ let int = '-'? digit+  (* regex for integers *)
 rule read_token = 
     parse 
     | int { INT (int_of_string (Lexing.lexeme lexbuf))}
+    | "+" { PLUS }
+    | "-" { MINUS }

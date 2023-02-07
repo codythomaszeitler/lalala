@@ -1,7 +1,7 @@
 (library
  (name lalala))
 
-(ocamllex apexlexer)
-
 (menhir
  (modules apexparser))
+
+(ocamllex apexlexer)
