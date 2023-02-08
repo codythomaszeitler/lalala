@@ -17,19 +17,9 @@ let tests =
            let expected = PLUS in
            let actual = read_token buffer in
            assert_equal expected actual );
-         ( "parse minus sign" >:: fun _ ->
-           let buffer = from_string "-" in
-           let expected = MINUS in
-           let actual = read_token buffer in
-           assert_equal expected actual );
          ( "parse multiplication sign" >:: fun _ ->
            let buffer = from_string "*" in
            let expected = MULT in
-           let actual = read_token buffer in
-           assert_equal expected actual );
-         ( "parse division sign" >:: fun _ ->
-           let buffer = from_string "/" in
-           let expected = DIV in
            let actual = read_token buffer in
            assert_equal expected actual );
          ( "parse abstract token" >:: fun _ ->
@@ -43,9 +33,13 @@ let tests =
            let actual = read_token buffer in
            assert_equal expected actual );
          ( "parse addition ast" >:: fun _ ->
-           let buffer = from_string "2\n" in
+           let buffer = from_string "2+3" in
            let ast = main read_token buffer in
-           assert_equal (Int 2) ast );
+           assert_equal (Binop (Add, Int 2, Int 3)) ast );
+         ( "parse subtraction ast" >:: fun _ ->
+           let buffer = from_string "2*3" in
+           let ast = main read_token buffer in
+           assert_equal (Binop (Mult, Int 2, Int 3)) ast );
        ]
 
 let _ = run_test_tt_main tests

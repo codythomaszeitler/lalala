@@ -2,6 +2,7 @@ type bop =
   | Add
   | Mult
   | Leq
+  | Minus
 
 type expr =
   | Var of string
