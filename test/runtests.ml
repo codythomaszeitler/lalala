@@ -47,8 +47,8 @@ let tests =
              (TypeDecl
                 ( Location,
                   Public Location,
-                  ClassDeclaration (Location, Identifier (Location, "TestClass"))
-                ))
+                  ClassDeclaration
+                    (Location, Identifier (Location, "TestClass"), []) ))
              ast );
          ( "parse apex class definition empty ast with different name"
          >:: fun _ ->
@@ -59,9 +59,34 @@ let tests =
                 ( Location,
                   Public Location,
                   ClassDeclaration
-                    (Location, Identifier (Location, "AnotherTestClass")) ))
+                    (Location, Identifier (Location, "AnotherTestClass"), []) ))
              ast );
-         
+         ( "parse apex class definition with variable declaration in it"
+         >:: fun _ ->
+           let buffer =
+             from_string "public class AnotherTestClass { public int a; }"
+           in
+           let ast = compilationUnit read_token buffer in
+           assert_equal
+             (TypeDecl
+                ( Location,
+                  Public Location,
+                  ClassDeclaration
+                    ( Location,
+                      Identifier (Location, "AnotherTestClass"),
+                      [
+                        ClassBodyDeclaration
+                          ( Location,
+                            Public Location,
+                            FieldDeclaration
+                              ( Location,
+                                ApexType (Location, Identifier (Location, "int")),
+                                [
+                                  VariableDecl
+                                    (Location, Identifier (Location, "a"));
+                                ] ) );
+                      ] ) ))
+             ast );
        ]
 
 let _ = run_test_tt_main tests

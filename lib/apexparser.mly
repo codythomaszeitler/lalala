@@ -11,6 +11,10 @@ open Ast
 %token PUBLIC
 %token CLASS
 %token LEFT_BRACE 
+%token SEMI
+%token COMMA
+%token ASSIGN
+%token STATIC
 %token <string> ID
 %token RIGHT_BRACE
 %token EOF
@@ -46,7 +50,63 @@ identifier:
 
 // Well what exactly are we going to return here. 
 classDeclaration:
-    | CLASS; id = identifier; LEFT_BRACE; RIGHT_BRACE {ClassDeclaration(Location, id)}
+    | CLASS; id = identifier; body = classBody {ClassDeclaration(Location, id, body)}
 ;
+
+classBody:
+    | LEFT_BRACE; decls = classBodyDeclaration*; RIGHT_BRACE {decls}
+;
+
+classBodyDeclaration:
+    | modi = modifier membDecl = memberDeclaration {ClassBodyDeclaration(Location, modi, membDecl)}
+;
+
+memberDeclaration:
+    | decl = fieldDeclaration {decl}
+
+fieldDeclaration
+    : apexType = typeRef decls = variableDeclarators SEMI {FieldDeclaration(Location, apexType, decls)}
+    ;
+
+variableDeclarators
+    : decls = separated_nonempty_list(COMMA, variableDeclarator) {decls} 
+    ;
+
+variableDeclarator
+    : iden = id {VariableDecl(Location, iden)} //(ASSIGN expression)?
+    ;
+
+typeRef:
+    | apexType = typeName {apexType} // (DOT typeName)* arraySubscripts
+;
+
+typeName:
+    | idd = id {ApexType(Location, idd)}
+;
+
+id:  
+    | iden = ID {Identifier(Location, iden)}
+;
+
+// block :
+//     | LEFT_BRACE stmts = statement* RIGHT_BRACE {stmts}
+// ;
+
+// statement:
+//     | localVarDeclStmt = localVariableDeclarationStatement {localVarDeclStmt}
+// ;
+
+// localVariableDeclarationStatement
+//     : localVarDecl = localVariableDeclaration SEMI {LocalVarDeclStmt(Location, localVarDecl)}
+//     ;
+
+// localVariableDeclaration
+//     : modi = modifier apexType = typeRef decls = variableDeclarators {LocalVarDecl(Location, modi, apexType, decls)}
+//     ;
+
+// memberDeclaration
+//     : methodDeclaration
+//     | fieldDeclaration
+//     ;
 
 %%

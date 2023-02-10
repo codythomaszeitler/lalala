@@ -26,9 +26,13 @@ rule read_token =
     | "abstract" {ABSTRACT}
     | "after" {AFTER}
     | "public" {PUBLIC}
+    | "static" {STATIC}
     | "{" {LEFT_BRACE}
     | "}" {RIGHT_BRACE}
     | "class" {CLASS}
+    | ';' {SEMI}
+    | ',' {COMMA}
+    | '=' {ASSIGN}
     | iden {ID (Lexing.lexeme lexbuf)}
     | eof {EOF}
     | _ {ID (Lexing.lexeme lexbuf)}
