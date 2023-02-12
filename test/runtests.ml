@@ -64,7 +64,9 @@ let tests =
          ( "parse apex class definition with variable declaration in it"
          >:: fun _ ->
            let buffer =
-             from_string "public class AnotherTestClass { public int a; }"
+             from_string
+               "public class AnotherTestClass { public int a; public int \
+                getA() {return a;} }"
            in
            let ast = compilationUnit read_token buffer in
            assert_equal
@@ -84,6 +86,20 @@ let tests =
                                 [
                                   VariableDecl
                                     (Location, Identifier (Location, "a"));
+                                ] ) );
+                        ClassBodyDeclaration
+                          ( Location,
+                            Public Location,
+                            MethodDeclaration
+                              ( Location,
+                                ApexType (Location, Identifier (Location, "int")),
+                                Identifier (Location, "getA"),
+                                [
+                                  ReturnStmt
+                                    ( Location,
+                                      Primary
+                                        (Location, Identifier (Location, "a"))
+                                    );
                                 ] ) );
                       ] ) ))
              ast );

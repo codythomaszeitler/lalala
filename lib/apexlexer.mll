@@ -27,8 +27,11 @@ rule read_token =
     | "after" {AFTER}
     | "public" {PUBLIC}
     | "static" {STATIC}
+    | "return" {RETURN}
     | "{" {LEFT_BRACE}
     | "}" {RIGHT_BRACE}
+    | "(" {LEFT_PAREN}
+    | ")" {RIGHT_PAREN}
     | "class" {CLASS}
     | ';' {SEMI}
     | ',' {COMMA}

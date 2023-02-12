@@ -11,12 +11,15 @@ open Ast
 %token PUBLIC
 %token CLASS
 %token LEFT_BRACE 
+%token RIGHT_BRACE
+%token LEFT_PAREN
+%token RIGHT_PAREN
 %token SEMI
+%token RETURN
 %token COMMA
 %token ASSIGN
 %token STATIC
 %token <string> ID
-%token RIGHT_BRACE
 %token EOF
 
 // So.. there should be something that could 
@@ -48,7 +51,6 @@ identifier:
     | id = ID {Identifier(Location, id)}
 ;
 
-// Well what exactly are we going to return here. 
 classDeclaration:
     | CLASS; id = identifier; body = classBody {ClassDeclaration(Location, id, body)}
 ;
@@ -63,6 +65,8 @@ classBodyDeclaration:
 
 memberDeclaration:
     | decl = fieldDeclaration {decl}
+    | decl = methodDeclaration {decl}
+;
 
 fieldDeclaration
     : apexType = typeRef decls = variableDeclarators SEMI {FieldDeclaration(Location, apexType, decls)}
@@ -88,21 +92,42 @@ id:
     | iden = ID {Identifier(Location, iden)}
 ;
 
-// block :
-//     | LEFT_BRACE stmts = statement* RIGHT_BRACE {stmts}
-// ;
+methodDeclaration
+    : apexType = typeRef id = id LEFT_PAREN RIGHT_PAREN stmts = block  {MethodDeclaration(Location, apexType, id, stmts)}
+;
 
-// statement:
-//     | localVarDeclStmt = localVariableDeclarationStatement {localVarDeclStmt}
-// ;
+block :
+    | LEFT_BRACE stmts = statement* RIGHT_BRACE {stmts}
+;
 
-// localVariableDeclarationStatement
-//     : localVarDecl = localVariableDeclaration SEMI {LocalVarDeclStmt(Location, localVarDecl)}
-//     ;
+statement:
+    | localVarDeclStmt = localVariableDeclarationStatement {localVarDeclStmt}
+    | returnStmt = returnStatement {returnStmt}
+;
 
-// localVariableDeclaration
-//     : modi = modifier apexType = typeRef decls = variableDeclarators {LocalVarDecl(Location, modi, apexType, decls)}
-//     ;
+localVariableDeclarationStatement
+    : localVarDecl = localVariableDeclaration SEMI {LocalVarDeclStmt(Location, localVarDecl)}
+;
+
+localVariableDeclaration
+    : modi = modifier apexType = typeRef decls = variableDeclarators {LocalVarDecl(Location, modi, apexType, decls)}
+;
+
+returnStatement
+    : RETURN expr = expression SEMI {ReturnStmt(Location, expr)}
+;
+
+expressionStatement
+    : expr = expression SEMI {expr}
+;
+
+primary
+    : 
+    | id = id {Primary(Location, id)}
+;
+
+expression
+    : expr = primary {expr}
 
 // memberDeclaration
 //     : methodDeclaration
