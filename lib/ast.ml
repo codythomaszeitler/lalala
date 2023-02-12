@@ -1,26 +1,19 @@
-type loc = Location
-type identifier = Identifier of loc * string
-
-type expr = Primary of loc * identifier
-
-type modifier = Public of loc
-type apexType = ApexType of loc * identifier
-type variableDecl = VariableDecl of loc * identifier
-
-type localVarDecl =
-  | LocalVarDecl of loc * modifier * apexType * variableDecl list
-
-type statement = LocalVarDeclStmt of loc * localVarDecl
-  | ReturnStmt of loc * expr
+type identifier = Identifier of string
+type expr = Primary of identifier
+type modifier = Public 
+type apexType = ApexType of identifier
+type variableDecl = VariableDecl of identifier
+type localVarDecl = LocalVarDecl of modifier * apexType * variableDecl list
+type statement = LocalVarDeclStmt of localVarDecl | ReturnStmt of expr
 
 type memberDeclaration =
-  | FieldDeclaration of loc * apexType * variableDecl list
-  | MethodDeclaration of loc * apexType * identifier * statement list
+  | FieldDeclaration of apexType * variableDecl list
+  | MethodDeclaration of apexType * identifier * statement list
 
 type classBodyDeclaration =
-  | ClassBodyDeclaration of loc * modifier * memberDeclaration
+  | ClassBodyDeclaration of modifier * memberDeclaration
 
 type classDeclaration =
-  | ClassDeclaration of loc * identifier * classBodyDeclaration list
+  | ClassDeclaration of identifier * classBodyDeclaration list
 
-type compilationUnit = TypeDecl of loc * modifier * classDeclaration
+type compilationUnit = TypeDecl of modifier * classDeclaration

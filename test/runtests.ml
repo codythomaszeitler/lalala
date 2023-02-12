@@ -44,11 +44,7 @@ let tests =
            let buffer = from_string "public class TestClass {}" in
            let ast = compilationUnit read_token buffer in
            assert_equal
-             (TypeDecl
-                ( Location,
-                  Public Location,
-                  ClassDeclaration
-                    (Location, Identifier (Location, "TestClass"), []) ))
+             (TypeDecl (Public, ClassDeclaration (Identifier "TestClass", [])))
              ast );
          ( "parse apex class definition empty ast with different name"
          >:: fun _ ->
@@ -56,10 +52,7 @@ let tests =
            let ast = compilationUnit read_token buffer in
            assert_equal
              (TypeDecl
-                ( Location,
-                  Public Location,
-                  ClassDeclaration
-                    (Location, Identifier (Location, "AnotherTestClass"), []) ))
+                (Public, ClassDeclaration (Identifier "AnotherTestClass", [])))
              ast );
          ( "parse apex class definition with variable declaration in it"
          >:: fun _ ->
@@ -71,36 +64,21 @@ let tests =
            let ast = compilationUnit read_token buffer in
            assert_equal
              (TypeDecl
-                ( Location,
-                  Public Location,
+                ( Public,
                   ClassDeclaration
-                    ( Location,
-                      Identifier (Location, "AnotherTestClass"),
+                    ( Identifier "AnotherTestClass",
                       [
                         ClassBodyDeclaration
-                          ( Location,
-                            Public Location,
+                          ( Public,
                             FieldDeclaration
-                              ( Location,
-                                ApexType (Location, Identifier (Location, "int")),
-                                [
-                                  VariableDecl
-                                    (Location, Identifier (Location, "a"));
-                                ] ) );
+                              ( ApexType (Identifier "int"),
+                                [ VariableDecl (Identifier "a") ] ) );
                         ClassBodyDeclaration
-                          ( Location,
-                            Public Location,
+                          ( Public,
                             MethodDeclaration
-                              ( Location,
-                                ApexType (Location, Identifier (Location, "int")),
-                                Identifier (Location, "getA"),
-                                [
-                                  ReturnStmt
-                                    ( Location,
-                                      Primary
-                                        (Location, Identifier (Location, "a"))
-                                    );
-                                ] ) );
+                              ( ApexType (Identifier "int"),
+                                Identifier "getA",
+                                [ ReturnStmt (Primary (Identifier "a")) ] ) );
                       ] ) ))
              ast );
        ]

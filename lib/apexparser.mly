@@ -40,19 +40,19 @@ compilationUnit:
 ;
 
 typeDeclaration :
-    | modi = modifier; decl = classDeclaration {TypeDecl(Location, modi, decl)}
+    | modi = modifier; decl = classDeclaration {TypeDecl(modi, decl)}
 ;
 
 modifier:
-    | PUBLIC {Public(Location)}
+    | PUBLIC {Public}
 ;
 
 identifier:
-    | id = ID {Identifier(Location, id)}
+    | id = ID {Identifier(id)}
 ;
 
 classDeclaration:
-    | CLASS; id = identifier; body = classBody {ClassDeclaration(Location, id, body)}
+    | CLASS; id = identifier; body = classBody {ClassDeclaration(id, body)}
 ;
 
 classBody:
@@ -60,7 +60,7 @@ classBody:
 ;
 
 classBodyDeclaration:
-    | modi = modifier membDecl = memberDeclaration {ClassBodyDeclaration(Location, modi, membDecl)}
+    | modi = modifier membDecl = memberDeclaration {ClassBodyDeclaration(modi, membDecl)}
 ;
 
 memberDeclaration:
@@ -69,7 +69,7 @@ memberDeclaration:
 ;
 
 fieldDeclaration
-    : apexType = typeRef decls = variableDeclarators SEMI {FieldDeclaration(Location, apexType, decls)}
+    : apexType = typeRef decls = variableDeclarators SEMI {FieldDeclaration(apexType, decls)}
     ;
 
 variableDeclarators
@@ -77,7 +77,7 @@ variableDeclarators
     ;
 
 variableDeclarator
-    : iden = id {VariableDecl(Location, iden)} //(ASSIGN expression)?
+    : iden = id {VariableDecl(iden)} //(ASSIGN expression)?
     ;
 
 typeRef:
@@ -85,15 +85,15 @@ typeRef:
 ;
 
 typeName:
-    | idd = id {ApexType(Location, idd)}
+    | idd = id {ApexType(idd)}
 ;
 
 id:  
-    | iden = ID {Identifier(Location, iden)}
+    | iden = ID {Identifier(iden)}
 ;
 
 methodDeclaration
-    : apexType = typeRef id = id LEFT_PAREN RIGHT_PAREN stmts = block  {MethodDeclaration(Location, apexType, id, stmts)}
+    : apexType = typeRef id = id LEFT_PAREN RIGHT_PAREN stmts = block  {MethodDeclaration(apexType, id, stmts)}
 ;
 
 block :
@@ -106,15 +106,15 @@ statement:
 ;
 
 localVariableDeclarationStatement
-    : localVarDecl = localVariableDeclaration SEMI {LocalVarDeclStmt(Location, localVarDecl)}
+    : localVarDecl = localVariableDeclaration SEMI {LocalVarDeclStmt(localVarDecl)}
 ;
 
 localVariableDeclaration
-    : modi = modifier apexType = typeRef decls = variableDeclarators {LocalVarDecl(Location, modi, apexType, decls)}
+    : modi = modifier apexType = typeRef decls = variableDeclarators {LocalVarDecl(modi, apexType, decls)}
 ;
 
 returnStatement
-    : RETURN expr = expression SEMI {ReturnStmt(Location, expr)}
+    : RETURN expr = expression SEMI {ReturnStmt(expr)}
 ;
 
 expressionStatement
@@ -123,7 +123,7 @@ expressionStatement
 
 primary
     : 
-    | id = id {Primary(Location, id)}
+    | id = id {Primary(id)}
 ;
 
 expression
