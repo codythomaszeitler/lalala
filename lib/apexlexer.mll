@@ -16,7 +16,6 @@ let int = '-'? digit+  (* regex for integers *)
 let ws    = [' ' '\t']
 let iden =  ['a'-'z''A'-'Z']['a'-'z''A'-'Z''$''_']+
 
-
 rule read_token = 
     parse 
     | ws {read_token lexbuf}
@@ -28,6 +27,7 @@ rule read_token =
     | "public" {PUBLIC}
     | "static" {STATIC}
     | "return" {RETURN}
+    | "@" {ATSIGN}
     | "{" {LEFT_BRACE}
     | "}" {RIGHT_BRACE}
     | "(" {LEFT_PAREN}

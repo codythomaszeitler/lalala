@@ -18,6 +18,7 @@ open Ast
 %token RETURN
 %token COMMA
 %token ASSIGN
+%token ATSIGN
 %token STATIC
 %token <string> ID
 %token EOF
@@ -40,11 +41,12 @@ compilationUnit:
 ;
 
 typeDeclaration :
-    | modi = modifier; decl = classDeclaration {TypeDecl(modi, decl)}
+    | modis = modifier*; decl = classDeclaration {TypeDecl(modis, decl)}
 ;
 
 modifier:
     | PUBLIC {Public}
+    | anno = annotation {anno}
 ;
 
 identifier:
@@ -128,6 +130,15 @@ primary
 
 expression
     : expr = primary {expr}
+;
+
+annotation
+    : ATSIGN name = qualifiedName {Annotation(name)}
+;
+
+qualifiedName
+    : id = id {id}
+;
 
 // memberDeclaration
 //     : methodDeclaration
