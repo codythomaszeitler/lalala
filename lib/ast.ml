@@ -22,7 +22,22 @@ let rec tabs (num : int) = if num == 0 then "" else tabs (num - 1) ^ "  "
 
 let to_string_identifier (identifier : identifier) (depth : int) =
   match identifier with
-  | Identifier name -> "(Identifier\n" ^ tabs (depth + 1) ^ "(\"" ^ name ^ "\"))"
+  | Identifier name ->
+      "(Identifier\n" ^ tabs (depth + 1) ^ "(\"" ^ name ^ "\"))"
+
+let to_string_expr (expr : expr) (depth : int) =
+  match expr with
+  | Primary identifier ->
+      tabs depth ^ "(Primary\n"
+      ^ tabs (depth + 1)
+      ^ to_string_identifier identifier (depth + 1)
+      ^ "))"
+
+let to_string_statement (stmt : statement) (depth : int) =
+  match stmt with
+  | ReturnStmt expr ->
+      "(ReturnStmt\n" ^ tabs depth ^ to_string_expr expr (depth + 1) ^ ")"
+  | _ -> "Not supported yet"
 
 let to_string_modifier (modifier : modifier) (depth : int) =
   match modifier with
@@ -44,10 +59,20 @@ let rec _to_string_modifiers (modifiers : modifier list) (depth : int) =
 let to_string_modifiers (modifiers : modifier list) (depth : int) =
   "[\n" ^ _to_string_modifiers modifiers (depth + 1) ^ "\n" ^ tabs depth ^ "]"
 
-let to_string_class_body_decls (class_body_decls : classBodyDeclaration list) (depth : int) =
-  match class_body_decls with 
-    | [] -> tabs depth ^ "[]"
-    | _ -> "Not implemented with class body decls to string"
+let to_string_class_body_decl (class_body_decl : classBodyDeclaration)
+    (depth : int) =
+  match class_body_decl with
+  | ClassBodyDeclaration (modifier, _) ->
+      "ClassBodyDeclaration(\n"
+      ^ tabs (depth + 1)
+      ^ to_string_modifier modifier (depth + 1)
+      ^ ")"
+
+let to_string_class_body_decls (class_body_decls : classBodyDeclaration list)
+    (depth : int) =
+  match class_body_decls with
+  | [] -> tabs depth ^ "[]"
+  | _ -> "Not implemented with class body decls to string"
 
 let to_string_class_declaration (class_decl : classDeclaration) (depth : int) =
   match class_decl with
@@ -55,9 +80,8 @@ let to_string_class_declaration (class_decl : classDeclaration) (depth : int) =
       tabs depth ^ "(ClassDeclaration\n"
       ^ tabs (depth + 1)
       ^ to_string_identifier identifer (depth + 1)
-      ^ ",\n"
-      ^ tabs (depth)
-      ^ to_string_class_body_decls class_body_decls (depth)
+      ^ ",\n" ^ tabs depth
+      ^ to_string_class_body_decls class_body_decls depth
       ^ "))"
 
 let to_string_compilation_unit (compilationUnit : compilationUnit) =
