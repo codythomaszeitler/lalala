@@ -3,6 +3,7 @@ open Lalala.Apexlexer
 open Lalala.Apexparser
 open Lexing
 open Lalala.Ast
+open Lalala.Formatter
 
 let tests =
   "test suite for apex lexer"
