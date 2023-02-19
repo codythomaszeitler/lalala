@@ -55,7 +55,7 @@ let tests =
            let buffer = from_string "@IsTest public class AppTest {}" in
            let ast = compilationUnit read_token buffer in
            assert_equal
-             ~printer:(fun x -> to_string_compilation_unit x)
+             ~printer:(fun x -> CompilationUnit.to_string x)
              (TypeDecl
                 ( [ Annotation (Identifier "IsTest"); Public ],
                   ClassDeclaration (Identifier "AppTest", []) ))
@@ -71,10 +71,10 @@ let tests =
            assert_equal
              ~printer:(fun x -> x)
              "[\n  (Public)\n]"
-             (to_string_modifiers modifiers 0) );
+             (Modifier.to_strings modifiers 0) );
          ( "tostring for the modifiers multiple args" >:: fun _ ->
            let to_string_value =
-             to_string_modifiers [ Public; Annotation (Identifier "a") ] 0
+             Modifier.to_strings [ Public; Annotation (Identifier "a") ] 0
            in
            assert_equal
              ~printer:(fun x -> x)
@@ -93,7 +93,7 @@ let tests =
                ( [ Annotation (Identifier "IsTest"); Public ],
                  ClassDeclaration (Identifier "AnotherTestClass", []) )
            in
-           let to_string_type_decl = to_string_compilation_unit typeDecl in
+           let to_string_type_decl = CompilationUnit.to_string typeDecl in
            assert_equal
              ~printer:(fun x -> x)
              "(TypeDecl(\n\
@@ -132,13 +132,13 @@ let tests =
              \        (Primary\n\
              \          (Identifier\n\
              \            (\"a\")))))]))"
-             (to_string_class_body_decl classBodyDecl 0) );
+             (ClassBodyDeclaration.to_string classBodyDecl 0) );
          ( "it should be able to tostring a return statement" >:: fun _ ->
            let returnStmt = ReturnStmt (Primary (Identifier "a")) in
            assert_equal
              ~printer:(fun x -> x)
              "(ReturnStmt\n  (Primary\n    (Identifier\n      (\"a\")))))"
-             (to_string_statement returnStmt 0) );
+             (Statement.to_string returnStmt 0) );
          ( "it should be able to tostring a method decl" >:: fun _ ->
            let methodDecl =
              MethodDeclaration
@@ -159,13 +159,13 @@ let tests =
              \      (Primary\n\
              \        (Identifier\n\
              \          (\"a\")))))])"
-             (to_string_member_decl methodDecl 0) );
+             (MemberDeclaration.to_string methodDecl 0) );
          ( "it should be able to tostring an apex type" >:: fun _ ->
            let apexType = ApexType (Identifier "int") in
            assert_equal
              ~printer:(fun x -> x)
              "(ApexType\n  (Identifier\n    (\"int\")))"
-             (to_string_apex_type apexType 0) );
+             (ApexType.to_string apexType 0) );
        ]
 
 let _ = run_test_tt_main tests
