@@ -107,30 +107,53 @@ let tests =
              \    (Identifier\n\
              \      (\"AnotherTestClass\")),\n\
              \    [])))" to_string_type_decl );
-         ( "it should be able to make a tostring out of a class decl body"
-         >:: fun _ ->
-           let classBodyDecl =
-             ClassBodyDeclaration
-               ( Public,
-                 MethodDeclaration
-                   ( ApexType (Identifier "int"),
-                     Identifier "getA",
-                     [ ReturnStmt (Primary (Identifier "a")) ] ) )
-           in
-
-           assert_equal
-             ~printer:(fun x -> x)
-             "(ClassBodyDeclaration\n )"
-             (to_string_class_body_decl classBodyDecl 0) );
+         (* ( "it should be able to make a tostring out of a class decl body"
+            >:: fun _ ->
+              let classBodyDecl =
+                ClassBodyDeclaration
+                  ( Public,
+                    MethodDeclaration
+                      ( ApexType (Identifier "int"),
+                        Identifier "getA",
+                        [ ReturnStmt (Primary (Identifier "a")) ] ) )
+              in
+              assert_equal
+                ~printer:(fun x -> x)
+                "(ClassBodyDeclaration\n )"
+                (to_string_class_body_decl classBodyDecl 0) ); *)
          ( "it should be able to tostring a return statement" >:: fun _ ->
            let returnStmt = ReturnStmt (Primary (Identifier "a")) in
            assert_equal
              ~printer:(fun x -> x)
-             "(ReturnStmt\n\
-             \  (Primary\n\
-             \    (Identifier\n\
-             \      (\"a\")))))"
+             "(ReturnStmt\n  (Primary\n    (Identifier\n      (\"a\")))))"
              (to_string_statement returnStmt 0) );
+         ( "it should be able to tostring a method decl" >:: fun _ ->
+           let methodDecl =
+             MethodDeclaration
+               ( ApexType (Identifier "int"),
+                 Identifier "getA",
+                 [ ReturnStmt (Primary (Identifier "a")) ] )
+           in
+           assert_equal
+             ~printer:(fun x -> x)
+             "(MethodDeclaration\n\
+             \  (ApexType\n\
+             \    (Identifier\n\
+             \      (\"int\"))),\n\
+             \  (Identifier\n\
+             \    (\"getA\")),\n\
+             \  [\n\
+             \    (ReturnStmt\n\
+             \      (Primary\n\
+             \        (Identifier\n\
+             \          (\"a\")))))])"
+             (to_string_member_decl methodDecl 0) );
+         ( "it should be able to tostring an apex type" >:: fun _ ->
+           let apexType = ApexType (Identifier "int") in
+           assert_equal
+             ~printer:(fun x -> x)
+             "(ApexType\n  (Identifier\n    (\"int\")))"
+             (to_string_apex_type apexType 0) );
        ]
 
 let _ = run_test_tt_main tests

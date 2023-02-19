@@ -28,7 +28,7 @@ let to_string_identifier (identifier : identifier) (depth : int) =
 let to_string_expr (expr : expr) (depth : int) =
   match expr with
   | Primary identifier ->
-      tabs depth ^ "(Primary\n"
+      "(Primary\n"
       ^ tabs (depth + 1)
       ^ to_string_identifier identifier (depth + 1)
       ^ "))"
@@ -36,8 +36,44 @@ let to_string_expr (expr : expr) (depth : int) =
 let to_string_statement (stmt : statement) (depth : int) =
   match stmt with
   | ReturnStmt expr ->
-      "(ReturnStmt\n" ^ tabs depth ^ to_string_expr expr (depth + 1) ^ ")"
+      "(ReturnStmt\n" ^ tabs (depth + 1) ^ to_string_expr expr (depth + 1) ^ ")"
   | _ -> "Not supported yet"
+
+let rec _to_string_statements (stmts : statement list) (depth : int) =
+  match stmts with
+  | [] -> ""
+  | h :: [] -> tabs depth ^ to_string_statement h depth
+  | h :: t ->
+      tabs depth
+      ^ to_string_statement h depth
+      ^ ";\n"
+      ^ _to_string_statements t depth
+
+let to_string_statements (stmts : statement list) (depth : int) =
+  "[\n" ^ _to_string_statements stmts (depth + 1) ^ "]"
+
+let to_string_apex_type (apex_type : apexType) (depth : int) =
+  match apex_type with
+  | ApexType identifier ->
+      "(ApexType\n"
+      ^ tabs (depth + 1)
+      ^ to_string_identifier identifier (depth + 1)
+      ^ ")"
+
+let to_string_member_decl (member_decl : memberDeclaration) (depth : int) =
+  match member_decl with
+  | MethodDeclaration (apexType, identifier, stmts) ->
+      tabs depth ^ "(MethodDeclaration\n"
+      ^ tabs (depth + 1)
+      ^ to_string_apex_type apexType (depth + 1)
+      ^ ",\n"
+      ^ tabs (depth + 1)
+      ^ to_string_identifier identifier (depth + 1)
+      ^ ",\n"
+      ^ tabs (depth + 1)
+      ^ to_string_statements stmts (depth + 1)
+      ^ ")"
+  | _ -> "Not implemented yet!"
 
 let to_string_modifier (modifier : modifier) (depth : int) =
   match modifier with
@@ -63,10 +99,10 @@ let to_string_class_body_decl (class_body_decl : classBodyDeclaration)
     (depth : int) =
   match class_body_decl with
   | ClassBodyDeclaration (modifier, _) ->
-      "ClassBodyDeclaration(\n"
+      "(ClassBodyDeclaration\n"
       ^ tabs (depth + 1)
       ^ to_string_modifier modifier (depth + 1)
-      ^ ")"
+      ^ ",\n" ^ tabs depth ^ ")"
 
 let to_string_class_body_decls (class_body_decls : classBodyDeclaration list)
     (depth : int) =
