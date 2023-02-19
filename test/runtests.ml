@@ -107,20 +107,32 @@ let tests =
              \    (Identifier\n\
              \      (\"AnotherTestClass\")),\n\
              \    [])))" to_string_type_decl );
-         (* ( "it should be able to make a tostring out of a class decl body"
-            >:: fun _ ->
-              let classBodyDecl =
-                ClassBodyDeclaration
-                  ( Public,
-                    MethodDeclaration
-                      ( ApexType (Identifier "int"),
-                        Identifier "getA",
-                        [ ReturnStmt (Primary (Identifier "a")) ] ) )
-              in
-              assert_equal
-                ~printer:(fun x -> x)
-                "(ClassBodyDeclaration\n )"
-                (to_string_class_body_decl classBodyDecl 0) ); *)
+         ( "it should be able to make a tostring out of a class decl body"
+         >:: fun _ ->
+           let classBodyDecl =
+             ClassBodyDeclaration
+               ( Public,
+                 MethodDeclaration
+                   ( ApexType (Identifier "int"),
+                     Identifier "getA",
+                     [ ReturnStmt (Primary (Identifier "a")) ] ) )
+           in
+           assert_equal
+             ~printer:(fun x -> x)
+             "(ClassBodyDeclaration\n\
+             \  (Public),\n\
+             \  (MethodDeclaration\n\
+             \    (ApexType\n\
+             \      (Identifier\n\
+             \        (\"int\"))),\n\
+             \    (Identifier\n\
+             \      (\"getA\")),\n\
+             \    [\n\
+             \      (ReturnStmt\n\
+             \        (Primary\n\
+             \          (Identifier\n\
+             \            (\"a\")))))]))"
+             (to_string_class_body_decl classBodyDecl 0) );
          ( "it should be able to tostring a return statement" >:: fun _ ->
            let returnStmt = ReturnStmt (Primary (Identifier "a")) in
            assert_equal
