@@ -67,27 +67,6 @@ let suite =
            assert_equal ~printer:(fun x -> x) "    " (tabs num_tabs) );
          ( "should be able to create no space with tabs being 0" >:: fun _ ->
            assert_equal ~printer:(fun x -> x) "" (tabs 0) );
-         ( "tostring for the modifiers single arg" >:: fun _ ->
-           let modifiers = [ Lalala.Modifier.Public ] in
-           assert_equal
-             ~printer:(fun x -> x)
-             "[\n  (Public)\n]"
-             (Lalala.Modifier.to_strings modifiers 0) );
-         ( "tostring for the modifiers multiple args" >:: fun _ ->
-           let to_string_value =
-             Lalala.Modifier.to_strings
-               [ Public; Annotation (Identifier "a") ]
-               0
-           in
-           assert_equal
-             ~printer:(fun x -> x)
-             "[\n\
-             \  (Public);\n\
-             \  (Annotation\n\
-             \    (Identifier\n\
-             \      (\"a\")))\n\
-              ]"
-             to_string_value );
          ( "tostring for a type decl that is a class declaration with no \
             statement"
          >:: fun _ ->
@@ -142,34 +121,14 @@ let suite =
              ~printer:(fun x -> x)
              "(ReturnStmt\n  (Primary\n    (Identifier\n      (\"a\")))))"
              (Statement.to_string returnStmt 0) );
-         ( "it should be able to tostring a method decl" >:: fun _ ->
-           let methodDecl =
-             MethodDeclaration
-               ( ApexType (Identifier "int"),
-                 Identifier "getA",
-                 [ ReturnStmt (Primary (Identifier "a")) ] )
-           in
-           assert_equal
-             ~printer:(fun x -> x)
-             "(MethodDeclaration\n\
-             \  (ApexType\n\
-             \    (Identifier\n\
-             \      (\"int\"))),\n\
-             \  (Identifier\n\
-             \    (\"getA\")),\n\
-             \  [\n\
-             \    (ReturnStmt\n\
-             \      (Primary\n\
-             \        (Identifier\n\
-             \          (\"a\")))))])"
-             (MemberDeclaration.to_string methodDecl 0) );
          ( "it should be able to tostring an apex type" >:: fun _ ->
            let apexType = Lalala.ApexType.ApexType (Identifier "int") in
            assert_equal
              ~printer:(fun x -> x)
              "(ApexType\n  (Identifier\n    (\"int\")))"
              (Lalala.ApexType.to_string apexType 0) );
-          VariableDeclTests.suite
+         VariableDeclTests.suite;
+         ModifierTest.suite;
        ]
 
 let _ = run_test_tt_main suite
