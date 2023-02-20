@@ -1,28 +1,3 @@
-type modifier = Public | Annotation of Identifier.node
-
-module Modifier = struct
-  let to_string (modifier : modifier) (depth : int) =
-    match modifier with
-    | Public -> "(Public)"
-    | Annotation identifer ->
-        "(Annotation\n"
-        ^ Formatter.tabs (depth + 1)
-        ^ Identifier.to_string identifer (depth + 1)
-        ^ ")"
-
-  let rec _to_strings (modifiers : modifier list) (depth : int) =
-    match modifiers with
-    | [] -> ""
-    | h :: [] -> Formatter.tabs depth ^ to_string h depth
-    | h :: t ->
-        Formatter.tabs depth ^ to_string h depth ^ ";\n" ^ _to_strings t depth
-
-  let to_strings (modifiers : modifier list) (depth : int) =
-    "[\n"
-    ^ _to_strings modifiers (depth + 1)
-    ^ "\n" ^ Formatter.tabs depth ^ "]"
-end
-
 type apexType = ApexType of Identifier.node
 
 module ApexType = struct
@@ -36,7 +11,10 @@ module ApexType = struct
 end
 
 type variableDecl = VariableDecl of Identifier.node
-type localVarDecl = LocalVarDecl of modifier * apexType * variableDecl list
+
+type localVarDecl =
+  | LocalVarDecl of Modifier.node * apexType * variableDecl list
+
 type statement = LocalVarDeclStmt of localVarDecl | ReturnStmt of Expr.node
 
 module Statement = struct
@@ -82,7 +60,7 @@ module MemberDeclaration = struct
 end
 
 type classBodyDeclaration =
-  | ClassBodyDeclaration of modifier * memberDeclaration
+  | ClassBodyDeclaration of Modifier.node * memberDeclaration
 
 module ClassBodyDeclaration = struct
   let to_string (class_body_decl : classBodyDeclaration) (depth : int) =
@@ -116,7 +94,7 @@ module ClassDeclaration = struct
         ^ "))"
 end
 
-type compilationUnit = TypeDecl of modifier list * classDeclaration
+type compilationUnit = TypeDecl of Modifier.node list * classDeclaration
 
 module CompilationUnit = struct
   let to_string (compilationUnit : compilationUnit) =

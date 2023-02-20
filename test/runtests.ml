@@ -68,14 +68,16 @@ let tests =
          ( "should be able to create no space with tabs being 0" >:: fun _ ->
            assert_equal ~printer:(fun x -> x) "" (tabs 0) );
          ( "tostring for the modifiers single arg" >:: fun _ ->
-           let modifiers = [ Public ] in
+           let modifiers = [ Lalala.Modifier.Public ] in
            assert_equal
              ~printer:(fun x -> x)
              "[\n  (Public)\n]"
-             (Modifier.to_strings modifiers 0) );
+             (Lalala.Modifier.to_strings modifiers 0) );
          ( "tostring for the modifiers multiple args" >:: fun _ ->
            let to_string_value =
-             Modifier.to_strings [ Public; Annotation (Identifier "a") ] 0
+             Lalala.Modifier.to_strings
+               [ Public; Annotation (Identifier "a") ]
+               0
            in
            assert_equal
              ~printer:(fun x -> x)
