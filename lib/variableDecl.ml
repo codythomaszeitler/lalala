@@ -1,0 +1,1 @@
+type variableDecl = VariableDecl of Identifier.node

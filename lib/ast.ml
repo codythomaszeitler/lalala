@@ -1,7 +1,5 @@
-type variableDecl = VariableDecl of Identifier.node
-
 type localVarDecl =
-  | LocalVarDecl of Modifier.node * ApexType.node * variableDecl list
+  | LocalVarDecl of Modifier.node * ApexType.node * VariableDecl.variableDecl list
 
 type statement = LocalVarDeclStmt of localVarDecl | ReturnStmt of Expr.node
 
@@ -27,7 +25,7 @@ module Statement = struct
 end
 
 type memberDeclaration =
-  | FieldDeclaration of ApexType.node * variableDecl list
+  | FieldDeclaration of ApexType.node * VariableDecl.variableDecl list
   | MethodDeclaration of ApexType.node * Identifier.node * statement list
 
 module MemberDeclaration = struct

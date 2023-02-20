@@ -79,7 +79,7 @@ variableDeclarators
     ;
 
 variableDeclarator
-    : iden = id {VariableDecl(iden)} //(ASSIGN expression)?
+    : iden = id {VariableDecl.VariableDecl(iden)} //(ASSIGN expression)?
     ;
 
 typeRef:
