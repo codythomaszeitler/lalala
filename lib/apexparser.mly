@@ -125,7 +125,7 @@ expressionStatement
 
 primary
     : 
-    | id = id {Primary(id)}
+    | id = id {Expr.Primary(id)}
 ;
 
 expression
