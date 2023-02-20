@@ -1,13 +1,4 @@
-type identifier = Identifier of string
-
-module Identifier = struct
-  let to_string (identifier : identifier) (depth : int) =
-    match identifier with
-    | Identifier name ->
-        "(Identifier\n" ^ Formatter.tabs (depth + 1) ^ "(\"" ^ name ^ "\"))"
-end
-
-type expr = Primary of identifier
+type expr = Primary of Identifier.node
 
 module Expr = struct
   let to_string (expr : expr) (depth : int) =
@@ -19,7 +10,7 @@ module Expr = struct
         ^ "))"
 end
 
-type modifier = Public | Annotation of identifier
+type modifier = Public | Annotation of Identifier.node
 
 module Modifier = struct
   let to_string (modifier : modifier) (depth : int) =
@@ -41,7 +32,7 @@ module Modifier = struct
     "[\n" ^ _to_strings modifiers (depth + 1) ^ "\n" ^ Formatter.tabs depth ^ "]"
 end
 
-type apexType = ApexType of identifier
+type apexType = ApexType of Identifier.node
 
 module ApexType = struct
   let to_string (apex_type : apexType) (depth : int) =
@@ -53,7 +44,7 @@ module ApexType = struct
         ^ ")"
 end
 
-type variableDecl = VariableDecl of identifier
+type variableDecl = VariableDecl of Identifier.node
 type localVarDecl = LocalVarDecl of modifier * apexType * variableDecl list
 type statement = LocalVarDeclStmt of localVarDecl | ReturnStmt of expr
 
@@ -79,7 +70,7 @@ end
 
 type memberDeclaration =
   | FieldDeclaration of apexType * variableDecl list
-  | MethodDeclaration of apexType * identifier * statement list
+  | MethodDeclaration of apexType * Identifier.node * statement list
 
 module MemberDeclaration = struct
   let to_string (member_decl : memberDeclaration) (depth : int) =
@@ -119,7 +110,7 @@ module ClassBodyDeclaration = struct
 end
 
 type classDeclaration =
-  | ClassDeclaration of identifier * classBodyDeclaration list
+  | ClassDeclaration of Identifier.node * classBodyDeclaration list
 
 module ClassDeclaration = struct
   let to_string (class_decl : classDeclaration) (depth : int) =

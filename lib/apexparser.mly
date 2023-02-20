@@ -50,7 +50,7 @@ modifier:
 ;
 
 identifier:
-    | id = ID {Identifier(id)}
+    | id = ID {Identifier.Identifier(id)}
 ;
 
 classDeclaration:
