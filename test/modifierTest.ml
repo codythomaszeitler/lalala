@@ -1,7 +1,7 @@
 open OUnit2
 
 let suite =
-  "test suite for variable decl apex ast"
+  "test suite for modifier test ast"
   >::: [
          ( "tostring for the modifiers single arg" >:: fun _ ->
            let modifiers = [ Lalala.Modifier.Public ] in
