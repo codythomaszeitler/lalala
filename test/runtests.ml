@@ -121,14 +121,9 @@ let suite =
              ~printer:(fun x -> x)
              "(ReturnStmt\n  (Primary\n    (Identifier\n      (\"a\")))))"
              (Statement.to_string returnStmt 0) );
-         ( "it should be able to tostring an apex type" >:: fun _ ->
-           let apexType = Lalala.ApexType.ApexType (Identifier "int") in
-           assert_equal
-             ~printer:(fun x -> x)
-             "(ApexType\n  (Identifier\n    (\"int\")))"
-             (Lalala.ApexType.to_string apexType 0) );
          VariableDeclTests.suite;
          ModifierTest.suite;
+         ApexTypeTest.suite;
        ]
 
 let _ = run_test_tt_main suite
