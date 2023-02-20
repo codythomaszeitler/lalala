@@ -1,19 +1,7 @@
-type apexType = ApexType of Identifier.node
-
-module ApexType = struct
-  let to_string (apex_type : apexType) (depth : int) =
-    match apex_type with
-    | ApexType identifier ->
-        "(ApexType\n"
-        ^ Formatter.tabs (depth + 1)
-        ^ Identifier.to_string identifier (depth + 1)
-        ^ ")"
-end
-
 type variableDecl = VariableDecl of Identifier.node
 
 type localVarDecl =
-  | LocalVarDecl of Modifier.node * apexType * variableDecl list
+  | LocalVarDecl of Modifier.node * ApexType.node * variableDecl list
 
 type statement = LocalVarDeclStmt of localVarDecl | ReturnStmt of Expr.node
 
@@ -39,8 +27,8 @@ module Statement = struct
 end
 
 type memberDeclaration =
-  | FieldDeclaration of apexType * variableDecl list
-  | MethodDeclaration of apexType * Identifier.node * statement list
+  | FieldDeclaration of ApexType.node * variableDecl list
+  | MethodDeclaration of ApexType.node * Identifier.node * statement list
 
 module MemberDeclaration = struct
   let to_string (member_decl : memberDeclaration) (depth : int) =

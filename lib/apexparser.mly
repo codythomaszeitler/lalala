@@ -87,7 +87,7 @@ typeRef:
 ;
 
 typeName:
-    | idd = id {ApexType(idd)}
+    | idd = id {ApexType.ApexType(idd)}
 ;
 
 id:  

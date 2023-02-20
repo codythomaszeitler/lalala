@@ -164,11 +164,11 @@ let tests =
              \          (\"a\")))))])"
              (MemberDeclaration.to_string methodDecl 0) );
          ( "it should be able to tostring an apex type" >:: fun _ ->
-           let apexType = ApexType (Identifier "int") in
+           let apexType = Lalala.ApexType.ApexType (Identifier "int") in
            assert_equal
              ~printer:(fun x -> x)
              "(ApexType\n  (Identifier\n    (\"int\")))"
-             (ApexType.to_string apexType 0) );
+             (Lalala.ApexType.to_string apexType 0) );
        ]
 
 let _ = run_test_tt_main tests
