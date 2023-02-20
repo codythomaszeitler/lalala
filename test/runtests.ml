@@ -5,7 +5,7 @@ open Lexing
 open Lalala.Ast
 open Lalala.Formatter
 
-let tests =
+let suite =
   "test suite for apex lexer"
   >::: [
          ( "parse apex class definition empty ast" >:: fun _ ->
@@ -169,6 +169,7 @@ let tests =
              ~printer:(fun x -> x)
              "(ApexType\n  (Identifier\n    (\"int\")))"
              (Lalala.ApexType.to_string apexType 0) );
+          VariableDeclTests.suite
        ]
 
-let _ = run_test_tt_main tests
+let _ = run_test_tt_main suite
