@@ -116,7 +116,7 @@ localVariableDeclaration
 ;
 
 returnStatement
-    : RETURN expr = expression SEMI {ReturnStmt(expr)}
+    : RETURN expr = expression SEMI {Stmt.ReturnStmt(expr)}
 ;
 
 expressionStatement

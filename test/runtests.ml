@@ -116,11 +116,11 @@ let suite =
              \            (\"a\")))))]))"
              (ClassBodyDeclaration.to_string classBodyDecl 0) );
          ( "it should be able to tostring a return statement" >:: fun _ ->
-           let returnStmt = ReturnStmt (Primary (Identifier "a")) in
+           let returnStmt = Lalala.Stmt.ReturnStmt (Primary (Identifier "a")) in
            assert_equal
              ~printer:(fun x -> x)
              "(ReturnStmt\n  (Primary\n    (Identifier\n      (\"a\")))))"
-             (Statement.to_string returnStmt 0) );
+             (Lalala.Stmt.to_string returnStmt 0) );
          VariableDeclTests.suite;
          ModifierTest.suite;
          ApexTypeTest.suite;

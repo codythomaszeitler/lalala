@@ -1,31 +1,6 @@
-type statement =
-  | LocalVarDeclStmt of LocalVarDecl.localVarDecl
-  | ReturnStmt of Expr.node
-
-module Statement = struct
-  let to_string (stmt : statement) (depth : int) =
-    match stmt with
-    | ReturnStmt expr ->
-        "(ReturnStmt\n"
-        ^ Formatter.tabs (depth + 1)
-        ^ Expr.to_string expr (depth + 1)
-        ^ ")"
-    | _ -> "Not supported yet"
-
-  let rec _to_strings (stmts : statement list) (depth : int) =
-    match stmts with
-    | [] -> ""
-    | h :: [] -> Formatter.tabs depth ^ to_string h depth
-    | h :: t ->
-        Formatter.tabs depth ^ to_string h depth ^ ";\n" ^ _to_strings t depth
-
-  let to_strings (stmts : statement list) (depth : int) =
-    "[\n" ^ _to_strings stmts (depth + 1) ^ "]"
-end
-
 type memberDeclaration =
   | FieldDeclaration of ApexType.node * VariableDecl.variableDecl list
-  | MethodDeclaration of ApexType.node * Identifier.node * statement list
+  | MethodDeclaration of ApexType.node * Identifier.node * Stmt.statement list
 
 module MemberDeclaration = struct
   let to_string (member_decl : memberDeclaration) (depth : int) =
@@ -39,7 +14,7 @@ module MemberDeclaration = struct
         ^ Identifier.to_string identifier (depth + 1)
         ^ ",\n"
         ^ Formatter.tabs (depth + 1)
-        ^ Statement.to_strings stmts (depth + 1)
+        ^ Stmt.to_strings stmts (depth + 1)
         ^ ")"
     | _ -> "Not implemented yet!"
 end
