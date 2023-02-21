@@ -62,7 +62,7 @@ classBody:
 ;
 
 classBodyDeclaration:
-    | modi = modifier membDecl = memberDeclaration {ClassBodyDeclaration(modi, membDecl)}
+    | modi = modifier membDecl = memberDeclaration {ClassBodyDecl.ClassBodyDeclaration(modi, membDecl)}
 ;
 
 memberDeclaration:

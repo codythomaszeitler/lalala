@@ -89,38 +89,13 @@ let suite =
              \    (Identifier\n\
              \      (\"AnotherTestClass\")),\n\
              \    [])))" to_string_type_decl );
-         ( "it should be able to make a tostring out of a class decl body"
-         >:: fun _ ->
-           let classBodyDecl =
-             ClassBodyDeclaration
-               ( Public,
-                 MethodDeclaration
-                   ( ApexType (Identifier "int"),
-                     Identifier "getA",
-                     [ ReturnStmt (Primary (Identifier "a")) ] ) )
-           in
-           assert_equal
-             ~printer:(fun x -> x)
-             "(ClassBodyDeclaration\n\
-             \  (Public),\n\
-             \  (MethodDeclaration\n\
-             \    (ApexType\n\
-             \      (Identifier\n\
-             \        (\"int\"))),\n\
-             \    (Identifier\n\
-             \      (\"getA\")),\n\
-             \    [\n\
-             \      (ReturnStmt\n\
-             \        (Primary\n\
-             \          (Identifier\n\
-             \            (\"a\")))))]))"
-             (ClassBodyDeclaration.to_string classBodyDecl 0) );
          VariableDeclTests.suite;
          ModifierTest.suite;
          ApexTypeTest.suite;
          LocalVarDeclTest.suite;
          StmtTest.suite;
          MemberDeclTest.suite;
+         ClassBodyDeclTest.suite;
        ]
 
 let _ = run_test_tt_main suite
