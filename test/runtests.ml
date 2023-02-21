@@ -124,6 +124,7 @@ let suite =
          VariableDeclTests.suite;
          ModifierTest.suite;
          ApexTypeTest.suite;
+         LocalVarDeclTest.suite;
        ]
 
 let _ = run_test_tt_main suite

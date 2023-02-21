@@ -1,7 +1,6 @@
-type localVarDecl =
-  | LocalVarDecl of Modifier.node * ApexType.node * VariableDecl.variableDecl list
-
-type statement = LocalVarDeclStmt of localVarDecl | ReturnStmt of Expr.node
+type statement =
+  | LocalVarDeclStmt of LocalVarDecl.localVarDecl
+  | ReturnStmt of Expr.node
 
 module Statement = struct
   let to_string (stmt : statement) (depth : int) =
