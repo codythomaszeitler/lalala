@@ -95,7 +95,7 @@ id:
 ;
 
 methodDeclaration
-    : apexType = typeRef id = id LEFT_PAREN RIGHT_PAREN stmts = block  {MethodDeclaration(apexType, id, stmts)}
+    : apexType = typeRef id = id LEFT_PAREN RIGHT_PAREN stmts = block  {MemberDecl.MethodDeclaration(apexType, id, stmts)}
 ;
 
 block :

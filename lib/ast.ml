@@ -1,26 +1,5 @@
-type memberDeclaration =
-  | FieldDeclaration of ApexType.node * VariableDecl.variableDecl list
-  | MethodDeclaration of ApexType.node * Identifier.node * Stmt.statement list
-
-module MemberDeclaration = struct
-  let to_string (member_decl : memberDeclaration) (depth : int) =
-    match member_decl with
-    | MethodDeclaration (apexType, identifier, stmts) ->
-        Formatter.tabs depth ^ "(MethodDeclaration\n"
-        ^ Formatter.tabs (depth + 1)
-        ^ ApexType.to_string apexType (depth + 1)
-        ^ ",\n"
-        ^ Formatter.tabs (depth + 1)
-        ^ Identifier.to_string identifier (depth + 1)
-        ^ ",\n"
-        ^ Formatter.tabs (depth + 1)
-        ^ Stmt.to_strings stmts (depth + 1)
-        ^ ")"
-    | _ -> "Not implemented yet!"
-end
-
 type classBodyDeclaration =
-  | ClassBodyDeclaration of Modifier.node * memberDeclaration
+  | ClassBodyDeclaration of Modifier.node * MemberDecl.memberDeclaration
 
 module ClassBodyDeclaration = struct
   let to_string (class_body_decl : classBodyDeclaration) (depth : int) =
@@ -30,7 +9,7 @@ module ClassBodyDeclaration = struct
         ^ Formatter.tabs (depth + 1)
         ^ Modifier.to_string modifier (depth + 1)
         ^ ",\n" ^ Formatter.tabs depth
-        ^ MemberDeclaration.to_string method_decl (depth + 1)
+        ^ MemberDecl.to_string method_decl (depth + 1)
         ^ ")"
 
   let to_strings (class_body_decls : classBodyDeclaration list) (depth : int) =
