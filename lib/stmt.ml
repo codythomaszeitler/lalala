@@ -9,7 +9,11 @@ let to_string (stmt : statement) (depth : int) =
       ^ Formatter.tabs (depth + 1)
       ^ Expr.to_string expr (depth + 1)
       ^ ")"
-  | _ -> "Not supported yet"
+  | LocalVarDeclStmt local_var_decl ->
+      "(LocalVarDecl\n"
+      ^ Formatter.tabs (depth + 1)
+      ^ LocalVarDecl.to_string local_var_decl (depth + 1)
+      ^ ")"
 
 let rec _to_strings (stmts : statement list) (depth : int) =
   match stmts with
