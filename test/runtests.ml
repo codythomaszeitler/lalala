@@ -125,6 +125,7 @@ let suite =
          ModifierTest.suite;
          ApexTypeTest.suite;
          LocalVarDeclTest.suite;
+         StmtTest.suite;
        ]
 
 let _ = run_test_tt_main suite
