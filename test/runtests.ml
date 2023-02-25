@@ -101,7 +101,7 @@ let suite =
          LocationTest.suite;
          ApexTypeTest.suite;
          ApexModifierTest.suite;
-         VariableDeclTest.suite;
+         ApexVariableDeclTest.suite;
        ]
 
 let _ = run_test_tt_main suite

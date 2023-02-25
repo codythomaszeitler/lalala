@@ -7,9 +7,9 @@ let suite =
            let buffer = Buffer.create 5 in
            let formatter = Format.formatter_of_buffer buffer in
            let variableDecl =
-             Lalala.VariableDecl.create (Lalala.ApexIdentifier.create "a")
+             Lalala.ApexVariableDecl.create (Lalala.ApexIdentifier.create "a")
            in
-           Lalala.VariableDecl.pr_variable_decl formatter variableDecl;
+           Lalala.ApexVariableDecl.pr_variable_decl formatter variableDecl;
            Format.pp_print_flush formatter ();
            assert_equal
              ~printer:(fun x -> x)
