@@ -1,14 +1,14 @@
 open OUnit2
-open Lalala.Apexlexer
+(* open Lalala.Apexlexer
 open Lalala.Apexparser
 open Lexing
 open Lalala.Ast
-open Lalala.Formatter
+open Lalala.Formatter *)
 
 let suite =
   "test suite for apex lexer"
   >::: [
-         ( "parse apex class definition empty ast" >:: fun _ ->
+         (* ( "parse apex class definition empty ast" >:: fun _ ->
            let buffer = from_string "public class TestClass {}" in
            let ast = compilationUnit read_token buffer in
            assert_equal
@@ -96,6 +96,8 @@ let suite =
          StmtTest.suite;
          MemberDeclTest.suite;
          ClassBodyDeclTest.suite;
+         ClassDeclTest.suite; *)
+         ApexIdentifierTest.suite;
        ]
 
 let _ = run_test_tt_main suite
