@@ -1,6 +1,7 @@
-type node = Identifier of string
+type identifier = { name : string }
 
-let to_string (identifier : node) (depth : int) =
-  match identifier with
-  | Identifier name ->
-      "(Identifier\n" ^ Formatter.tabs (depth + 1) ^ "(\"" ^ name ^ "\"))"
+let create (name : string) : identifier = { name }
+
+let pr_identifer (ppf : Format.formatter) (id : identifier) =
+  match id with
+  | { name } -> Format.fprintf ppf "(Identifier {@[ name=\"%s\" @]})" name
