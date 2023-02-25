@@ -1,27 +1,16 @@
 open OUnit2
 
 let suite =
-  "test suite for modifier test ast"
+  "Modifier"
   >::: [
-         ( "tostring for the modifiers single arg" >:: fun _ ->
-           let modifiers = [ Lalala.Modifier.Public ] in
+         ( "it should be able to pretty print a modifier" >:: fun _ ->
+           let buffer = Buffer.create 5 in
+           let formatter = Format.formatter_of_buffer buffer in
+           let modifier = Lalala.Modifier.create Public in
+           Lalala.Modifier.pr_modifier formatter modifier;
+           Format.pp_print_flush formatter ();
            assert_equal
              ~printer:(fun x -> x)
-             "[\n  (Public)\n]"
-             (Lalala.Modifier.to_strings modifiers 0) );
-         ( "tostring for the modifiers multiple args" >:: fun _ ->
-           let to_string_value =
-             Lalala.Modifier.to_strings
-               [ Public; Annotation (Identifier "a") ]
-               0
-           in
-           assert_equal
-             ~printer:(fun x -> x)
-             "[\n\
-             \  (Public);\n\
-             \  (Annotation\n\
-             \    (Identifier\n\
-             \      (\"a\")))\n\
-              ]"
-             to_string_value );
+             "(Modifier\n  {modifier_type=\"public\"; loc=(Location)}"
+             (Buffer.contents buffer) );
        ]

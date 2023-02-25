@@ -1,20 +1,56 @@
-type node = Public | Annotation of Identifier.node
+type modifierType =
+  | Global
+  | Public
+  | Protected
+  | Private
+  | Transient
+  | Static
+  | Abstract
+  | Final
+  | Webservice
+  | Override
+  | Virtual
+  | Testmethod
+  | WithSharing
+  | WithoutSharing
+  | InheritedSharing
 
-let to_string (modifier : node) (depth : int) =
+type modifier = { modifier_type : modifierType; loc : Location.location option }
+
+let create ?(loc = None) (modifier_type : modifierType) : modifier =
+  { modifier_type; loc }
+
+let pr_modifier (ppf : Format.formatter) (modifier : modifier) : unit =
+  let to_string (modifier_type : modifierType) : string =
+    match modifier_type with
+    | Global -> "global"
+    | Public -> "public"
+    | Protected -> "protected"
+    | Private -> "private"
+    | Transient -> "transient"
+    | Static -> "static"
+    | Abstract -> "abstract"
+    | Final -> "final"
+    | Webservice -> "webservice"
+    | Override -> "override"
+    | Virtual -> "virtual"
+    | Testmethod -> "testmethod"
+    | WithSharing -> "with_sharing"
+    | WithoutSharing -> "without_sharing"
+    | InheritedSharing -> "inherited_sharing"
+  in
   match modifier with
-  | Public -> "(Public)"
-  | Annotation identifer ->
-      "(Annotation\n"
-      ^ Formatter.tabs (depth + 1)
-      ^ Identifier.to_string identifer (depth + 1)
-      ^ ")"
+  | { modifier_type; loc } ->
+      Format.fprintf ppf
+        "(Modifier@;<1 2>@[{modifier_type=\"%s\";@;<1 2>loc=%a}@]"
+        (to_string modifier_type) Location.pr_location loc
 
-let rec _to_strings (modifiers : node list) (depth : int) =
-  match modifiers with
-  | [] -> ""
-  | h :: [] -> Formatter.tabs depth ^ to_string h depth
-  | h :: t ->
-      Formatter.tabs depth ^ to_string h depth ^ ";\n" ^ _to_strings t depth
+(* let create ?(loc = None) (identifier : ApexIdentifier.apexIdentifier) : apexType
+     =
+   { identifier; loc } *)
 
-let to_strings (modifiers : node list) (depth : int) =
-  "[\n" ^ _to_strings modifiers (depth + 1) ^ "\n" ^ Formatter.tabs depth ^ "]"
+(* let pr_apex_type (ppf : Format.formatter) (apex_type : apexType) : unit =
+   match apex_type with
+   | { identifier; loc } ->
+       Format.fprintf ppf "(ApexType@;<1 2>@[{identifier=%a;@;<1 2>loc=%a}@])"
+         ApexIdentifier.pr_identifer identifier Location.pr_location loc *)
