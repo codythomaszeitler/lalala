@@ -1,7 +1,7 @@
 open OUnit2
 
 let suite =
-  "VariableDecl"
+  "ApexVariableDecl"
   >::: [
          ( "it should be able to pretty print a variable decl" >:: fun _ ->
            let buffer = Buffer.create 5 in
@@ -13,7 +13,7 @@ let suite =
            Format.pp_print_flush formatter ();
            assert_equal
              ~printer:(fun x -> x)
-             "(VariableDecl\n  {id=(ApexIdentifier {name=\"a\" loc=(Location)}); \
+             "(ApexVariableDecl\n  {id=(ApexIdentifier {name=\"a\" loc=(Location)}); \
               loc=(Location)})"
              (Buffer.contents buffer) );
        ]
