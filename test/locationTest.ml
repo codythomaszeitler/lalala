@@ -17,7 +17,7 @@ let suite =
            let buffer = Buffer.create 5 in
            let formatter = Format.formatter_of_buffer buffer in
            Lalala.Location.pr_location formatter None;
-           Format.pp_print_newline formatter ();
+           Format.pp_print_flush formatter ();
            assert_equal
              ~printer:(fun x -> x)
              "(Location)" (Buffer.contents buffer) );

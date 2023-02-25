@@ -100,7 +100,7 @@ let suite =
          ApexIdentifierTest.suite;
          LocationTest.suite;
          ApexTypeTest.suite;
-         ModifierTest.suite;
+         ApexModifierTest.suite;
        ]
 
 let _ = run_test_tt_main suite
