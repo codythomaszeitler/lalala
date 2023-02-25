@@ -12,6 +12,6 @@ let suite =
            Format.pp_print_flush formatter ();
            assert_equal
              ~printer:(fun x -> x)
-             "(ApexIdentifier { name=\"testIdentifier\" loc=(Location)})"
+             "(ApexIdentifier\n  {name=\"testIdentifier\" loc=(Location)})"
              (Buffer.contents buffer) );
        ]
