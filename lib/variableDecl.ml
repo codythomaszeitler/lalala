@@ -1,22 +1,13 @@
-type variableDecl = VariableDecl of Identifier.node
+type variableDecl = {
+  id : ApexIdentifier.apexIdentifier;
+  loc : Location.location option;
+}
 
-let to_string (variable_decl : variableDecl) (depth : int) =
-  match variable_decl with
-  | VariableDecl identifier ->
-      "(VariableDecl\n"
-      ^ Formatter.tabs (depth + 1)
-      ^ Identifier.to_string identifier (depth + 1)
-      ^ ")"
+let create ?(loc = None) (id : ApexIdentifier.apexIdentifier) : variableDecl =
+  { id; loc }
 
-let to_strings (variable_decls: variableDecl list) (depth: int) =
-  let rec _to_strings (variable_decls : variableDecl list) (depth : int) =
-    match variable_decls with
-    | [] -> ""
-    | h :: [] -> to_string h (depth + 1)
-    | h :: t ->
-        to_string h (depth + 1)
-        ^ ";\n"
-        ^ Formatter.tabs (depth + 1)
-        ^ _to_strings t depth
-  in
-  "[\n" ^ Formatter.tabs (depth + 1) ^ _to_strings variable_decls depth ^ "]"
+let pr_variable_decl (ppf : Format.formatter) (var_decl : variableDecl) : unit =
+  match var_decl with
+  | { id; loc } ->
+      Format.fprintf ppf "(VariableDecl@;<1 2>@[{id=%a;@;<1 2>loc=%a}@])"
+        ApexIdentifier.pr_identifer id Location.pr_location loc

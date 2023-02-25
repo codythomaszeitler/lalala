@@ -1,28 +1,19 @@
-(* open OUnit2
-open Lalala.VariableDecl
-open Lalala.Identifier
+open OUnit2
 
 let suite =
-  "test suite for variable decl apex ast"
+  "VariableDecl"
   >::: [
-         ( "it should be able to tostring variable decl" >:: fun _ ->
-           let astNode = VariableDecl (Identifier "a") in
-           assert_equal
-             ~printer:(fun x -> x)
-             "(VariableDecl\n  (Identifier\n    (\"a\")))"
-             (Lalala.VariableDecl.to_string astNode 0) );
-         ( "it should be able to tostrings variable decl list" >:: fun _ ->
-           let astNode =
-             [ VariableDecl (Identifier "a"); VariableDecl (Identifier "b") ]
+         ( "it should be able to pretty print a variable decl" >:: fun _ ->
+           let buffer = Buffer.create 5 in
+           let formatter = Format.formatter_of_buffer buffer in
+           let variableDecl =
+             Lalala.VariableDecl.create (Lalala.ApexIdentifier.create "a")
            in
+           Lalala.VariableDecl.pr_variable_decl formatter variableDecl;
+           Format.pp_print_flush formatter ();
            assert_equal
              ~printer:(fun x -> x)
-             "[\n\
-             \  (VariableDecl\n\
-             \    (Identifier\n\
-             \      (\"a\")));\n\
-             \  (VariableDecl\n\
-             \    (Identifier\n\
-             \      (\"b\")))]"
-             (Lalala.VariableDecl.to_strings astNode 0) );
-       ] *)
+             "(VariableDecl\n  {id=(ApexIdentifier {name=\"a\" loc=(Location)}); \
+              loc=(Location)})"
+             (Buffer.contents buffer) );
+       ]
