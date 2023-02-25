@@ -1,9 +1,14 @@
-type node = ApexType of Identifier.node
+type apexType = {
+  identifier : ApexIdentifier.apexIdentifier;
+  loc : Location.location option;
+}
 
-let to_string (apex_type : node) (depth : int) =
+let create ?(loc = None) (identifier : ApexIdentifier.apexIdentifier) : apexType
+    =
+  { identifier; loc }
+
+let pr_apex_type (ppf : Format.formatter) (apex_type : apexType) : unit =
   match apex_type with
-  | ApexType identifier ->
-      "(ApexType\n"
-      ^ Formatter.tabs (depth + 1)
-      ^ Identifier.to_string identifier (depth + 1)
-      ^ ")"
+  | { identifier; loc } ->
+      Format.fprintf ppf "(ApexType@;<1 2>@[{identifier=%a;@;<1 2>loc=%a}@])"
+        ApexIdentifier.pr_identifer identifier Location.pr_location loc
