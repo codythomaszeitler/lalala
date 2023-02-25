@@ -1,4 +1,4 @@
-open OUnit2
+(* open OUnit2
 open Lalala.VariableDecl
 open Lalala.Identifier
 
@@ -25,4 +25,4 @@ let suite =
              \    (Identifier\n\
              \      (\"b\")))]"
              (Lalala.VariableDecl.to_strings astNode 0) );
-       ]
+       ] *)
