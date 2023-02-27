@@ -1,0 +1,21 @@
+{
+    "types": [
+        {
+            "name": "Location",
+            "formats": [
+                {
+                    "keyName": "line",
+                    "format": "%d"
+                },
+                {
+                    "keyName": "row",
+                    "format": "%d"
+                },
+                {
+                    "keyName": "column",
+                    "format": "%d"
+                }
+            ]
+        }
+    ]
+}

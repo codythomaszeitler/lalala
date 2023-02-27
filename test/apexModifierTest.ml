@@ -1,4 +1,6 @@
 open OUnit2
+open Lalala.ApexModifier
+open Lalala.Location
 
 let suite =
   "Modifier"
@@ -6,7 +8,7 @@ let suite =
          ( "it should be able to pretty print a modifier" >:: fun _ ->
            let buffer = Buffer.create 5 in
            let formatter = Format.formatter_of_buffer buffer in
-           let modifier = Lalala.ApexModifier.create Public in
+           let modifier = Public no_loc in
            Lalala.ApexModifier.pr_modifier formatter modifier;
            Format.pp_print_flush formatter ();
            assert_equal

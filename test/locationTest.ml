@@ -1,4 +1,5 @@
 open OUnit2
+open Lalala.Location
 
 let suite =
   "Location"
@@ -6,8 +7,8 @@ let suite =
          ( "it should be able to pretty print a location" >:: fun _ ->
            let buffer = Buffer.create 5 in
            let formatter = Format.formatter_of_buffer buffer in
-           let identifier = Lalala.Location.create 1 2 3 in
-           Lalala.Location.pr_location formatter (Some identifier);
+           let location = create 1 2 3 in
+           pr_location formatter location;
            Format.pp_print_newline formatter ();
            assert_equal
              ~printer:(fun x -> x)
@@ -16,7 +17,7 @@ let suite =
          ( "it should be able to pretty print a none location" >:: fun _ ->
            let buffer = Buffer.create 5 in
            let formatter = Format.formatter_of_buffer buffer in
-           Lalala.Location.pr_location formatter None;
+           pr_location formatter no_loc;
            Format.pp_print_flush formatter ();
            assert_equal
              ~printer:(fun x -> x)
