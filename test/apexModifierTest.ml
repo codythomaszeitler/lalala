@@ -13,6 +13,6 @@ let suite =
            Format.pp_print_flush formatter ();
            assert_equal
              ~printer:(fun x -> x)
-             "(Modifier\n  {modifier_type=\"public\"; loc=(Location)}"
+             "(Public\n  { loc=(Location)}"
              (Buffer.contents buffer) );
        ]
