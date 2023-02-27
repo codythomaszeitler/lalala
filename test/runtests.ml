@@ -103,6 +103,7 @@ let suite =
          ApexModifierTest.suite;
          ApexVariableDeclTest.suite;
          OperatorTest.suite;
+         ApexLiteralTest.suite;
        ]
 
 let _ = run_test_tt_main suite
