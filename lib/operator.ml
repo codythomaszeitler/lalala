@@ -7,10 +7,10 @@ type operator =
 let pr_operator (ppf : Format.formatter) (op : operator) : unit =
   match op with
   | Add location ->
-      Format.fprintf ppf "(Add@;<1 2>@[{loc=%a@])" Location.pr_location location
+      Format.fprintf ppf "(Add{@[<v>@;loc=%a@]})" Location.pr_location location
   | Sub location ->
-      Format.fprintf ppf "(Sub@;<1 2>@[{loc=%a@])" Location.pr_location location
+      Format.fprintf ppf "(Sub{@[<v>@;loc=%a@]})" Location.pr_location location
   | Mul location ->
-      Format.fprintf ppf "(Mul@;<1 2>@[{loc=%a@])" Location.pr_location location
+      Format.fprintf ppf "(Mul{@[<v>@;loc=%a@]})" Location.pr_location location
   | Div location ->
-      Format.fprintf ppf "(Div@;<1 2>@[{loc=%a@])" Location.pr_location location
+      Format.fprintf ppf "(Div{@[<v>@;loc=%a@]})" Location.pr_location location
