@@ -1,7 +1,8 @@
-type variableDecl =
+type apexVariableDecl =
   | ApexVariableDecl of Location.location * ApexIdentifier.apexIdentifier
 
-let pr_variable_decl (ppf : Format.formatter) (var_decl : variableDecl) : unit =
+let pr_variable_decl (ppf : Format.formatter) (var_decl : apexVariableDecl) :
+    unit =
   match var_decl with
   | ApexVariableDecl (location, identifier) ->
       Format.fprintf ppf "(ApexVariableDecl@[<v>{@;id=%a;@;loc=%a}@])"
