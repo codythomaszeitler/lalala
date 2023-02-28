@@ -98,7 +98,6 @@ let suite =
             ClassBodyDeclTest.suite;
             ClassDeclTest.suite; *)
          (*
-            LocationTest.suite;
             ApexModifierTest.suite;
             ApexVariableDeclTest.suite;
             OperatorTest.suite;
@@ -107,6 +106,7 @@ let suite =
          ApexTypeTest.suite;
          ExprTest.suite;
          ApexLiteralTest.suite;
+         LocationTest.suite;
        ]
 
 let _ = run_test_tt_main suite

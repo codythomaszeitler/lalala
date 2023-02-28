@@ -12,7 +12,7 @@ let suite =
            Format.pp_print_newline formatter ();
            assert_equal
              ~printer:(fun x -> x)
-             "(Location\n  {line=1, row=2, column=3})\n"
+             "(Location{line=1,row=2,column=3})\n"
              (Buffer.contents buffer) );
          ( "it should be able to pretty print a none location" >:: fun _ ->
            let buffer = Buffer.create 5 in
