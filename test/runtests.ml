@@ -101,8 +101,8 @@ let suite =
          ApexIdentifierTest.suite;
          ApexVariableDeclTest.suite;
          ApexLocalVarDeclTest.suite;
-         ClassBodyDeclTest.suite;
-         ClassDeclTest.suite;
+         ApexClassBodyDeclTest.suite;
+         ApexClassDeclTest.suite;
        ]
 
 let _ = run_test_tt_main suite

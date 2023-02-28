@@ -1,5 +1,5 @@
 open OUnit2
-open Lalala.ClassBodyDecl
+open Lalala.ApexClassBodyDecl
 open Lalala.Location
 open Lalala.ApexModifier
 open Lalala.ApexMemberDecl

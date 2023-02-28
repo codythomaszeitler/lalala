@@ -1,6 +1,6 @@
 open OUnit2
 open Lalala.Location
-open Lalala.ClassDecl
+open Lalala.ApexClassDecl
 open Lalala.ApexIdentifier
 
 let suite =
