@@ -13,7 +13,7 @@ let suite =
            Format.pp_print_flush formatter ();
            assert_equal
              ~printer:(fun x -> x)
-             "(Public{\n       loc=(Location)}" (Buffer.contents buffer) );
+             "(Public{\n  loc=(Location)}" (Buffer.contents buffer) );
          ( "it should be able to pretty print the webservice modifier"
          >:: fun _ ->
            let buffer = Buffer.create 5 in
@@ -23,6 +23,5 @@ let suite =
            Format.pp_print_flush formatter ();
            assert_equal
              ~printer:(fun x -> x)
-             "(Webservice{\n           loc=(Location)}" (Buffer.contents buffer)
-         );
+             "(Webservice{\n  loc=(Location)}" (Buffer.contents buffer) );
        ]

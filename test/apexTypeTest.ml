@@ -17,8 +17,11 @@ let suite =
            assert_equal
              ~printer:(fun x -> x)
              "(ApexType{\n\
-             \         identifier=(ApexIdentifier{\n\
-             \                                   name=\"int\"\n\
-             \                                   loc=(Location)});\n\
-             \         loc=(Location)})" (Buffer.contents buffer) );
+             \  identifier=\n\
+             \    (ApexIdentifier{\n\
+             \      name=\n\
+             \        \"int\"\n\
+             \      loc=\n\
+             \        (Location)});\n\
+             \  loc=(Location)})" (Buffer.contents buffer) );
        ]

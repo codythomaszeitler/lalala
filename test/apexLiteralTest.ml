@@ -13,10 +13,8 @@ let suite =
            Format.pp_print_flush formatter ();
            assert_equal
              ~printer:(fun x -> x)
-             "(IntegerLiteral{\n\
-             \                int=100;\n\
-             \                loc=(Location)\n\
-             \                })" (Buffer.contents buffer) );
+             "(IntegerLiteral{\n  int=100;\n  loc=(Location)})"
+             (Buffer.contents buffer) );
          ( "it should be able to pretty print a long literal" >:: fun _ ->
            let buffer = Buffer.create 5 in
            let formatter = Format.formatter_of_buffer buffer in
@@ -25,10 +23,8 @@ let suite =
            Format.pp_print_flush formatter ();
            assert_equal
              ~printer:(fun x -> x)
-             "(LongLiteral{\n\
-             \             long=100;\n\
-             \             loc=(Location)\n\
-             \             })" (Buffer.contents buffer) );
+             "(LongLiteral{\n  long=100;\n  loc=(Location)})"
+             (Buffer.contents buffer) );
          ( "it should be able to pretty print a string literal" >:: fun _ ->
            let buffer = Buffer.create 5 in
            let formatter = Format.formatter_of_buffer buffer in
@@ -37,10 +33,8 @@ let suite =
            Format.pp_print_flush formatter ();
            assert_equal
              ~printer:(fun x -> x)
-             "(StringLiteral{\n\
-             \               string=\"abc\";\n\
-             \               loc=(Location)\n\
-             \               })" (Buffer.contents buffer) );
+             "(StringLiteral{\n  string=\"abc\";\n  loc=(Location)})"
+             (Buffer.contents buffer) );
          ( "it should be able to pretty print a boolean literal" >:: fun _ ->
            let buffer = Buffer.create 5 in
            let formatter = Format.formatter_of_buffer buffer in
@@ -49,10 +43,8 @@ let suite =
            Format.pp_print_flush formatter ();
            assert_equal
              ~printer:(fun x -> x)
-             "(BooleanLiteral{\n\
-             \                bool=true;\n\
-             \                loc=(Location)\n\
-             \                })" (Buffer.contents buffer) );
+             "(BooleanLiteral{\n  bool=true;\n  loc=(Location)})"
+             (Buffer.contents buffer) );
          ( "it should be able to pretty print a null literal" >:: fun _ ->
            let buffer = Buffer.create 5 in
            let formatter = Format.formatter_of_buffer buffer in
@@ -61,6 +53,5 @@ let suite =
            Format.pp_print_flush formatter ();
            assert_equal
              ~printer:(fun x -> x)
-             "(NullLiteral{\n             loc=(Location)\n             })"
-             (Buffer.contents buffer) );
+             "(NullLiteral{\n  loc=(Location)})" (Buffer.contents buffer) );
        ]
