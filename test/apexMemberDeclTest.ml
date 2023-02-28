@@ -1,5 +1,5 @@
 open OUnit2
-open Lalala.MemberDecl
+open Lalala.ApexMemberDecl
 open Lalala.Location
 open Lalala.ApexIdentifier
 open Lalala.ApexType

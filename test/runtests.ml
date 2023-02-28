@@ -99,7 +99,7 @@ let suite =
          OperatorTest.suite;
          ApexLiteralTest.suite;
          ApexModifierTest.suite;
-         MemberDeclTest.suite;
+         ApexMemberDeclTest.suite;
          ApexIdentifierTest.suite;
          ApexVariableDeclTest.suite;
          ApexLocalVarDeclTest.suite;
