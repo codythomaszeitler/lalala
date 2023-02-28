@@ -28,34 +28,46 @@ let suite =
            assert_equal
              ~printer:(fun x -> x)
              "(ApexLocalVarDecl{\n\
-             \                  modifier=(Public{\n\
-             \                                  loc=(Location)};\n\
-             \                  apex_type=(ApexType{\n\
-             \                                     identifier=(ApexIdentifier{\n\
-             \                                                               \
-              name=\"int\"\n\
-             \                                                               \
-              loc=(Location)});\n\
-             \                                     loc=(Location)});\n\
-             \                  variable_decl=\n\
-             \                  [(ApexVariableDecl{\n\
-             \                                    id=(ApexIdentifier{\n\
-             \                                                      name=\"a\"\n\
-             \                                                      \
-              loc=(Location)});\n\
-             \                                    loc=(Location)})\n\
-             \                  (ApexVariableDecl{\n\
-             \                                   id=(ApexIdentifier{\n\
-             \                                                     name=\"b\"\n\
-             \                                                     \
-              loc=(Location)});\n\
-             \                                   loc=(Location)})\n\
-             \                  (ApexVariableDecl{\n\
-             \                                   id=(ApexIdentifier{\n\
-             \                                                     name=\"c\"\n\
-             \                                                     \
-              loc=(Location)});\n\
-             \                                   loc=(Location)})];\n\
-             \                  location=(Location);})" (Buffer.contents buffer)
-         );
+             \  modifier=\n\
+             \    (Public{\n\
+             \      loc=(Location)};\n\
+             \  apex_type=\n\
+             \    (ApexType{\n\
+             \      identifier=\n\
+             \        (ApexIdentifier{\n\
+             \          name=\n\
+             \            \"int\"\n\
+             \          loc=\n\
+             \            (Location)});\n\
+             \      loc=(Location)});\n\
+             \  variable_decl=[\n\
+             \    (ApexVariableDecl{\n\
+             \      id=\n\
+             \        (ApexIdentifier{\n\
+             \          name=\n\
+             \            \"a\"\n\
+             \          loc=\n\
+             \            (Location)});\n\
+             \      loc=\n\
+             \        (Location)})\n\
+             \    (ApexVariableDecl{\n\
+             \      id=\n\
+             \        (ApexIdentifier{\n\
+             \          name=\n\
+             \            \"b\"\n\
+             \          loc=\n\
+             \            (Location)});\n\
+             \      loc=\n\
+             \        (Location)})\n\
+             \    (ApexVariableDecl{\n\
+             \      id=\n\
+             \        (ApexIdentifier{\n\
+             \          name=\n\
+             \            \"c\"\n\
+             \          loc=\n\
+             \            (Location)});\n\
+             \      loc=\n\
+             \        (Location)})];\n\
+             \  location=\n\
+             \    (Location);})" (Buffer.contents buffer) );
        ]

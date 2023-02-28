@@ -16,8 +16,12 @@ let suite =
            assert_equal
              ~printer:(fun x -> x)
              "(ApexVariableDecl{\n\
-             \                 id=(ApexIdentifier{\n\
-             \                                   name=\"a\"\n\
-             \                                   loc=(Location)});\n\
-             \                 loc=(Location)})" (Buffer.contents buffer) );
+             \  id=\n\
+             \    (ApexIdentifier{\n\
+             \      name=\n\
+             \        \"a\"\n\
+             \      loc=\n\
+             \        (Location)});\n\
+             \  loc=\n\
+             \    (Location)})" (Buffer.contents buffer) );
        ]

@@ -14,6 +14,8 @@ let suite =
            assert_equal
              ~printer:(fun x -> x)
              "(ApexIdentifier{\n\
-             \               name=\"testIdentifier\"\n\
-             \               loc=(Location)})" (Buffer.contents buffer) );
+             \  name=\n\
+             \    \"testIdentifier\"\n\
+             \  loc=\n\
+             \    (Location)})" (Buffer.contents buffer) );
        ]

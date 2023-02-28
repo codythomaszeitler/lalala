@@ -89,14 +89,9 @@ let suite =
                 \    (Identifier\n\
                 \      (\"AnotherTestClass\")),\n\
                 \    [])))" to_string_type_decl );
-            VariableDeclTests.suite;
-            ModifierTest.suite;
-
             ClassBodyDeclTest.suite;
             ClassDeclTest.suite; *)
-         (* ApexIdentifierTest.suite;
-         ApexVariableDeclTest.suite;
-         ApexLocalVarDeclTest.suite; *)
+         (* *)
          StmtTest.suite;
          ApexTypeTest.suite;
          ExprTest.suite;
@@ -104,7 +99,10 @@ let suite =
          OperatorTest.suite;
          ApexLiteralTest.suite;
          ApexModifierTest.suite;
-            MemberDeclTest.suite;
+         MemberDeclTest.suite;
+         ApexIdentifierTest.suite;
+         ApexVariableDeclTest.suite;
+         ApexLocalVarDeclTest.suite;
        ]
 
 let _ = run_test_tt_main suite
