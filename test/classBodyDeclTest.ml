@@ -1,31 +1,54 @@
 open OUnit2
+open Lalala.ClassBodyDecl
+open Lalala.Location
+open Lalala.ApexModifier
+open Lalala.ApexMemberDecl
 
 let suite =
-  "test suite for class body decl ast"
+  "ClassBodyDecl"
   >::: [
-         ( "to string for class body decl" >:: fun _ ->
+         ( "it should be able to pretty print a class body decl" >:: fun _ ->
+           let buffer = Buffer.create 5 in
+           let formatter = Format.formatter_of_buffer buffer in
            let ast =
-             Lalala.ClassBodyDecl.ClassBodyDeclaration
-               ( Public,
+             ApexClassBodyDeclaration
+               ( no_loc,
+                 Public no_loc,
                  MethodDeclaration
-                   ( ApexType (Identifier "int"),
-                     Identifier "getA",
-                     [ ReturnStmt (Primary (Identifier "a")) ] ) )
+                   ( no_loc,
+                     ApexType (no_loc, ApexIdentifier (no_loc, "int")),
+                     ApexIdentifier (no_loc, "a"),
+                     [] ) )
            in
+           pr_class_body_decl formatter ast;
+           Format.pp_print_flush formatter ();
            assert_equal
              ~printer:(fun x -> x)
-             "(ClassBodyDeclaration\n\
-             \  (Public),\n\
-             \  (MethodDeclaration\n\
-             \    (ApexType\n\
-             \      (Identifier\n\
-             \        (\"int\"))),\n\
-             \    (Identifier\n\
-             \      (\"getA\")),\n\
-             \    [\n\
-             \      (ReturnStmt\n\
-             \        (Primary\n\
-             \          (Identifier\n\
-             \            (\"a\")))))]))"
-             (Lalala.ClassBodyDecl.to_string ast 0) );
+             "(ApexClassBodyDeclaration{\n\
+             \  modifier=\n\
+             \    (Public{\n\
+             \      loc=(Location)};\n\
+             \   member_decl=\n\
+             \    (MethodDeclaration{\n\
+             \      apex_type=\n\
+             \        (ApexType{\n\
+             \          identifier=\n\
+             \            (ApexIdentifier{\n\
+             \              name=\n\
+             \                \"int\"\n\
+             \              loc=\n\
+             \                (Location)});\n\
+             \          loc=(Location)})\n\
+             \      identifier=\n\
+             \        (ApexIdentifier{\n\
+             \          name=\n\
+             \            \"a\"\n\
+             \          loc=\n\
+             \            (Location)})\n\
+             \      stmts=\n\
+             \        []\n\
+             \      location=\n\
+             \        (Location)});\n\
+             \  location=\n\
+             \    (Location)" (Buffer.contents buffer) );
        ]
