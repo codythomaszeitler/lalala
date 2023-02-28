@@ -1,54 +1,28 @@
-(* open OUnit2
+open OUnit2
+open Lalala.Location
+open Lalala.ClassDecl
+open Lalala.ApexIdentifier
 
 let suite =
-  "test suite for class decl ast"
+  "ApexClassDeclaration"
   >::: [
-         ( "tostring for class decl" >:: fun _ ->
+         ( "it should be able to pretty print an apex class decl" >:: fun _ ->
+           let buffer = Buffer.create 5 in
+           let formatter = Format.formatter_of_buffer buffer in
            let ast =
-             Lalala.ClassDecl.ClassDeclaration
-               ( Identifier "AnotherTestClass",
-                 [
-                   ClassBodyDeclaration
-                     ( Public,
-                       FieldDeclaration
-                         ( ApexType (Identifier "int"),
-                           [ VariableDecl (Identifier "a") ] ) );
-                   ClassBodyDeclaration
-                     ( Public,
-                       MethodDeclaration
-                         ( ApexType (Identifier "int"),
-                           Identifier "getA",
-                           [ ReturnStmt (Primary (Identifier "a")) ] ) );
-                 ] )
+             ClassDeclaration
+               (no_loc, ApexIdentifier (no_loc, "AnotherTestClass"), [])
            in
+           pr_class_decl formatter ast;
+           Format.pp_print_flush formatter ();
            assert_equal
              ~printer:(fun x -> x)
-             "(ClassDeclaration\n\
-             \  (Identifier\n\
-             \    (\"AnotherTestClass\")),\n\
-             \  [\n\
-             \    (ClassBodyDeclaration\n\
-             \      (Public),\n\
-             \      (FieldDeclaration\n\
-             \        (ApexType\n\
-             \          (Identifier\n\
-             \            (\"int\"))),\n\
-             \    [\n\
-             \      (VariableDecl\n\
-             \        (Identifier\n\
-             \          (\"a\")))]));\n\
-             \      (ClassBodyDeclaration\n\
-             \        (Public),\n\
-             \        (MethodDeclaration\n\
-             \          (ApexType\n\
-             \            (Identifier\n\
-             \              (\"int\"))),\n\
-             \          (Identifier\n\
-             \            (\"getA\")),\n\
-             \          [\n\
-             \            (ReturnStmt\n\
-             \              (Primary\n\
-             \                (Identifier\n\
-             \                  (\"a\")))))]))]))"
-             (Lalala.ClassDecl.to_string ast 0) );
-       ] *)
+             "(ApexClassDeclaration{\n\
+             \  id=(ApexIdentifier{\n\
+             \       name=\n\
+             \         \"AnotherTestClass\"\n\
+             \       loc=\n\
+             \         (Location)});\n\
+             \  class_body_decls=[ ]\n\
+             \  location=(Location)})" (Buffer.contents buffer) );
+       ]
