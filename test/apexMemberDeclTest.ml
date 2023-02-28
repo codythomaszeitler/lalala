@@ -2,7 +2,7 @@ open OUnit2
 open Lalala.ApexMemberDecl
 open Lalala.Location
 open Lalala.ApexIdentifier
-open Lalala.ApexType
+open Lalala.ApexTypeName
 
 let suite =
   "Member Decl"
@@ -11,9 +11,9 @@ let suite =
            let buffer = Buffer.create 5 in
            let formatter = Format.formatter_of_buffer buffer in
            let methodDecl =
-             MethodDeclaration
+             ApexMethodDeclaration
                ( no_loc,
-                 ApexType (no_loc, ApexIdentifier (no_loc, "int")),
+                 ApexTypeName (no_loc, ApexIdentifier (no_loc, "int")),
                  ApexIdentifier (no_loc, "a"),
                  [] )
            in
@@ -21,9 +21,9 @@ let suite =
            Format.pp_print_flush formatter ();
            assert_equal
              ~printer:(fun x -> x)
-             "(MethodDeclaration{\n\
+             "(ApexMethodDeclaration{\n\
              \  apex_type=\n\
-             \    (ApexType{\n\
+             \    (ApexTypeName{\n\
              \      identifier=\n\
              \        (ApexIdentifier{\n\
              \          name=\n\
@@ -45,9 +45,9 @@ let suite =
            let buffer = Buffer.create 5 in
            let formatter = Format.formatter_of_buffer buffer in
            let methodDecl =
-             FieldDeclaration
+             ApexFieldDeclaration
                ( no_loc,
-                 ApexType (no_loc, ApexIdentifier (no_loc, "int")),
+                 ApexTypeName (no_loc, ApexIdentifier (no_loc, "int")),
                  [
                    ApexVariableDecl (no_loc, ApexIdentifier (no_loc, "a"));
                    ApexVariableDecl (no_loc, ApexIdentifier (no_loc, "b"));
@@ -58,9 +58,9 @@ let suite =
            Format.pp_print_flush formatter ();
            assert_equal
              ~printer:(fun x -> x)
-             "(FieldDeclaration{\n\
+             "(ApexFieldDeclaration{\n\
              \  apex_type=\n\
-             \    (ApexType{\n\
+             \    (ApexTypeName{\n\
              \      identifier=\n\
              \        (ApexIdentifier{\n\
              \          name=\n\

@@ -1,20 +1,20 @@
 type apexMemberDeclaration =
-  | FieldDeclaration of
+  | ApexFieldDeclaration of
       Location.location
-      * ApexType.apexType
+      * ApexTypeName.apexTypeName
       * ApexVariableDecl.apexVariableDecl list
-  | MethodDeclaration of
+  | ApexMethodDeclaration of
       Location.location
-      * ApexType.apexType
+      * ApexTypeName.apexTypeName
       * ApexIdentifier.apexIdentifier
       * Stmt.stmt list
 
 let pr_member_decl (ppf : Format.formatter)
     (member_decl : apexMemberDeclaration) : unit =
   match member_decl with
-  | MethodDeclaration (location, apex_type, identifier, stmts) ->
+  | ApexMethodDeclaration (location, apex_type, identifier, stmts) ->
       Format.fprintf ppf
-        "@[<v 2>(MethodDeclaration{@;\
+        "@[<v 2>(ApexMethodDeclaration{@;\
          @[<v 2>apex_type=@;\
          %a@]@;\
          @[<v 2>identifier=@;\
@@ -23,18 +23,18 @@ let pr_member_decl (ppf : Format.formatter)
          [%a]@]@;\
          @[<v 2>location=@;\
          %a@]})@]"
-        ApexType.pr_apex_type apex_type ApexIdentifier.pr_identifer identifier
+        ApexTypeName.pr_apex_type apex_type ApexIdentifier.pr_identifer identifier
         (Format.pp_print_list Stmt.pr_stmt)
         stmts Location.pr_location location
-  | FieldDeclaration (location, apex_type, var_decls) ->
+  | ApexFieldDeclaration (location, apex_type, var_decls) ->
       Format.fprintf ppf
-        "@[<v 2>(FieldDeclaration{@;\
+        "@[<v 2>(ApexFieldDeclaration{@;\
          @[<v 2>apex_type=@;\
          %a@]@;\
          @[<v 2>decls=[@;\
          %a]@]@;\
          @[<v 2>location=@;\
          %a@]})@]"
-        ApexType.pr_apex_type apex_type
+        ApexTypeName.pr_apex_type apex_type
         (Format.pp_print_list ApexVariableDecl.pr_variable_decl)
         var_decls Location.pr_location location

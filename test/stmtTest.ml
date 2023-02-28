@@ -12,13 +12,14 @@ let suite =
            let buffer = Buffer.create 5 in
            let formatter = Format.formatter_of_buffer buffer in
            let astNode =
-             ReturnStmt (no_loc, Primary (no_loc, IntegerLiteral (no_loc, 100)))
+             ApexReturnStmt
+               (no_loc, Primary (no_loc, IntegerLiteral (no_loc, 100)))
            in
            pr_stmt formatter astNode;
            Format.pp_print_flush formatter ();
            assert_equal
              ~printer:(fun x -> x)
-             "(ReturnStmt{\n\
+             "(ApexReturnStmt{\n\
              \  expr=\n\
              \    (Primary{\n\
              \      apexLiteral=\n\
@@ -31,12 +32,12 @@ let suite =
            let buffer = Buffer.create 5 in
            let formatter = Format.formatter_of_buffer buffer in
            let astNode =
-             LocalVarDeclStmt
+             ApexLocalVarDeclStmt
                ( no_loc,
                  ApexLocalVarDecl
                    ( no_loc,
                      Public no_loc,
-                     ApexType (no_loc, ApexIdentifier (no_loc, "int")),
+                     ApexTypeName (no_loc, ApexIdentifier (no_loc, "int")),
                      [ ApexVariableDecl (no_loc, ApexIdentifier (no_loc, "a")) ]
                    ) )
            in
@@ -44,14 +45,14 @@ let suite =
            Format.pp_print_flush formatter ();
            assert_equal
              ~printer:(fun x -> x)
-             "(LocalVarDeclStmt{\n\
+             "(ApexLocalVarDeclStmt{\n\
              \  local_var_decl=\n\
              \    (ApexLocalVarDecl{\n\
              \      modifier=\n\
              \        (Public{\n\
              \          loc=(Location)};\n\
              \      apex_type=\n\
-             \        (ApexType{\n\
+             \        (ApexTypeName{\n\
              \          identifier=\n\
              \            (ApexIdentifier{\n\
              \              name=\n\

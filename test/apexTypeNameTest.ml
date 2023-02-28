@@ -7,16 +7,16 @@ let suite =
            let buffer = Buffer.create 5 in
            let formatter = Format.formatter_of_buffer buffer in
            let apexType =
-             Lalala.ApexType.ApexType
+             Lalala.ApexTypeName.ApexTypeName
                ( Lalala.Location.no_loc,
                  Lalala.ApexIdentifier.ApexIdentifier
                    (Lalala.Location.no_loc, "int") )
            in
-           Lalala.ApexType.pr_apex_type formatter apexType;
+           Lalala.ApexTypeName.pr_apex_type formatter apexType;
            Format.pp_print_flush formatter ();
            assert_equal
              ~printer:(fun x -> x)
-             "(ApexType{\n\
+             "(ApexTypeName{\n\
              \  identifier=\n\
              \    (ApexIdentifier{\n\
              \      name=\n\

@@ -91,7 +91,7 @@ let suite =
                 \    [])))" to_string_type_decl );
          *)
          StmtTest.suite;
-         ApexTypeTest.suite;
+         ApexTypeNameTest.suite;
          ExprTest.suite;
          LocationTest.suite;
          OperatorTest.suite;
