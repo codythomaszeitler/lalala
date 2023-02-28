@@ -15,8 +15,9 @@ let suite =
            Format.pp_print_flush formatter ();
            assert_equal
              ~printer:(fun x -> x)
-             "(ApexVariableDecl\n\
-             \  {id=(ApexIdentifier {name=\"a\" loc=(Location)}); \
-              loc=(Location)})"
-             (Buffer.contents buffer) );
+             "(ApexVariableDecl{\n\
+             \                 id=(ApexIdentifier{\n\
+             \                                   name=\"a\"\n\
+             \                                   loc=(Location)});\n\
+             \                 loc=(Location)})" (Buffer.contents buffer) );
        ]

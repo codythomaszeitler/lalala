@@ -97,9 +97,6 @@ let suite =
             MemberDeclTest.suite;
             ClassBodyDeclTest.suite;
             ClassDeclTest.suite; *)
-         (*
-            ApexVariableDeclTest.suite;
-             *)
          ApexIdentifierTest.suite;
          ApexTypeTest.suite;
          ExprTest.suite;
@@ -107,6 +104,7 @@ let suite =
          LocationTest.suite;
          OperatorTest.suite;
          ApexModifierTest.suite;
+         ApexVariableDeclTest.suite;
        ]
 
 let _ = run_test_tt_main suite
