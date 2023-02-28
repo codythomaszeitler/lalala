@@ -16,8 +16,9 @@ let suite =
            Format.pp_print_flush formatter ();
            assert_equal
              ~printer:(fun x -> x)
-             "(ApexType\n\
-             \  {identifier=(ApexIdentifier {name=\"int\" loc=(Location)}); \
-              loc=(Location)})"
-             (Buffer.contents buffer) );
+             "(ApexType{\n\
+             \         identifier=(ApexIdentifier{\n\
+             \                                   name=\"int\"\n\
+             \                                   loc=(Location)});\n\
+             \         loc=(Location)})" (Buffer.contents buffer) );
        ]
