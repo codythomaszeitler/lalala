@@ -1,17 +1,20 @@
-type localVarDecl =
-  | LocalVarDecl of
-      Modifier.node * ApexType.node * VariableDecl.variableDecl list
+type apexLocalVarDecl =
+  | ApexLocalVarDecl of
+      Location.location
+      * ApexModifier.modifier
+      * ApexType.apexType
+      * ApexVariableDecl.apexVariableDecl list
 
-let to_string (local_var_decl : localVarDecl) (depth : int) =
-  match local_var_decl with
-  | LocalVarDecl (modifier, apexType, decls) ->
-      "(LocalVarDecl\n"
-      ^ Formatter.tabs (depth + 1)
-      ^ Modifier.to_string modifier (depth + 1)
-      ^ ",\n"
-      ^ Formatter.tabs (depth + 1)
-      ^ ApexType.to_string apexType (depth + 1)
-      ^ ",\n"
-      ^ Formatter.tabs (depth + 1)
-      ^ VariableDecl.to_strings decls (depth + 1)
-      ^ ")"
+let pr_local_var_decl (ppf : Format.formatter)
+    (apex_local_var_decl : apexLocalVarDecl) : unit =
+  match apex_local_var_decl with
+  | ApexLocalVarDecl (location, modifier, apex_type, variable_decl) ->
+      Format.fprintf ppf
+        "(ApexLocalVarDecl{@[<v>@;\
+         modifier=%a;@;\
+         apex_type=%a;@;\
+         variable_decl=%a;@;\
+         location=%a;@]})"
+        ApexModifier.pr_modifier modifier ApexType.pr_apex_type apex_type
+        (Format.pp_print_list ApexVariableDecl.pr_variable_decl)
+        variable_decl Location.pr_location location

@@ -91,8 +91,7 @@ let suite =
                 \    [])))" to_string_type_decl );
             VariableDeclTests.suite;
             ModifierTest.suite;
-            ApexTypeTest.suite;
-            LocalVarDeclTest.suite;
+
             StmtTest.suite;
             MemberDeclTest.suite;
             ClassBodyDeclTest.suite;
@@ -105,6 +104,7 @@ let suite =
          OperatorTest.suite;
          ApexModifierTest.suite;
          ApexVariableDeclTest.suite;
+         LocalVarDeclTest.suite;
        ]
 
 let _ = run_test_tt_main suite
