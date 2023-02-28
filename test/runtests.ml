@@ -97,12 +97,13 @@ let suite =
             MemberDeclTest.suite;
             ClassBodyDeclTest.suite;
             ClassDeclTest.suite; *)
-         (* ApexIdentifierTest.suite;
-         LocationTest.suite;
-         ApexModifierTest.suite;
-         ApexVariableDeclTest.suite;
-         OperatorTest.suite;
-         ApexLiteralTest.suite; *)
+         (*
+            LocationTest.suite;
+            ApexModifierTest.suite;
+            ApexVariableDeclTest.suite;
+            OperatorTest.suite;
+            ApexLiteralTest.suite; *)
+         ApexIdentifierTest.suite;
          ApexTypeTest.suite;
          ExprTest.suite;
        ]
