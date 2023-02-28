@@ -1,5 +1,5 @@
 open OUnit2
-open Lalala.LocalVarDecl
+open Lalala.ApexLocalVarDecl
 open Lalala.ApexModifier
 open Lalala.ApexType
 open Lalala.ApexVariableDecl

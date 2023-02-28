@@ -104,7 +104,7 @@ let suite =
          OperatorTest.suite;
          ApexModifierTest.suite;
          ApexVariableDeclTest.suite;
-         LocalVarDeclTest.suite;
+         ApexLocalVarDeclTest.suite;
        ]
 
 let _ = run_test_tt_main suite
