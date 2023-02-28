@@ -11,17 +11,16 @@ let pr_apex_literal (ppf : Format.formatter) (apex_literal : apexLiteral) : unit
     =
   match apex_literal with
   | IntegerLiteral (location, int) ->
-      Format.fprintf ppf "(IntegerLiteral@;<1 2>@[{int=%d;@;<1 2>loc=%a}@])" int
+      Format.fprintf ppf "(IntegerLiteral{@[<v>@;int=%d;@;loc=%a@;@]})" int
         pr_location location
   | LongLiteral (location, long) ->
-      Format.fprintf ppf "(LongLiteral@;<1 2>@[{long=%d;@;<1 2>loc=%a}@])" long
+      Format.fprintf ppf "(LongLiteral{@[<v>@;long=%d;@;loc=%a@;@]})" long
         pr_location location
   | StringLiteral (location, string) ->
-      Format.fprintf ppf
-        "(StringLiteral@;<1 2>@[{string=\"%s\";@;<1 2>loc=%a}@])" string
-        pr_location location
+      Format.fprintf ppf "(StringLiteral{@[<v>@;string=\"%s\";@;loc=%a@;@]})"
+        string pr_location location
   | BooleanLiteral (location, bool) ->
-      Format.fprintf ppf "(BooleanLiteral@;<1 2>@[{boolean=%b;@;<1 2>loc=%a}@])"
-        bool pr_location location
+      Format.fprintf ppf "(BooleanLiteral{@[<v>@;bool=%b;@;loc=%a@;@]})" bool
+        pr_location location
   | NullLiteral location ->
-      Format.fprintf ppf "(NullLiteral@;<1 2>@[{loc=%a}@])" pr_location location
+      Format.fprintf ppf "(NullLiteral{@[<v>@;loc=%a@;@]})" pr_location location
