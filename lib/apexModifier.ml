@@ -18,47 +18,47 @@ type modifier =
 let pr_modifier (ppf : Format.formatter) (modifier : modifier) : unit =
   match modifier with
   | Global location ->
-      Format.fprintf ppf "(Global@;<1 2>@[{@;<1 2>loc=%a}@]"
+      Format.fprintf ppf "(Global@[<v>{@;loc=%a}@]"
         Location.pr_location location
   | Public location ->
-      Format.fprintf ppf "(Public@;<1 2>@[{@;<1 2>loc=%a}@]"
+      Format.fprintf ppf "(Public@[<v>{@;loc=%a}@]"
         Location.pr_location location
   | Protected location ->
-      Format.fprintf ppf "(Protected@;<1 2>@[{@;<1 2>loc=%a}@]"
+      Format.fprintf ppf "(Protected@[<v>{@;loc=%a}@]"
         Location.pr_location location
   | Private location ->
-      Format.fprintf ppf "(Private@;<1 2>@[{@;<1 2>loc=%a}@]"
+      Format.fprintf ppf "(Private@[<v>{@;loc=%a}@]"
         Location.pr_location location
   | Transient location ->
-      Format.fprintf ppf "(Transient@;<1 2>@[{@;<1 2>loc=%a}@]"
+      Format.fprintf ppf "(Transient@[<v>{@;loc=%a}@]"
         Location.pr_location location
   | Static location ->
-      Format.fprintf ppf "(Static@;<1 2>@[{@;<1 2>loc=%a}@]"
+      Format.fprintf ppf "(Static@[<v>{@;loc=%a}@]"
         Location.pr_location location
   | Abstract location ->
-      Format.fprintf ppf "(Abstract@;<1 2>@[{@;<1 2>loc=%a}@]"
+      Format.fprintf ppf "(Abstract@[<v>{@;loc=%a}@]"
         Location.pr_location location
   | Final location ->
-      Format.fprintf ppf "(Final@;<1 2>@[{@;<1 2>loc=%a}@]" Location.pr_location
+      Format.fprintf ppf "(Final@[<v>{@;loc=%a}@]" Location.pr_location
         location
   | Webservice location ->
-      Format.fprintf ppf "(Webservice@;<1 2>@[{@;<1 2>loc=%a}@]"
+      Format.fprintf ppf "(Webservice@[<v>{@;loc=%a}@]"
         Location.pr_location location
   | Override location ->
-      Format.fprintf ppf "(Webservice@;<1 2>@[{@;<1 2>loc=%a}@]"
+      Format.fprintf ppf "(Webservice@[<v>{@;loc=%a}@]"
         Location.pr_location location
   | Virtual location ->
-      Format.fprintf ppf "(Virtual@;<1 2>@[{@;<1 2>loc=%a}@]"
+      Format.fprintf ppf "(Virtual@[<v>{@;loc=%a}@]"
         Location.pr_location location
   | Testmethod location ->
-      Format.fprintf ppf "(TestMethod@;<1 2>@[{@;<1 2>loc=%a}@]"
+      Format.fprintf ppf "(TestMethod@[<v>{@;loc=%a}@]"
         Location.pr_location location
   | WithSharing location ->
-      Format.fprintf ppf "(WithSharing@;<1 2>@[{@;<1 2>loc=%a}@]"
+      Format.fprintf ppf "(WithSharing@[<v>{@;loc=%a}@]"
         Location.pr_location location
   | WithoutSharing location ->
-      Format.fprintf ppf "(WithoutSharing@;<1 2>@[{@;<1 2>loc=%a}@]"
+      Format.fprintf ppf "(WithoutSharing@[<v>{@;loc=%a}@]"
         Location.pr_location location
   | InheritedSharing location ->
-      Format.fprintf ppf "(InheritedSharing@;<1 2>@[{@;<1 2>loc=%a}@]"
+      Format.fprintf ppf "(InheritedSharing@[<v>{@;loc=%a}@]"
         Location.pr_location location
