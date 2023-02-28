@@ -1,18 +1,40 @@
-type memberDeclaration =
-  | FieldDeclaration of ApexType.node * VariableDecl.variableDecl list
-  | MethodDeclaration of ApexType.node * Identifier.node * Stmt.statement list
+type apexMemberDeclaration =
+  | FieldDeclaration of
+      Location.location
+      * ApexType.apexType
+      * ApexVariableDecl.apexVariableDecl list
+  | MethodDeclaration of
+      Location.location
+      * ApexType.apexType
+      * ApexIdentifier.apexIdentifier
+      * Stmt.stmt list
 
-let to_string (member_decl : memberDeclaration) (depth : int) =
+let pr_member_decl (ppf : Format.formatter)
+    (member_decl : apexMemberDeclaration) : unit =
   match member_decl with
-  | MethodDeclaration (apexType, identifier, stmts) ->
-      Formatter.tabs depth ^ "(MethodDeclaration\n"
-      ^ Formatter.tabs (depth + 1)
-      ^ ApexType.to_string apexType (depth + 1)
-      ^ ",\n"
-      ^ Formatter.tabs (depth + 1)
-      ^ Identifier.to_string identifier (depth + 1)
-      ^ ",\n"
-      ^ Formatter.tabs (depth + 1)
-      ^ Stmt.to_strings stmts (depth + 1)
-      ^ ")"
-  | _ -> "Not implemented yet!"
+  | MethodDeclaration (location, apex_type, identifier, stmts) ->
+      Format.fprintf ppf
+        "@[<v 2>(MethodDeclaration{@;\
+         @[<v 2>apex_type=@;\
+         %a@]@;\
+         @[<v 2>identifier=@;\
+         %a@]@;\
+         @[<v 2>stmts=@;\
+         [%a]@]@;\
+         @[<v 2>location=@;\
+         %a@]})@]"
+        ApexType.pr_apex_type apex_type ApexIdentifier.pr_identifer identifier
+        (Format.pp_print_list Stmt.pr_stmt)
+        stmts Location.pr_location location
+  | FieldDeclaration (location, apex_type, var_decls) ->
+      Format.fprintf ppf
+        "@[<v 2>(FieldDeclaration{@;\
+         @[<v 2>apex_type=@;\
+         %a@]@;\
+         @[<v 2>decls=[@;\
+         %a]@]@;\
+         @[<v 2>location=@;\
+         %a@]})@]"
+        ApexType.pr_apex_type apex_type
+        (Format.pp_print_list ApexVariableDecl.pr_variable_decl)
+        var_decls Location.pr_location location
