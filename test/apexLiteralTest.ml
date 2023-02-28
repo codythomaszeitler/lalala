@@ -45,4 +45,13 @@ let suite =
              ~printer:(fun x -> x)
              "(BooleanLiteral\n  {boolean=true; loc=(Location)})"
              (Buffer.contents buffer) );
+         ( "it should be able to pretty print a null literal" >:: fun _ ->
+           let buffer = Buffer.create 5 in
+           let formatter = Format.formatter_of_buffer buffer in
+           let booleanLiteral = NullLiteral no_loc in
+           pr_apex_literal formatter booleanLiteral;
+           Format.pp_print_flush formatter ();
+           assert_equal
+             ~printer:(fun x -> x)
+             "(NullLiteral\n  {loc=(Location)})" (Buffer.contents buffer) );
        ]

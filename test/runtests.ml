@@ -104,6 +104,7 @@ let suite =
          ApexVariableDeclTest.suite;
          OperatorTest.suite;
          ApexLiteralTest.suite;
+         ExprTest.suite;
        ]
 
 let _ = run_test_tt_main suite

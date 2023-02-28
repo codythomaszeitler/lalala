@@ -5,6 +5,7 @@ type apexLiteral =
   | LongLiteral of Location.location * int
   | StringLiteral of Location.location * string
   | BooleanLiteral of Location.location * bool
+  | NullLiteral of Location.location
 
 let pr_apex_literal (ppf : Format.formatter) (apex_literal : apexLiteral) : unit
     =
@@ -22,3 +23,5 @@ let pr_apex_literal (ppf : Format.formatter) (apex_literal : apexLiteral) : unit
   | BooleanLiteral (location, bool) ->
       Format.fprintf ppf "(BooleanLiteral@;<1 2>@[{boolean=%b;@;<1 2>loc=%a}@])"
         bool pr_location location
+  | NullLiteral location ->
+      Format.fprintf ppf "(NullLiteral@;<1 2>@[{loc=%a}@])" pr_location location

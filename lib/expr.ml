@@ -1,9 +1,7 @@
-type node = Primary of Identifier.node
+type expr = Primary of Location.location * ApexLiteral.apexLiteral
 
-let to_string (expr : node) (depth : int) =
+let pr_expr (ppf : Format.formatter) (expr : expr) : unit =
   match expr with
-  | Primary identifier ->
-      "(Primary\n"
-      ^ Formatter.tabs (depth + 1)
-      ^ Identifier.to_string identifier (depth + 1)
-      ^ "))"
+  | Primary (location, literal) ->
+      Format.fprintf ppf "(Primary@;<1 2>@[apexLiteral=%a;@;<1 2>loc=%a@])"
+        ApexLiteral.pr_apex_literal literal Location.pr_location location
