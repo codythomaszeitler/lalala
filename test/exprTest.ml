@@ -8,20 +8,21 @@ let suite =
   "Expr"
   >::: [
          ( "it should be able to pretty print an integer literal" >:: fun _ ->
-            let buffer = Buffer.create 5 in
-            let formatter = Format.formatter_of_buffer buffer in
-            let primaryExpr = Primary (no_loc, IntegerLiteral (no_loc, 100)) in
-            pr_expr formatter primaryExpr;
-            Format.pp_print_flush formatter ();
-            assert_equal
-              ~printer:(fun x -> x)
-              "(Primary {apexLiteral=(IntegerLiteral{
-              \                int=100;
-              \                loc=(Location)
-              \                });
-              \        loc=(Location)
-              \        })"
-              (Buffer.contents buffer) );
+           let buffer = Buffer.create 5 in
+           let formatter = Format.formatter_of_buffer buffer in
+           let primaryExpr = Primary (no_loc, IntegerLiteral (no_loc, 100)) in
+           pr_expr formatter primaryExpr;
+           Format.pp_print_newline formatter ();
+           assert_equal
+             ~printer:(fun x -> x)
+             "(Primary {\n\
+             \          apexLiteral=(IntegerLiteral{\n\
+             \                                      int=100;\n\
+             \                                      loc=(Location)\n\
+             \                                      });\n\
+             \          loc=(Location)\n\
+             \          })\n"
+             (Buffer.contents buffer) );
          ( "it should be able to pretty print a binary expression" >:: fun _ ->
            let buffer = Buffer.create 5 in
            let formatter = Format.formatter_of_buffer buffer in
@@ -34,20 +35,20 @@ let suite =
            assert_equal
              ~printer:(fun x -> x)
              "(Binary{\n\
-             \        left=(Primary {apexLiteral=(IntegerLiteral{\n\
+             \        left=(Primary {\n\
+             \                       apexLiteral=(IntegerLiteral{\n\
              \                                                   int=100;\n\
              \                                                   loc=(Location)\n\
-             \                                                   \n\
              \                                                   });\n\
              \                       loc=(Location)\n\
              \                       });\n\
              \        op=(Add{\n\
              \                loc=(Location)});\n\
-             \        right=(Primary {apexLiteral=(IntegerLiteral{\n\
+             \        right=(Primary {\n\
+             \                        apexLiteral=(IntegerLiteral{\n\
              \                                                    int=200;\n\
              \                                                    loc=(Location)\n\
-             \                                                    \n\
-             \                                                    });\
+             \                                                    });\n\
              \                        loc=(Location)\n\
              \                        });\n\
              \        loc=(Location)})\n"
