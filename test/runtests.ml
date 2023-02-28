@@ -89,9 +89,7 @@ let suite =
                 \    (Identifier\n\
                 \      (\"AnotherTestClass\")),\n\
                 \    [])))" to_string_type_decl );
-            ClassBodyDeclTest.suite;
             ClassDeclTest.suite; *)
-         (* *)
          StmtTest.suite;
          ApexTypeTest.suite;
          ExprTest.suite;
@@ -103,6 +101,7 @@ let suite =
          ApexIdentifierTest.suite;
          ApexVariableDeclTest.suite;
          ApexLocalVarDeclTest.suite;
+         ClassBodyDeclTest.suite;
        ]
 
 let _ = run_test_tt_main suite

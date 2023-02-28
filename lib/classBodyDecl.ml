@@ -1,17 +1,20 @@
-type classBodyDeclaration =
-  | ClassBodyDeclaration of Modifier.node * MemberDecl.memberDeclaration
+type apexClassBodyDecl =
+  | ApexClassBodyDeclaration of
+      Location.location
+      * ApexModifier.modifier
+      * ApexMemberDecl.apexMemberDeclaration
 
-let to_string (class_body_decl : classBodyDeclaration) (depth : int) =
+let pr_class_body_decl (ppf : Format.formatter)
+    (class_body_decl : apexClassBodyDecl) : unit =
   match class_body_decl with
-  | ClassBodyDeclaration (modifier, method_decl) ->
-      "(ClassBodyDeclaration\n"
-      ^ Formatter.tabs (depth + 1)
-      ^ Modifier.to_string modifier (depth + 1)
-      ^ ",\n" ^ Formatter.tabs depth
-      ^ MemberDecl.to_string method_decl (depth + 1)
-      ^ ")"
-
-let to_strings (class_body_decls : classBodyDeclaration list) (depth : int) =
-  match class_body_decls with
-  | [] -> Formatter.tabs depth ^ "[]"
-  | _ -> "Not implemented with class body decls to string"
+  | ApexClassBodyDeclaration (location, modifier, member_decl) ->
+      Format.fprintf ppf
+        "@[<v 2>(ApexClassBodyDeclaration{@;\
+         @[<v 2>modifier=@;\
+         %a;@]@;\
+         @[<v 2> member_decl=@;\
+         %a;@]@;\
+         @[<v 2>location=@;\
+         %a@]@]"
+        ApexModifier.pr_modifier modifier ApexMemberDecl.pr_member_decl
+        member_decl Location.pr_location location
