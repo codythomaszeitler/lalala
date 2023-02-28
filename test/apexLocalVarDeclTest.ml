@@ -17,7 +17,11 @@ let suite =
                ( no_loc,
                  Public no_loc,
                  ApexType (no_loc, ApexIdentifier (no_loc, "int")),
-                 [ ApexVariableDecl (no_loc, ApexIdentifier (no_loc, "a")) ] )
+                 [
+                   ApexVariableDecl (no_loc, ApexIdentifier (no_loc, "a"));
+                   ApexVariableDecl (no_loc, ApexIdentifier (no_loc, "b"));
+                   ApexVariableDecl (no_loc, ApexIdentifier (no_loc, "c"));
+                 ] )
            in
            pr_local_var_decl formatter astNode;
            Format.pp_print_flush formatter ();
@@ -33,14 +37,25 @@ let suite =
              \                                                               \
               loc=(Location)});\n\
              \                                     loc=(Location)});\n\
-             \                  variable_decl=(ApexVariableDecl{\n\
-             \                                                 \
-              id=(ApexIdentifier{\n\
-             \                                                                   \
-              name=\"a\"\n\
-             \                                                                   \
+             \                  variable_decl=\n\
+             \                  [(ApexVariableDecl{\n\
+             \                                    id=(ApexIdentifier{\n\
+             \                                                      name=\"a\"\n\
+             \                                                      \
               loc=(Location)});\n\
-             \                                                 loc=(Location)});\n\
+             \                                    loc=(Location)})\n\
+             \                  (ApexVariableDecl{\n\
+             \                                   id=(ApexIdentifier{\n\
+             \                                                     name=\"b\"\n\
+             \                                                     \
+              loc=(Location)});\n\
+             \                                   loc=(Location)})\n\
+             \                  (ApexVariableDecl{\n\
+             \                                   id=(ApexIdentifier{\n\
+             \                                                     name=\"c\"\n\
+             \                                                     \
+              loc=(Location)});\n\
+             \                                   loc=(Location)})];\n\
              \                  location=(Location);})" (Buffer.contents buffer)
          );
        ]

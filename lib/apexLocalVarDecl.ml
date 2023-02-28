@@ -13,7 +13,7 @@ let pr_local_var_decl (ppf : Format.formatter)
         "(ApexLocalVarDecl{@[<v>@;\
          modifier=%a;@;\
          apex_type=%a;@;\
-         variable_decl=%a;@;\
+         variable_decl=@;[%a];@;\
          location=%a;@]})"
         ApexModifier.pr_modifier modifier ApexType.pr_apex_type apex_type
         (Format.pp_print_list ApexVariableDecl.pr_variable_decl)
