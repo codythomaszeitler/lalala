@@ -13,14 +13,13 @@ let pr_compilation_unit (ppf : Format.formatter)
       Format.fprintf ppf
         "@[<v 2>(ApexClassDeclaration{@;\
          @[<v 2>annotation=@;\
-         %a;@]@;\
+         %a@]@;\
          @[<v 2>modis=@;\
-         %a;@]@;\
+         [%a]@]@;\
          @[<v 2>id=@;\
-         %a;@]@;\
-         @[<v 2>class_body_decls@;\
-         =[@;\
-         %a]@]@;\
+         %a@]@;\
+         @[<v 2>class_body_decls\
+         =@;[%a]@]@;\
          @[<v 2>location=@;\
          %a@]})@]"
         (Format.pp_print_option ApexAnnotation.pr_apex_annotation)

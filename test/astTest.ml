@@ -23,18 +23,17 @@ let suite =
              ~printer:(fun x -> x)
              "(ApexClassDeclaration{\n\
              \  annotation=\n\
-             \    ;\n\
+             \    \n\
              \  modis=\n\
-             \    ;\n\
+             \    []\n\
              \  id=\n\
              \    (ApexIdentifier{\n\
              \      name=\n\
              \        \"AnotherTestClass\"\n\
              \      loc=\n\
-             \        (Location)});\n\
-             \  class_body_decls\n\
-             \    =[\n\
-             \    ]\n\
+             \        (Location)})\n\
+             \  class_body_decls=\n\
+             \    []\n\
              \  location=\n\
              \    (Location)})" (Buffer.contents buffer) );
        ]

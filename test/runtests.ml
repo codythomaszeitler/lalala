@@ -6,17 +6,18 @@ open Lalala.Ast
 open Lalala.Location
 open Lalala.ApexModifier
 open Lalala.ApexIdentifier
+open Lalala.ApexAnnotation
 
 let suite =
   "test suite for apex lexer"
   >::: [
          ( "parse apex class definition empty ast" >:: fun _ ->
-           let buffer = from_string "public class TestClass {}" in
+           let buffer = from_string "@TestVisible public class TestClass {}" in
            let ast = compilationUnit read_token buffer in
            assert_equal ~printer:to_string
              (ApexClassDeclaration
                 ( no_loc,
-                  None,
+                  Some (ApexAnnotation (no_loc, "TestVisible")),
                   [ Public no_loc ],
                   ApexIdentifier (no_loc, "TestClass"),
                   [] ))
