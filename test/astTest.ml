@@ -1,6 +1,6 @@
 open OUnit2
 open Lalala.Location
-open Lalala.ApexClassDecl
+open Lalala.Ast
 open Lalala.ApexIdentifier
 
 let suite =
@@ -10,10 +10,10 @@ let suite =
            let buffer = Buffer.create 5 in
            let formatter = Format.formatter_of_buffer buffer in
            let ast =
-             ClassDeclaration
+             ApexClassDeclaration
                (no_loc, ApexIdentifier (no_loc, "AnotherTestClass"), [])
            in
-           pr_class_decl formatter ast;
+           pr_compilation_unit formatter ast;
            Format.pp_print_flush formatter ();
            assert_equal
              ~printer:(fun x -> x)

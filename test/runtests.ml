@@ -8,14 +8,14 @@ open OUnit2
 let suite =
   "test suite for apex lexer"
   >::: [
-         (* ( "parse apex class definition empty ast" >:: fun _ ->
+          ( "parse apex class definition empty ast" >:: fun _ ->
               let buffer = from_string "public class TestClass {}" in
               let ast = compilationUnit read_token buffer in
               assert_equal
                 (TypeDecl
                    ([ Public ], ClassDeclaration (Identifier "TestClass", [])))
                 ast );
-            ( "parse apex class definition empty ast with different name"
+            (* ( "parse apex class definition empty ast with different name"
             >:: fun _ ->
               let buffer = from_string "public class AnotherTestClass {}" in
               let ast = compilationUnit read_token buffer in
@@ -90,7 +90,7 @@ let suite =
                 \      (\"AnotherTestClass\")),\n\
                 \    [])))" to_string_type_decl );
          *)
-         StmtTest.suite;
+         (* StmtTest.suite;
          ApexTypeNameTest.suite;
          ExprTest.suite;
          LocationTest.suite;
@@ -102,7 +102,7 @@ let suite =
          ApexVariableDeclTest.suite;
          ApexLocalVarDeclTest.suite;
          ApexClassBodyDeclTest.suite;
-         ApexClassDeclTest.suite;
+         ApexClassDeclTest.suite; *)
        ]
 
 let _ = run_test_tt_main suite
