@@ -32,7 +32,7 @@ let suite =
                  ApexLocalVarDecl
                    ( no_loc,
                      Public no_loc,
-                     ApexTypeName (no_loc, "int"),
+                     ApexType (no_loc, "int"),
                      [ ApexVariableDecl (no_loc, ApexIdentifier (no_loc, "a")) ]
                    ) )
            in
@@ -47,7 +47,7 @@ let suite =
              \        (Public{\n\
              \          loc=(Location)};\n\
              \      apex_type=\n\
-             \        (ApexTypeName{\n\
+             \        (ApexType{\n\
              \          identifier=\n\
              \            int;\n\
              \          loc=(Location)});\n\

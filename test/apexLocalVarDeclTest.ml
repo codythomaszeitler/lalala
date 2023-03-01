@@ -1,7 +1,7 @@
 open OUnit2
 open Lalala.ApexLocalVarDecl
 open Lalala.ApexModifier
-open Lalala.ApexTypeName
+open Lalala.ApexType
 open Lalala.ApexVariableDecl
 open Lalala.ApexIdentifier
 open Lalala.Location
@@ -17,7 +17,7 @@ let suite =
              ApexLocalVarDecl
                ( no_loc,
                  Public no_loc,
-                 ApexTypeName (no_loc, "int"),
+                 ApexType (no_loc, "int"),
                  [
                    ApexVariableDecl (no_loc, ApexIdentifier (no_loc, "a"));
                    ApexVariableDecl (no_loc, ApexIdentifier (no_loc, "b"));
@@ -33,7 +33,7 @@ let suite =
              \    (Public{\n\
              \      loc=(Location)};\n\
              \  apex_type=\n\
-             \    (ApexTypeName{\n\
+             \    (ApexType{\n\
              \      identifier=\n\
              \        int;\n\
              \      loc=(Location)});\n\

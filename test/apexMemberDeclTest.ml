@@ -2,7 +2,7 @@ open OUnit2
 open Lalala.ApexMemberDecl
 open Lalala.Location
 open Lalala.ApexIdentifier
-open Lalala.ApexTypeName
+open Lalala.ApexType
 
 let suite =
   "Member Decl"
@@ -13,7 +13,7 @@ let suite =
            let methodDecl =
              ApexMethodDeclaration
                ( no_loc,
-                 ApexTypeName (no_loc, "int"),
+                 ApexType (no_loc, "int"),
                  ApexIdentifier (no_loc, "a"),
                  [] )
            in
@@ -23,7 +23,7 @@ let suite =
              ~printer:(fun x -> x)
              "(ApexMethodDeclaration{\n\
              \  apex_type=\n\
-             \    (ApexTypeName{\n\
+             \    (ApexType{\n\
              \      identifier=\n\
              \        int;\n\
              \      loc=(Location)})\n\
@@ -43,7 +43,7 @@ let suite =
            let methodDecl =
              ApexFieldDeclaration
                ( no_loc,
-                 ApexTypeName (no_loc, "int"),
+                 ApexType (no_loc, "int"),
                  [
                    ApexVariableDecl (no_loc, ApexIdentifier (no_loc, "a"));
                    ApexVariableDecl (no_loc, ApexIdentifier (no_loc, "b"));
@@ -56,7 +56,7 @@ let suite =
              ~printer:(fun x -> x)
              "(ApexFieldDeclaration{\n\
              \  apex_type=\n\
-             \    (ApexTypeName{\n\
+             \    (ApexType{\n\
              \      identifier=\n\
              \        int;\n\
              \      loc=(Location)})\n\

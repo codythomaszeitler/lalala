@@ -67,7 +67,7 @@ let suite =
                         Public no_loc,
                         ApexFieldDeclaration
                           ( no_loc,
-                            ApexTypeName (no_loc, "int"),
+                            ApexType (no_loc, "int"),
                             [
                               ApexVariableDecl
                                 (no_loc, ApexIdentifier (no_loc, "a"));
@@ -77,7 +77,7 @@ let suite =
                         Public no_loc,
                         ApexMethodDeclaration
                           ( no_loc,
-                            ApexTypeName (no_loc, "int"),
+                            ApexType (no_loc, "int"),
                             ApexIdentifier (no_loc, "getA"),
                             [
                               ApexReturnStmt
@@ -87,7 +87,7 @@ let suite =
                   ] ))
              ast );
          StmtTest.suite;
-         ApexTypeNameTest.suite;
+         ApexTypeTest.suite;
          ExprTest.suite;
          LocationTest.suite;
          OperatorTest.suite;

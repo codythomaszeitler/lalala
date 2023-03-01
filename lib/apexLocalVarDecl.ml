@@ -2,7 +2,7 @@ type apexLocalVarDecl =
   | ApexLocalVarDecl of
       Location.location
       * ApexModifier.modifier
-      * ApexTypeName.apexTypeName
+      * ApexType.apexType
       * ApexVariableDecl.apexVariableDecl list
 
 let pr_local_var_decl (ppf : Format.formatter)
@@ -15,6 +15,6 @@ let pr_local_var_decl (ppf : Format.formatter)
          @[<v 2>apex_type=@;%a;@]@;\
          @[<v 2>variable_decl=[@;%a];@]@;\
          @[<v 2>location=@;%a;@]@]})"
-        ApexModifier.pr_modifier modifier ApexTypeName.pr_apex_type apex_type
+        ApexModifier.pr_modifier modifier ApexType.pr_apex_type apex_type
         (Format.pp_print_list ApexVariableDecl.pr_variable_decl)
         variable_decl Location.pr_location location

@@ -16,7 +16,7 @@ let suite =
                  Public no_loc,
                  ApexMethodDeclaration
                    ( no_loc,
-                     ApexTypeName (no_loc, "int"),
+                     ApexType (no_loc, "int"),
                      ApexIdentifier (no_loc, "a"),
                      [] ) )
            in
@@ -31,7 +31,7 @@ let suite =
              \   member_decl=\n\
              \    (ApexMethodDeclaration{\n\
              \      apex_type=\n\
-             \        (ApexTypeName{\n\
+             \        (ApexType{\n\
              \          identifier=\n\
              \            int;\n\
              \          loc=(Location)})\n\

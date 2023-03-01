@@ -85,7 +85,7 @@ typeRef:
 ;
 
 typeName:
-    | idd = id { match idd with ApexIdentifier.ApexIdentifier(_, name) ->  ApexTypeName.ApexTypeName(no_loc, name)}
+    | idd = id { match idd with ApexIdentifier.ApexIdentifier(_, name) ->  ApexType.ApexType(no_loc, name)}
 ;
 
 id:  

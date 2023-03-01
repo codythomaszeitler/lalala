@@ -1,11 +1,11 @@
 type apexMemberDeclaration =
   | ApexFieldDeclaration of
       Location.location
-      * ApexTypeName.apexTypeName
+      * ApexType.apexType
       * ApexVariableDecl.apexVariableDecl list
   | ApexMethodDeclaration of
       Location.location
-      * ApexTypeName.apexTypeName
+      * ApexType.apexType
       * ApexIdentifier.apexIdentifier
       * Stmt.stmt list
 
@@ -23,7 +23,7 @@ let pr_member_decl (ppf : Format.formatter)
          [%a]@]@;\
          @[<v 2>location=@;\
          %a@]})@]"
-        ApexTypeName.pr_apex_type apex_type ApexIdentifier.pr_identifer identifier
+        ApexType.pr_apex_type apex_type ApexIdentifier.pr_identifer identifier
         (Format.pp_print_list Stmt.pr_stmt)
         stmts Location.pr_location location
   | ApexFieldDeclaration (location, apex_type, var_decls) ->
@@ -35,6 +35,6 @@ let pr_member_decl (ppf : Format.formatter)
          %a]@]@;\
          @[<v 2>location=@;\
          %a@]})@]"
-        ApexTypeName.pr_apex_type apex_type
+        ApexType.pr_apex_type apex_type
         (Format.pp_print_list ApexVariableDecl.pr_variable_decl)
         var_decls Location.pr_location location
