@@ -1,13 +1,16 @@
 type expr =
-  | Primary of Location.location * ApexPrimary.apexPrimary
+  | Id of Location.location * ApexIdentifier.apexIdentifier
+  | Literal of Location.location * ApexLiteral.apexLiteral
   | Binary of Location.location * expr * Operator.operator * expr
 
 let rec pr_expr (ppf : Format.formatter) (expr : expr) : unit =
   match expr with
-  | Primary (location, primary) ->
-      Format.fprintf ppf
-        "@[<v 2>(Primary{@;@[<v 2>apexLiteral=@;%a;@]@;loc=%a@]})"
-        ApexPrimary.pr_primary primary Location.pr_location location
+  | Id (location, identifier) ->
+      Format.fprintf ppf "@[<v 2>(Id{@;@[<v 2>identifier=@;%a;@]@;loc=%a@]})"
+        ApexIdentifier.pr_identifer identifier Location.pr_location location
+  | Literal (location, literal) ->
+      Format.fprintf ppf "@[<v 2>(Literal{@;@[<v 2>literal=@;%a;@]@;loc=%a@]})"
+        ApexLiteral.pr_apex_literal literal Location.pr_location location
   | Binary (location, left, op, right) ->
       Format.fprintf ppf
         "@[<v 2>(Binary{@;\

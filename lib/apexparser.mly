@@ -1,6 +1,7 @@
 /* File parser.mly */
 %{
 open Ast
+open Location
 %}
 
 %token <int> INT
@@ -23,8 +24,6 @@ open Ast
 %token <string> ID
 %token EOF
 
-// So.. there should be something that could 
-// be like... the top level of aynthing. 
 
 %type <Ast.compilationUnit> compilationUnit
 %start compilationUnit
@@ -41,20 +40,19 @@ compilationUnit:
 ;
 
 typeDeclaration :
-    | modis = modifier*; decl = classDeclaration {TypeDecl(modis, decl)}
+    |  decl = classDeclaration {decl}
 ;
 
 modifier:
-    | PUBLIC {Public}
-    | anno = annotation {anno}
+    | PUBLIC {ApexModifier.Public(no_loc)}
 ;
 
 identifier:
-    | id = ID {Identifier.Identifier(id)}
+    | id = ID {ApexIdentifier.ApexIdentifier(no_loc, id)}
 ;
 
 classDeclaration:
-    | CLASS; id = identifier; body = classBody {ClassDeclaration(id, body)}
+    | anno=annotation? modis = modifier*; CLASS; id = identifier; body = classBody {ApexClassDeclaration(no_loc, anno, modis, id, body)}
 ;
 
 classBody:
@@ -62,7 +60,7 @@ classBody:
 ;
 
 classBodyDeclaration:
-    | modi = modifier membDecl = memberDeclaration {ClassBodyDecl.ClassBodyDeclaration(modi, membDecl)}
+    | modi = modifier membDecl = memberDeclaration {ApexClassBodyDecl.ApexClassBodyDeclaration(no_loc, modi, membDecl)}
 ;
 
 memberDeclaration:
@@ -71,7 +69,7 @@ memberDeclaration:
 ;
 
 fieldDeclaration
-    : apexType = typeRef decls = variableDeclarators SEMI {FieldDeclaration(apexType, decls)}
+    : apexType = typeRef decls = variableDeclarators SEMI {ApexMemberDecl.ApexFieldDeclaration(no_loc, apexType, decls)}
     ;
 
 variableDeclarators
@@ -79,7 +77,7 @@ variableDeclarators
     ;
 
 variableDeclarator
-    : iden = id {VariableDecl.VariableDecl(iden)} //(ASSIGN expression)?
+    : iden = id {ApexVariableDecl.ApexVariableDecl(no_loc, iden)} //(ASSIGN expression)?
     ;
 
 typeRef:
@@ -87,15 +85,15 @@ typeRef:
 ;
 
 typeName:
-    | idd = id {ApexType.ApexType(idd)}
+    | idd = id {ApexTypeName.ApexTypeName(no_loc,idd)}
 ;
 
 id:  
-    | iden = ID {Identifier(iden)}
+    | iden = ID {ApexIdentifier.ApexIdentifier(no_loc, iden)}
 ;
 
 methodDeclaration
-    : apexType = typeRef id = id LEFT_PAREN RIGHT_PAREN stmts = block  {MemberDecl.MethodDeclaration(apexType, id, stmts)}
+    : apexType = typeRef id = id LEFT_PAREN RIGHT_PAREN stmts = block  {ApexMemberDecl.ApexMethodDeclaration(no_loc,apexType, id, stmts)}
 ;
 
 block :
@@ -108,15 +106,15 @@ statement:
 ;
 
 localVariableDeclarationStatement
-    : localVarDecl = localVariableDeclaration SEMI {LocalVarDeclStmt(localVarDecl)}
+    : localVarDecl = localVariableDeclaration SEMI {Stmt.ApexLocalVarDeclStmt(no_loc,localVarDecl)}
 ;
 
 localVariableDeclaration
-    : modi = modifier apexType = typeRef decls = variableDeclarators {LocalVarDecl(modi, apexType, decls)}
+    : modi = modifier apexType = typeRef decls = variableDeclarators {ApexLocalVarDecl.ApexLocalVarDecl(no_loc, modi, apexType, decls)}
 ;
 
 returnStatement
-    : RETURN expr = expression SEMI {Stmt.ReturnStmt(expr)}
+    : RETURN expr = expression SEMI {Stmt.ApexReturnStmt(no_loc, expr)}
 ;
 
 expressionStatement
@@ -125,7 +123,7 @@ expressionStatement
 
 primary
     : 
-    | id = id {Expr.Primary(id)}
+    | id = id {Expr.Id(no_loc, id)}
 ;
 
 expression
@@ -133,16 +131,12 @@ expression
 ;
 
 annotation
-    : ATSIGN name = qualifiedName {Annotation(name)}
+    : ATSIGN name = ID {ApexAnnotation.ApexAnnotation(no_loc, name)}
 ;
 
 qualifiedName
     : id = id {id}
 ;
 
-// memberDeclaration
-//     : methodDeclaration
-//     | fieldDeclaration
-//     ;
 
 %%

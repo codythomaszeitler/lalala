@@ -1,21 +1,28 @@
 open OUnit2
-(* open Lalala.Apexlexer
-   open Lalala.Apexparser
-   open Lexing
-   open Lalala.Ast
-   open Lalala.Formatter *)
+open Lalala.Apexlexer
+open Lalala.Apexparser
+open Lexing
+open Lalala.Ast
+open Lalala.Location
+open Lalala.ApexModifier
+open Lalala.ApexIdentifier
 
 let suite =
   "test suite for apex lexer"
   >::: [
-          ( "parse apex class definition empty ast" >:: fun _ ->
-              let buffer = from_string "public class TestClass {}" in
-              let ast = compilationUnit read_token buffer in
-              assert_equal
-                (TypeDecl
-                   ([ Public ], ClassDeclaration (Identifier "TestClass", [])))
-                ast );
-            (* ( "parse apex class definition empty ast with different name"
+         ( "parse apex class definition empty ast" >:: fun _ ->
+           let buffer = from_string "public class TestClass {}" in
+           let ast = compilationUnit read_token buffer in
+           assert_equal
+             ~printer:to_string
+             (ApexClassDeclaration
+                ( no_loc,
+                  None,
+                  [ Public no_loc ],
+                  ApexIdentifier (no_loc, "TestClass"),
+                  [] ))
+             ast );
+         (* ( "parse apex class definition empty ast with different name"
             >:: fun _ ->
               let buffer = from_string "public class AnotherTestClass {}" in
               let ast = compilationUnit read_token buffer in
@@ -91,18 +98,18 @@ let suite =
                 \    [])))" to_string_type_decl );
          *)
          (* StmtTest.suite;
-         ApexTypeNameTest.suite;
-         ExprTest.suite;
-         LocationTest.suite;
-         OperatorTest.suite;
-         ApexLiteralTest.suite;
-         ApexModifierTest.suite;
-         ApexMemberDeclTest.suite;
-         ApexIdentifierTest.suite;
-         ApexVariableDeclTest.suite;
-         ApexLocalVarDeclTest.suite;
-         ApexClassBodyDeclTest.suite;
-         ApexClassDeclTest.suite; *)
+            ApexTypeNameTest.suite;
+            ExprTest.suite;
+            LocationTest.suite;
+            OperatorTest.suite;
+            ApexLiteralTest.suite;
+            ApexModifierTest.suite;
+            ApexMemberDeclTest.suite;
+            ApexIdentifierTest.suite;
+            ApexVariableDeclTest.suite;
+            ApexLocalVarDeclTest.suite;
+            ApexClassBodyDeclTest.suite;
+            ApexClassDeclTest.suite; *)
        ]
 
 let _ = run_test_tt_main suite
