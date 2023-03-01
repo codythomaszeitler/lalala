@@ -107,6 +107,7 @@ let suite =
          ApexVariableDeclTest.suite;
          ApexLocalVarDeclTest.suite;
          ApexClassBodyDeclTest.suite;
+         AstTest.suite;
        ]
 
 let _ = run_test_tt_main suite
