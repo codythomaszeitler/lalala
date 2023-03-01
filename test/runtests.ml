@@ -67,8 +67,7 @@ let suite =
                         [ Public no_loc ],
                         ApexType (no_loc, "int"),
                         [
-                          ApexVariableDecl
-                            (no_loc, ApexIdentifier (no_loc, "a"));
+                          ApexVariableDecl (no_loc, ApexIdentifier (no_loc, "a"));
                         ] );
                     ApexMethodDeclaration
                       ( no_loc,
@@ -87,17 +86,25 @@ let suite =
          >:: fun _ ->
            let buffer =
              from_string
-               "@IsTest public class TestClass { @TestMethod private void \
+               "@IsTest private class TestClass { @TestMethod private void \
                 testMethod() {} }"
            in
            let ast = compilationUnit read_token buffer in
            assert_equal ~printer:to_string
              (ApexClassDeclaration
                 ( no_loc,
-                  None,
-                  [ Public no_loc ],
-                  ApexIdentifier (no_loc, "AnotherTestClass"),
-                  [] ))
+                  Some (ApexAnnotation (no_loc, "IsTest")),
+                  [ Private no_loc ],
+                  ApexIdentifier (no_loc, "TestClass"),
+                  [
+                    ApexMethodDeclaration
+                      ( no_loc,
+                        Some (ApexAnnotation (no_loc, "TestMethod")),
+                        [ Private no_loc ],
+                        ApexType (no_loc, "void"),
+                        ApexIdentifier (no_loc, "testMethod"),
+                        [] );
+                  ] ))
              ast );
          StmtTest.suite;
          ApexTypeTest.suite;
