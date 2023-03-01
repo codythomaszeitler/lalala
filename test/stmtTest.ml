@@ -2,7 +2,6 @@ open OUnit2
 open Lalala.Stmt
 open Lalala.Location
 open Lalala.Expr
-open Lalala.ApexLiteral
 open Lalala.ApexLocalVarDecl
 
 let suite =
@@ -12,8 +11,7 @@ let suite =
            let buffer = Buffer.create 5 in
            let formatter = Format.formatter_of_buffer buffer in
            let astNode =
-             ApexReturnStmt
-               (no_loc, Primary (no_loc, IntegerLiteral (no_loc, 100)))
+             ApexReturnStmt (no_loc, IntegerLiteral (no_loc, 100))
            in
            pr_stmt formatter astNode;
            Format.pp_print_flush formatter ();
@@ -21,11 +19,8 @@ let suite =
              ~printer:(fun x -> x)
              "(ApexReturnStmt{\n\
              \  expr=\n\
-             \    (Primary{\n\
-             \      apexLiteral=\n\
-             \        (IntegerLiteral{\n\
-             \          int=100;\n\
-             \          loc=(Location)});\n\
+             \    (IntegerLiteral{\n\
+             \      int=100;\n\
              \      loc=(Location)});\n\
              \  location=(Location);})" (Buffer.contents buffer) );
          ( "it should be able to pretty print a apex local var decl" >:: fun _ ->
