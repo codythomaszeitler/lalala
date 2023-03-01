@@ -10,6 +10,7 @@ open Location
 %token ABSTRACT
 %token AFTER
 %token PUBLIC
+%token PRIVATE
 %token CLASS
 %token LEFT_BRACE 
 %token RIGHT_BRACE
@@ -45,6 +46,7 @@ typeDeclaration :
 
 modifier:
     | PUBLIC {ApexModifier.Public(no_loc)}
+    | PRIVATE {ApexModifier.Private(no_loc)}
 ;
 
 identifier:
@@ -60,7 +62,7 @@ classBody:
 ;
 
 classBodyDeclaration:
-    | modi = modifier membDecl = memberDeclaration {ApexClassBodyDecl.ApexClassBodyDeclaration(no_loc, modi, membDecl)}
+    | decl = memberDeclaration {decl}
 ;
 
 memberDeclaration:
@@ -69,7 +71,7 @@ memberDeclaration:
 ;
 
 fieldDeclaration
-    : apexType = typeRef decls = variableDeclarators SEMI {ApexMemberDecl.ApexFieldDeclaration(no_loc, apexType, decls)}
+    : anno=annotation? modis=modifier* apexType = typeRef decls = variableDeclarators SEMI {ApexDecl.ApexFieldDeclaration(no_loc, anno, modis, apexType, decls)}
     ;
 
 variableDeclarators
@@ -93,7 +95,7 @@ id:
 ;
 
 methodDeclaration
-    : apexType = typeRef id = id LEFT_PAREN RIGHT_PAREN stmts = block  {ApexMemberDecl.ApexMethodDeclaration(no_loc,apexType, id, stmts)}
+    : anno=annotation? modis=modifier* apexType = typeRef id = id LEFT_PAREN RIGHT_PAREN stmts = block  {ApexDecl.ApexMethodDeclaration(no_loc, anno, modis, apexType, id, stmts)}
 ;
 
 block :

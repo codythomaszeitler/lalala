@@ -25,6 +25,7 @@ rule read_token =
     | "abstract" {ABSTRACT}
     | "after" {AFTER}
     | "public" {PUBLIC}
+    | "private" {PRIVATE}
     | "static" {STATIC}
     | "return" {RETURN}
     | "@" {ATSIGN}

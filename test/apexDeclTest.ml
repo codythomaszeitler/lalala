@@ -1,11 +1,11 @@
 open OUnit2
-open Lalala.ApexMemberDecl
+open Lalala.ApexDecl
 open Lalala.Location
 open Lalala.ApexIdentifier
 open Lalala.ApexType
 
 let suite =
-  "Member Decl"
+  "ApexDecl"
   >::: [
          ( "it should be able to pretty print a method decl" >:: fun _ ->
            let buffer = Buffer.create 5 in
@@ -13,6 +13,8 @@ let suite =
            let methodDecl =
              ApexMethodDeclaration
                ( no_loc,
+                 None,
+                 [],
                  ApexType (no_loc, "int"),
                  ApexIdentifier (no_loc, "a"),
                  [] )
@@ -22,6 +24,10 @@ let suite =
            assert_equal
              ~printer:(fun x -> x)
              "(ApexMethodDeclaration{\n\
+             \  annotation=\n\
+             \    \n\
+             \  modifiers=\n\
+             \    \n\
              \  apex_type=\n\
              \    (ApexType{\n\
              \      identifier=\n\
@@ -43,6 +49,8 @@ let suite =
            let methodDecl =
              ApexFieldDeclaration
                ( no_loc,
+                 None,
+                 [],
                  ApexType (no_loc, "int"),
                  [
                    ApexVariableDecl (no_loc, ApexIdentifier (no_loc, "a"));
@@ -55,6 +63,10 @@ let suite =
            assert_equal
              ~printer:(fun x -> x)
              "(ApexFieldDeclaration{\n\
+             \  annotation=\n\
+             \    \n\
+             \  modifiers=\n\
+             \    \n\
              \  apex_type=\n\
              \    (ApexType{\n\
              \      identifier=\n\
