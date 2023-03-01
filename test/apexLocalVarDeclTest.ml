@@ -7,16 +7,17 @@ open Lalala.ApexIdentifier
 open Lalala.Location
 
 let suite =
-  "test suite for local var decl ast"
+  "ApexLocalVarDecl"
   >::: [
-         ( "it should be able to tostring a local var decl" >:: fun _ ->
+         ( "it should be able to pretty print an apex local var decl"
+         >:: fun _ ->
            let buffer = Buffer.create 5 in
            let formatter = Format.formatter_of_buffer buffer in
            let astNode =
              ApexLocalVarDecl
                ( no_loc,
                  Public no_loc,
-                 ApexTypeName (no_loc, ApexIdentifier (no_loc, "int")),
+                 ApexTypeName (no_loc, "int"),
                  [
                    ApexVariableDecl (no_loc, ApexIdentifier (no_loc, "a"));
                    ApexVariableDecl (no_loc, ApexIdentifier (no_loc, "b"));
@@ -34,11 +35,7 @@ let suite =
              \  apex_type=\n\
              \    (ApexTypeName{\n\
              \      identifier=\n\
-             \        (ApexIdentifier{\n\
-             \          name=\n\
-             \            \"int\"\n\
-             \          loc=\n\
-             \            (Location)});\n\
+             \        int;\n\
              \      loc=(Location)});\n\
              \  variable_decl=[\n\
              \    (ApexVariableDecl{\n\
