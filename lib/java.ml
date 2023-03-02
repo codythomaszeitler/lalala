@@ -2,7 +2,8 @@ type javaType = JavaType of string
 type javaAnnotation = JavaAnnotation of string
 type javaIdentifier = JavaIdentifier of string
 type javaModifier = JavaPublic | JavaPrivate 
-type javaStmt = JavaReturnStmt
+type javaExpr = JavaMethodCall of javaIdentifier * javaExpr list | JavaIntegerLiteral of int 
+type javaStmt = JavaReturnStmt | JavaExprStmt of javaExpr
 
 type javaDecl =
   | JavaMethodDecl of

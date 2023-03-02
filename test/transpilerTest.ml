@@ -10,7 +10,8 @@ open Lalala.ApexAnnotation
 let suite =
   "Transpiler"
   >::: [
-         ( "it should be able to convert class definition with one empty test method into junit test"
+         ( "it should be able to convert class definition with one empty test \
+            method into junit test"
          >:: fun _ ->
            let apex =
              ApexClassDeclaration
@@ -25,7 +26,17 @@ let suite =
                        [ Private no_loc ],
                        ApexType (no_loc, "void"),
                        ApexIdentifier (no_loc, "testMethod"),
-                       [] );
+                       [
+                         ApexExprStmt
+                           ( no_loc,
+                             ApexMethodCall
+                               ( no_loc,
+                                 ApexIdentifier (no_loc, "System.assertEquals"),
+                                 [
+                                   IntegerLiteral (no_loc, 2);
+                                   IntegerLiteral (no_loc, 3);
+                                 ] ) );
+                       ] );
                  ] )
            in
            let expected =
@@ -40,7 +51,14 @@ let suite =
                           Some JavaPublic,
                           JavaType "void",
                           JavaIdentifier "testMethod",
-                          [] );
+                          [
+                            JavaExprStmt
+                              (JavaMethodCall
+                                 ( JavaIdentifier "System.assertEquals",
+                                   [
+                                     JavaIntegerLiteral 2; JavaIntegerLiteral 3;
+                                   ] ));
+                          ] );
                     ] ))
            in
            let transpiled = transpile apex in

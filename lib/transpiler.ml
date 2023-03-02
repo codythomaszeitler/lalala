@@ -5,6 +5,7 @@ open ApexDecl
 open ApexAnnotation
 open ApexIdentifier
 open ApexType
+open Expr
 
 let transpile_annotation (apex_annotation : apexAnnotation option) :
     javaAnnotation option =
@@ -49,18 +50,35 @@ let transpile_identifier (apex_identifer : apexIdentifier) : javaIdentifier =
 let transpile_type (apex_type : apexType) : javaType =
   match apex_type with ApexType (_, name) -> JavaType name
 
+let rec transpile_exprs (exprs : expr list) : javaExpr list =
+  match exprs with h :: t -> transpile_expr h :: transpile_exprs t | [] -> []
+and transpile_expr (expr : expr) : javaExpr =
+  match expr with
+  | IntegerLiteral (_, number) -> JavaIntegerLiteral number
+  | ApexMethodCall (_, identifier, exprs) -> JavaMethodCall(transpile_identifier identifier, transpile_exprs exprs)
+  | _ -> failwith "transpile expr not implemented yet"
+
+let transpile_stmt (stmt : Stmt.stmt) : javaStmt =
+  match stmt with
+  | ApexLocalVarDeclStmt (_, _) -> failwith "a"
+  | ApexReturnStmt (_, _) -> failwith "b"
+  | ApexExprStmt (_, expr) -> JavaExprStmt (transpile_expr expr)
+
+let rec transpile_stmts (stmts : Stmt.stmt list) : javaStmt list =
+  match stmts with h :: t -> transpile_stmt h :: transpile_stmts t | [] -> []
+
 let rec transpile_decls (top_level_class : compilationUnit)
     (decls : apexDecl list) : javaDecl list =
   let transpile_decl (apex_decl : apexDecl) : javaDecl =
     match apex_decl with
-    | ApexMethodDeclaration (_, annotation, modifiers, apex_type, identifier, _)
-      ->
+    | ApexMethodDeclaration
+        (_, annotation, modifiers, apex_type, identifier, stmts) ->
         JavaMethodDecl
           ( transpile_annotation annotation,
             get_access_modifier top_level_class modifiers,
             transpile_type apex_type,
             transpile_identifier identifier,
-            [] )
+            transpile_stmts stmts )
     | _ -> failwith "transpile_decl not supported yet"
   in
   match decls with
@@ -101,17 +119,36 @@ let pr_java_modifier (ppf : Format.formatter) (java_type : javaModifier) : unit
   | JavaPublic -> Format.fprintf ppf "@[<v 2>(JavaPublic)@]"
   | JavaPrivate -> Format.fprintf ppf "@[<v 2>(JavaPrivate)@]"
 
+let rec pr_java_expr (ppf : Format.formatter) (java_expr : javaExpr) : unit =
+  match java_expr with
+  | JavaMethodCall (identifier, exprs) ->
+      Format.fprintf ppf "@[<v 2>(JavaMethodCall{@;identifier=%a@;exprs=%a@]"
+        pr_java_identifier identifier
+        (Format.pp_print_list pr_java_expr)
+        exprs
+  | JavaIntegerLiteral number ->
+      Format.fprintf ppf "@[<v 2>(JavaIntegerLiteral{@;number=%d}@]" number
+
+let pr_java_stmt (ppf : Format.formatter) (java_stmt : javaStmt) : unit =
+  match java_stmt with
+  | JavaReturnStmt -> Format.fprintf ppf "@[<v 2>(JavaReturnStmt)@]"
+  | JavaExprStmt expr ->
+      Format.fprintf ppf "@[<v 2>(JavaExprStmt{expr=%a})@]" pr_java_expr expr
+
 let rec pr_java_decl (ppf : Format.formatter) (java_decl : javaDecl) : unit =
   match java_decl with
-  | JavaMethodDecl (annotation, modifier, java_type, identifier, _) ->
+  | JavaMethodDecl (annotation, modifier, java_type, identifier, stmts) ->
       Format.fprintf ppf
         "@[<v 2>(JavaMethodDecl{@;\
          annotation=%a@;\
-         modifier=%a;java_type=%a;identifier=%a}@]"
+         modifier=%a;java_type=%a;identifier=%a@;\
+         stmts=%a}@]"
         (Format.pp_print_option pr_java_annotation)
         annotation
         (Format.pp_print_option pr_java_modifier)
         modifier pr_java_type java_type pr_java_identifier identifier
+        (Format.pp_print_list pr_java_stmt)
+        stmts
   | JavaClassDecl (annotation, modifier, identifier, decls) ->
       Format.fprintf ppf
         "@[<v 2>(JavaClassDecl{@;\
