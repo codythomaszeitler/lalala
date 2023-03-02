@@ -19,6 +19,7 @@ open Location
 %token SEMI
 %token RETURN
 %token COMMA
+%token DOT
 %token ASSIGN
 %token ATSIGN
 %token STATIC
@@ -105,6 +106,7 @@ block :
 statement:
     | localVarDeclStmt = localVariableDeclarationStatement {localVarDeclStmt}
     | returnStmt = returnStatement {returnStmt}
+    | exprStmt = expressionStatement {exprStmt}
 ;
 
 localVariableDeclarationStatement
@@ -120,7 +122,7 @@ returnStatement
 ;
 
 expressionStatement
-    : expr = expression SEMI {expr}
+    : expr = expression SEMI {Stmt.ApexExprStmt(no_loc, expr)}
 ;
 
 primary
@@ -130,6 +132,16 @@ primary
 
 expression
     : expr = primary {expr}
+    | expr = methodCall{expr}
+    | expr = literal{expr}
+;
+
+literal
+    : num = INT {Expr.IntegerLiteral(no_loc, num)}
+;
+
+methodCall 
+    : id = qualifiedName LEFT_PAREN exprs = separated_nonempty_list(COMMA, expression) RIGHT_PAREN {Expr.ApexMethodCall(no_loc, id, exprs)}
 ;
 
 annotation
@@ -137,7 +149,7 @@ annotation
 ;
 
 qualifiedName
-    : id = id {id}
+    : ids = separated_nonempty_list(DOT, id) {ApexIdentifier.build_qualified_name(ids)}
 ;
 
 

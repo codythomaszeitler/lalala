@@ -8,6 +8,8 @@ type expr =
   | StringLiteral of Location.location * string
   | BooleanLiteral of Location.location * bool
   | NullLiteral of Location.location
+  | ApexMethodCall of
+      Location.location * ApexIdentifier.apexIdentifier * expr list
 
 let rec pr_expr (ppf : Format.formatter) (expr : expr) : unit =
   match expr with
@@ -41,3 +43,9 @@ let rec pr_expr (ppf : Format.formatter) (expr : expr) : unit =
         pr_location location
   | NullLiteral location ->
       Format.fprintf ppf "@[<v 2>(NullLiteral{@;loc=%a@]})" pr_location location
+  | ApexMethodCall (location, identifier, exprs) ->
+      Format.fprintf ppf
+        "@[<v 2>(ApexMethodCall{@;identifier=%a;@;exprs=%a@;loc=%a@]})"
+        ApexIdentifier.pr_identifer identifier
+        (Format.pp_print_list pr_expr)
+        exprs Location.pr_location location

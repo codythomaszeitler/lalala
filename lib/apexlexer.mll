@@ -13,7 +13,7 @@ let next_line lexbuf =
 
 let digit = ['0'-'9']
 let int = '-'? digit+  (* regex for integers *)
-let ws    = [' ' '\t']
+let ws    = [' ' '\t' '\n']
 let iden =  ['a'-'z''A'-'Z']['a'-'z''A'-'Z''$''_']+
 
 rule read_token = 
@@ -35,6 +35,7 @@ rule read_token =
     | ")" {RIGHT_PAREN}
     | "class" {CLASS}
     | ';' {SEMI}
+    | '.' {DOT}
     | ',' {COMMA}
     | '=' {ASSIGN}
     | iden {ID (Lexing.lexeme lexbuf)}

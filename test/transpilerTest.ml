@@ -10,7 +10,7 @@ open Lalala.ApexAnnotation
 let suite =
   "Transpiler"
   >::: [
-         ( "it should be able to convert empty class definition into junit test"
+         ( "it should be able to convert class definition with one empty test method into junit test"
          >:: fun _ ->
            let apex =
              ApexClassDeclaration
@@ -28,7 +28,6 @@ let suite =
                        [] );
                  ] )
            in
-
            let expected =
              JavaFile
                (JavaClassDecl
