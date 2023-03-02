@@ -106,6 +106,7 @@ let suite =
                         [] );
                   ] ))
              ast );
+        (* So what is interesting here now is that we should be able to construct a java tree here *)
          StmtTest.suite;
          ApexTypeTest.suite;
          ExprTest.suite;
@@ -117,6 +118,7 @@ let suite =
          ApexVariableDeclTest.suite;
          ApexLocalVarDeclTest.suite;
          AstTest.suite;
+         TranspilerTest.suite;
        ]
 
 let _ = run_test_tt_main suite
