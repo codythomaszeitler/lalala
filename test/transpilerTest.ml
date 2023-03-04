@@ -39,9 +39,6 @@ let suite =
                        ] );
                  ] )
            in
-           (* import static org.junit.jupiter.api.Assertions.assertEquals; *)
-           (* So this really should only import this when there is one System.assertEquals in the ast *)
-           (* However, in other non test classes, such an item should not be present.*)
            let expected =
              JavaFile
                ( [

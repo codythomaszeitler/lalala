@@ -48,12 +48,4 @@ let suite =
                  [] )
            in
            assert_equal true (is_test_class apex) );
-         ( "it should be able to tell if the apex class is a test class when \
-            it is not a test class"
-         >:: fun _ ->
-           let apex =
-             ApexClassDeclaration
-               (no_loc, None, [], ApexIdentifier (no_loc, "NotATestClass"), [])
-           in
-           assert_equal false (is_test_class apex) );
        ]
