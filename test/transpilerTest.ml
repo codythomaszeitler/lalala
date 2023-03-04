@@ -1,5 +1,4 @@
 open OUnit2
-
 open Lalala.Java
 open Lalala.Transpiler
 open Lalala.Ast
@@ -12,61 +11,63 @@ let suite =
   "Transpiler"
   >::: [
          ( "it should be able to convert class definition with one empty test \
-               method into junit test"
-            >:: fun _ ->
-              let apex =
-                ApexClassDeclaration
-                  ( no_loc,
-                    Some (ApexAnnotation (no_loc, "IsTest")),
-                    [ Private no_loc ],
-                    ApexIdentifier (no_loc, "TestClass"),
-                    [
-                      ApexMethodDeclaration
-                        ( no_loc,
-                          Some (ApexAnnotation (no_loc, "TestMethod")),
-                          [ Private no_loc ],
-                          ApexType (no_loc, "void"),
-                          ApexIdentifier (no_loc, "testMethod"),
-                          [
-                            ApexExprStmt
-                              ( no_loc,
-                                ApexMethodCall
-                                  ( no_loc,
-                                    ApexIdentifier (no_loc, "System.assertEquals"),
+            method into junit test"
+         >:: fun _ ->
+           let apex =
+             ApexClassDeclaration
+               ( no_loc,
+                 Some (ApexAnnotation (no_loc, "IsTest")),
+                 [ Private no_loc ],
+                 ApexIdentifier (no_loc, "TestClass"),
+                 [
+                   ApexMethodDeclaration
+                     ( no_loc,
+                       Some (ApexAnnotation (no_loc, "TestMethod")),
+                       [ Private no_loc ],
+                       ApexType (no_loc, "void"),
+                       ApexIdentifier (no_loc, "testMethod"),
+                       [
+                         ApexExprStmt
+                           ( no_loc,
+                             ApexMethodCall
+                               ( no_loc,
+                                 ApexIdentifier (no_loc, "System.assertEquals"),
+                                 [
+                                   IntegerLiteral (no_loc, 2);
+                                   IntegerLiteral (no_loc, 3);
+                                 ] ) );
+                       ] );
+                 ] )
+           in
+           (* import static org.junit.jupiter.api.Assertions.assertEquals; *)
+           (* So this really should only import this when there is one System.assertEquals in the ast *)
+           (* However, in other non test classes, such an item should not be present.*)
+           let expected =
+             JavaFile
+               ( [
+                   JavaImport "org.junit.jupiter.api.Test";
+                   JavaImport "org.junit.jupiter.api.Assertions.assertEquals";
+                 ],
+                 JavaClassDecl
+                   ( None,
+                     Some JavaPublic,
+                     JavaIdentifier "TestClass",
+                     [
+                       JavaMethodDecl
+                         ( Some (JavaAnnotation "Test"),
+                           Some JavaPublic,
+                           JavaType "void",
+                           JavaIdentifier "testMethod",
+                           [
+                             JavaExprStmt
+                               (JavaMethodCall
+                                  ( JavaIdentifier "System.assertEquals",
                                     [
-                                      IntegerLiteral (no_loc, 2);
-                                      IntegerLiteral (no_loc, 3);
-                                    ] ) );
-                          ] );
-                    ] )
-              in
-              (* import static org.junit.jupiter.api.Assertions.assertEquals; *)
-              (* So this really should only import this when there is one System.assertEquals in the ast *)
-              (* However, in other non test classes, such an item should not be present.*)
-              let expected =
-                JavaFile
-                  ( [ JavaImport "org.junit.jupiter.api.Test" ],
-                    JavaClassDecl
-                      ( None,
-                        Some JavaPublic,
-                        JavaIdentifier "TestClass",
-                        [
-                          JavaMethodDecl
-                            ( Some (JavaAnnotation "Test"),
-                              Some JavaPublic,
-                              JavaType "void",
-                              JavaIdentifier "testMethod",
-                              [
-                                JavaExprStmt
-                                  (JavaMethodCall
-                                     ( JavaIdentifier "System.assertEquals",
-                                       [
-                                         JavaIntegerLiteral 2; JavaIntegerLiteral 3;
-                                       ] ));
-                              ] );
-                        ] ) )
-              in
-              let transpiled = transpile apex in
-              assert_equal ~printer:to_string_java expected transpiled );
-         
+                                      JavaIntegerLiteral 2; JavaIntegerLiteral 3;
+                                    ] ));
+                           ] );
+                     ] ) )
+           in
+           let transpiled = transpile apex in
+           assert_equal ~printer:to_string_java expected transpiled );
        ]

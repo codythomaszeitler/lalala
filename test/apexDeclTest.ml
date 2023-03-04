@@ -3,6 +3,7 @@ open Lalala.ApexDecl
 open Lalala.Location
 open Lalala.ApexIdentifier
 open Lalala.ApexType
+open Lalala.ApexAnnotation
 
 let suite =
   "ApexDecl"
@@ -102,4 +103,30 @@ let suite =
              \        (Location)})]\n\
              \  location=\n\
              \    (Location)})" (Buffer.contents buffer) );
+         ( "it should be able to tell if apex-decl is a test method when it is \
+            a test method"
+         >:: fun _ ->
+           let test_method =
+             ApexMethodDeclaration
+               ( no_loc,
+                 Some (ApexAnnotation (no_loc, "TestMethod")),
+                 [],
+                 ApexType (no_loc, "void"),
+                 ApexIdentifier (no_loc, "fooTest"),
+                 [] )
+           in
+           assert_equal true (is_test_method test_method) );
+         ( "it should be able to tell if apex-decl is a test method when it is \
+            NOT a test method"
+         >:: fun _ ->
+           let test_method =
+             ApexMethodDeclaration
+               ( no_loc,
+                 None,
+                 [],
+                 ApexType (no_loc, "void"),
+                 ApexIdentifier (no_loc, "fooTest"),
+                 [] )
+           in
+           assert_equal false (is_test_method test_method) );
        ]

@@ -58,3 +58,10 @@ let pr_member_decl (ppf : Format.formatter) (member_decl : apexDecl) : unit =
         modifiers ApexType.pr_apex_type apex_type
         (Format.pp_print_list ApexVariableDecl.pr_variable_decl)
         var_decls Location.pr_location location
+
+let is_test_method (apex_decl : apexDecl) : bool =
+  match apex_decl with
+  | ApexMethodDeclaration
+      (_, Some (ApexAnnotation (_, "TestMethod")), _, _, _, _) ->
+      true
+  | _ -> false
