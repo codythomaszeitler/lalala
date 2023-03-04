@@ -119,6 +119,7 @@ let suite =
          AstTest.suite;
          TranspilerTest.suite;
          ApexParserTest.suite;
+         JavaPrinterTest.suite;
        ]
 
 let _ = run_test_tt_main suite
