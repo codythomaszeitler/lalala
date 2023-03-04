@@ -6,7 +6,6 @@ type compilationUnit =
       * ApexIdentifier.apexIdentifier
       * ApexDecl.apexDecl list
 
-
 let pr_compilation_unit (ppf : Format.formatter)
     (compilation_unit : compilationUnit) : unit =
   match compilation_unit with
@@ -19,8 +18,8 @@ let pr_compilation_unit (ppf : Format.formatter)
          [%a]@]@;\
          @[<v 2>id=@;\
          %a@]@;\
-         @[<v 2>class_body_decls\
-         =@;[%a]@]@;\
+         @[<v 2>class_body_decls=@;\
+         [%a]@]@;\
          @[<v 2>location=@;\
          %a@]})@]"
         (Format.pp_print_option ApexAnnotation.pr_apex_annotation)
@@ -36,3 +35,10 @@ let to_string (compilation_unit : compilationUnit) : string =
   pr_compilation_unit formatter compilation_unit;
   Format.pp_print_flush formatter ();
   Buffer.contents buffer
+
+let is_test_class (apex : compilationUnit) : bool =
+  match apex with
+  | ApexClassDeclaration (_, annotation, _, _, _) -> (
+      match annotation with
+      | Some (ApexAnnotation (_, "IsTest")) -> true
+      | _ -> false)

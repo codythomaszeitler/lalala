@@ -36,4 +36,24 @@ let suite =
              \    []\n\
              \  location=\n\
              \    (Location)})" (Buffer.contents buffer) );
+         ( "it should be able to tell if the apex class is a test class when \
+            it is a test class"
+         >:: fun _ ->
+           let apex =
+             ApexClassDeclaration
+               ( no_loc,
+                 Some (ApexAnnotation (no_loc, "IsTest")),
+                 [],
+                 ApexIdentifier (no_loc, "TestClass"),
+                 [] )
+           in
+           assert_equal true (is_test_class apex) );
+         ( "it should be able to tell if the apex class is a test class when \
+            it is not a test class"
+         >:: fun _ ->
+           let apex =
+             ApexClassDeclaration
+               (no_loc, None, [], ApexIdentifier (no_loc, "NotATestClass"), [])
+           in
+           assert_equal false (is_test_class apex) );
        ]

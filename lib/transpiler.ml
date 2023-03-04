@@ -92,8 +92,11 @@ let transpile (apex : compilationUnit) : java =
   match apex with
   | ApexClassDeclaration (_, annotation, modifiers, identifier, decls) ->
       JavaFile
-        (JavaClassDecl
-           ( transpile_annotation annotation,
-             transpile_mods modifiers,
-             transpile_identifier identifier,
-             transpile_decls apex decls ))
+        ( TranspilerImport.transpile apex,
+          JavaClassDecl
+            ( transpile_annotation annotation,
+              transpile_mods modifiers,
+              transpile_identifier identifier,
+              transpile_decls apex decls ) )
+
+
