@@ -129,4 +129,41 @@ let suite =
                  [] )
            in
            assert_equal false (is_test_method test_method) );
+         ( "it should be able to tell if there are any test methods within a \
+            list of decls"
+         >:: fun _ ->
+           let decls =
+             [
+               ApexMethodDeclaration
+                 ( no_loc,
+                   None,
+                   [],
+                   ApexType (no_loc, "void"),
+                   ApexIdentifier (no_loc, "fooUtil"),
+                   [] );
+               ApexMethodDeclaration
+                 ( no_loc,
+                   Some (ApexAnnotation (no_loc, "TestMethod")),
+                   [],
+                   ApexType (no_loc, "void"),
+                   ApexIdentifier (no_loc, "fooTest"),
+                   [] );
+             ]
+           in
+           assert_equal true (has_test_method decls) );
+         ( "it should be able to tell if there no test methods within a list \
+            of decls"
+         >:: fun _ ->
+           let decls =
+             [
+               ApexMethodDeclaration
+                 ( no_loc,
+                   None,
+                   [],
+                   ApexType (no_loc, "void"),
+                   ApexIdentifier (no_loc, "fooUtil"),
+                   [] );
+             ]
+           in
+           assert_equal false (has_test_method decls) );
        ]

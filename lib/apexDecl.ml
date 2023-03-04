@@ -65,3 +65,6 @@ let is_test_method (apex_decl : apexDecl) : bool =
       (_, Some (ApexAnnotation (_, "TestMethod")), _, _, _, _) ->
       true
   | _ -> false
+
+let has_test_method (apex_decls : apexDecl list) : bool =
+  List.exists is_test_method apex_decls
