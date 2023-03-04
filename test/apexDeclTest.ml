@@ -166,4 +166,7 @@ let suite =
              ]
            in
            assert_equal false (has_test_method decls) );
+         ( "it should be able to state no test methods found if empty list \
+            given "
+         >:: fun _ -> assert_equal false (has_test_method []) );
        ]
