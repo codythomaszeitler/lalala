@@ -1,9 +1,13 @@
-type apexAnnotation = ApexAnnotation of Location.location * string
+type apexAnnotation =
+  | IsTest of Location.location
+  | TestVisible of Location.location
 
 let pr_apex_annotation (ppf : Format.formatter) (annotation : apexAnnotation) :
     unit =
   match annotation with
-  | ApexAnnotation (loc, name) ->
-      Format.fprintf ppf
-        "@[<v 2>(Annotation{@;@[<v 2>name=@;\"%s\"@]@;@[<v 2>loc=%a@]})@]" name
+  | IsTest loc ->
+      Format.fprintf ppf "@[<v 2>(IsTest{@;@[<v 2>@[<v 2>loc=%a@]})@]"
+        Location.pr_location loc
+  | TestVisible loc ->
+      Format.fprintf ppf "@[<v 2>(TestVisible{@;@[<v 2>@[<v 2>loc=%a@]})@]"
         Location.pr_location loc

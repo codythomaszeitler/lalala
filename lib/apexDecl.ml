@@ -61,9 +61,7 @@ let pr_member_decl (ppf : Format.formatter) (member_decl : apexDecl) : unit =
 
 let is_test_method (apex_decl : apexDecl) : bool =
   match apex_decl with
-  | ApexMethodDeclaration
-      (_, Some (ApexAnnotation (_, "TestMethod")), _, _, _, _) ->
-      true
+  | ApexMethodDeclaration (_, Some (IsTest _), _, _, _, _) -> true
   | _ -> false
 
 let has_test_method (apex_decls : apexDecl list) : bool =

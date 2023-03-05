@@ -7,20 +7,17 @@ open ApexIdentifier
 open ApexType
 open Expr
 
-let transpile_annotation (apex_annotation : apexAnnotation option) :
+let transpile_method_annotation (apex_annotation : apexAnnotation option) :
     javaAnnotation option =
   match apex_annotation with
-  | Some (ApexAnnotation (_, "IsTest")) -> None
-  | Some (ApexAnnotation (_, "TestMethod")) -> Some (JavaAnnotation "Test")
-  | Some (ApexAnnotation (_, name)) -> Some (JavaAnnotation name)
+  | Some (IsTest _) -> Some (JavaAnnotation "Test")
   | _ -> None
 
 let rec transpile_modifiers (top_level_class : compilationUnit)
     (modifiers : modifier list) : javaModifier list =
   let transpile_modifier (modifier : modifier) : javaModifier option =
     match top_level_class with
-    | ApexClassDeclaration (_, Some (ApexAnnotation (_, "IsTest")), _, _, _)
-      -> (
+    | ApexClassDeclaration (_, Some (IsTest _), _, _, _) -> (
         match modifier with
         | Private _ -> Some JavaPublic
         | Public _ -> Some JavaPublic
@@ -76,7 +73,7 @@ let rec transpile_decls (top_level_class : compilationUnit)
     | ApexMethodDeclaration
         (_, annotation, modifiers, apex_type, identifier, stmts) ->
         JavaMethodDecl
-          ( transpile_annotation annotation,
+          ( transpile_method_annotation annotation,
             get_access_modifier top_level_class modifiers,
             transpile_type apex_type,
             transpile_identifier identifier,
@@ -90,13 +87,11 @@ let rec transpile_decls (top_level_class : compilationUnit)
 let transpile (apex : compilationUnit) : java =
   let transpile_mods = get_access_modifier apex in
   match apex with
-  | ApexClassDeclaration (_, annotation, modifiers, identifier, decls) ->
+  | ApexClassDeclaration (_, _, modifiers, identifier, decls) ->
       JavaFile
         ( TranspilerImport.transpile apex,
           JavaClassDecl
-            ( transpile_annotation annotation,
+            ( None,
               transpile_mods modifiers,
               transpile_identifier identifier,
               transpile_decls apex decls ) )
-
-

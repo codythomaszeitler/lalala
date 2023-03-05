@@ -13,12 +13,12 @@ let suite =
   "RunTests"
   >::: [
          ( "parse apex class definition empty ast" >:: fun _ ->
-           let buffer = from_string "@TestVisible public class TestClass {}" in
+           let buffer = from_string "@IsTest public class TestClass {}" in
            let ast = compilationUnit read_token buffer in
            assert_equal ~printer:to_string
              (ApexClassDeclaration
                 ( no_loc,
-                  Some (ApexAnnotation (no_loc, "TestVisible")),
+                  Some (IsTest no_loc),
                   [ Public no_loc ],
                   ApexIdentifier (no_loc, "TestClass"),
                   [] ))
@@ -27,7 +27,7 @@ let suite =
          >:: fun _ ->
            let buffer = from_string "public class AnotherTestClass {}" in
            let ast = compilationUnit read_token buffer in
-           assert_equal
+           assert_equal ~printer:to_string
              (ApexClassDeclaration
                 ( no_loc,
                   None,
@@ -93,13 +93,13 @@ let suite =
            assert_equal ~printer:to_string
              (ApexClassDeclaration
                 ( no_loc,
-                  Some (ApexAnnotation (no_loc, "IsTest")),
+                  Some (IsTest no_loc),
                   [ Private no_loc ],
                   ApexIdentifier (no_loc, "TestClass"),
                   [
                     ApexMethodDeclaration
                       ( no_loc,
-                        Some (ApexAnnotation (no_loc, "TestMethod")),
+                        Some (IsTest no_loc),
                         [ Private no_loc ],
                         ApexType (no_loc, "void"),
                         ApexIdentifier (no_loc, "testMethod"),
@@ -120,6 +120,7 @@ let suite =
          TranspilerTest.suite;
          ApexParserTest.suite;
          JavaPrinterTest.suite;
+         ApexAnnotationTest.suite;
        ]
 
 let _ = run_test_tt_main suite

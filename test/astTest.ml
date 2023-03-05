@@ -42,7 +42,7 @@ let suite =
            let apex =
              ApexClassDeclaration
                ( no_loc,
-                 Some (ApexAnnotation (no_loc, "IsTest")),
+                 Some (IsTest(no_loc)),
                  [],
                  ApexIdentifier (no_loc, "TestClass"),
                  [] )

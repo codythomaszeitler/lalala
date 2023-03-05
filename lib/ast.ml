@@ -39,6 +39,4 @@ let to_string (compilation_unit : compilationUnit) : string =
 let is_test_class (apex : compilationUnit) : bool =
   match apex with
   | ApexClassDeclaration (_, annotation, _, _, _) -> (
-      match annotation with
-      | Some (ApexAnnotation (_, "IsTest")) -> true
-      | _ -> false)
+      match annotation with Some (IsTest _) -> true | _ -> false)

@@ -17,7 +17,7 @@ let suite =
            let buffer =
              from_string
                " @IsTest private class TestClass {\n\
-               \  @TestMethod private void testMethod() {\n\
+               \  @IsTest private static void methodName() {\n\
                \    System.assertEquals(2, 3);\n\
                \  }\n\
                \ }"
@@ -26,13 +26,13 @@ let suite =
            assert_equal ~printer:to_string
              (ApexClassDeclaration
                 ( no_loc,
-                  Some (ApexAnnotation (no_loc, "IsTest")),
+                  Some (IsTest no_loc),
                   [ Private no_loc ],
                   ApexIdentifier (no_loc, "TestClass"),
                   [
                     ApexMethodDeclaration
                       ( no_loc,
-                        Some (ApexAnnotation (no_loc, "TestMethod")),
+                        Some (IsTest no_loc),
                         [ Private no_loc ],
                         ApexType (no_loc, "void"),
                         ApexIdentifier (no_loc, "testMethod"),

@@ -109,7 +109,7 @@ let suite =
            let test_method =
              ApexMethodDeclaration
                ( no_loc,
-                 Some (ApexAnnotation (no_loc, "TestMethod")),
+                 Some (IsTest(no_loc)),
                  [],
                  ApexType (no_loc, "void"),
                  ApexIdentifier (no_loc, "fooTest"),
@@ -143,7 +143,7 @@ let suite =
                    [] );
                ApexMethodDeclaration
                  ( no_loc,
-                   Some (ApexAnnotation (no_loc, "TestMethod")),
+                   Some (IsTest(no_loc)),
                    [],
                    ApexType (no_loc, "void"),
                    ApexIdentifier (no_loc, "fooTest"),

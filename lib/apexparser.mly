@@ -137,8 +137,9 @@ methodCall
     : id = qualifiedName LEFT_PAREN exprs = separated_nonempty_list(COMMA, expression) RIGHT_PAREN {Expr.ApexMethodCall(no_loc, id, exprs)}
 ;
 
+(* So what do we need here? *)
 annotation
-    : ATSIGN name = ID {ApexAnnotation.ApexAnnotation(no_loc, name)}
+    : ATSIGN ID {ApexAnnotation.IsTest(no_loc)}
 ;
 
 qualifiedName
