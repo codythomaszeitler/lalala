@@ -28,7 +28,6 @@ let int = '-'? digit+  (* regex for integers *)
 let ws    = [' ' '\t' '\n']
 let iden =  ['a'-'z''A'-'Z']['a'-'z''A'-'Z''$''_']+
 
-(* let public = ['p''P']['u''U']['b''B']['l''L']['i''I']['c''C'] *)
 rule read_token = 
     parse 
     | ws {read_token lexbuf}
@@ -47,7 +46,6 @@ rule read_token =
     | eof {EOF}
     | iden as s {
         let idOrKeyword = String.lowercase_ascii s in 
-        print_string idOrKeyword;
         try Hashtbl.find keyword_tbl idOrKeyword
         with Not_found -> ID s
     }

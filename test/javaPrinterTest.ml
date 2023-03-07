@@ -15,7 +15,8 @@ let suite =
                    JavaImport "org.junit.jupiter.api.Test";
                    JavaImport "org.junit.jupiter.api.Assertions.assertEquals";
                  ],
-                 JavaClassDecl (None, None, JavaIdentifier "TestClass", []) )
+                 JavaClassDecl (None, None, JavaIdentifier "TestClass", [
+                 ]) )
            in
            print formatter java;
            Format.pp_print_flush formatter ();

@@ -21,6 +21,7 @@ let rec transpile_modifiers (top_level_class : compilationUnit)
         match modifier with
         | Private _ -> Some JavaPublic
         | Public _ -> Some JavaPublic
+        | Static _ -> Some JavaStatic
         | _ -> None)
     | _ -> failwith "a"
   in

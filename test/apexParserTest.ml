@@ -16,7 +16,7 @@ let suite =
          >:: fun _ ->
            let buffer =
              from_string
-               " @IsTest private class TestClass {\n\
+               "@IsTest private class TestClass {\n\
                \  @IsTest private static void methodName() {\n\
                \    System.assertEquals(2, 3);\n\
                \  }\n\
@@ -33,9 +33,9 @@ let suite =
                     ApexMethodDeclaration
                       ( no_loc,
                         Some (IsTest no_loc),
-                        [ Private no_loc ],
+                        [ Private no_loc; Static no_loc ],
                         ApexType (no_loc, "void"),
-                        ApexIdentifier (no_loc, "testMethod"),
+                        ApexIdentifier (no_loc, "methodName"),
                         [
                           ApexExprStmt
                             ( no_loc,

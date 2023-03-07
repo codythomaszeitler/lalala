@@ -8,8 +8,11 @@ open Location
 %token MULT
 %token ABSTRACT
 %token AFTER
+
 %token PUBLIC
 %token PRIVATE
+%token STATIC
+
 %token CLASS
 %token LEFT_BRACE 
 %token RIGHT_BRACE
@@ -21,7 +24,6 @@ open Location
 %token DOT
 %token ASSIGN
 %token ATSIGN
-%token STATIC
 %token <string> ID
 %token EOF
 
@@ -31,7 +33,7 @@ open Location
 
 %%
 compilationUnit: 
-    | decl = typeDeclaration {decl}
+    | decl = typeDeclaration {print_string "we are in compilation unit"; decl}
 ;
 
 typeDeclaration :
@@ -41,6 +43,7 @@ typeDeclaration :
 modifier:
     | PUBLIC {ApexModifier.Public(no_loc)}
     | PRIVATE {ApexModifier.Private(no_loc)}
+    | STATIC {ApexModifier.Static(no_loc)}
 ;
 
 identifier:
@@ -137,7 +140,6 @@ methodCall
     : id = qualifiedName LEFT_PAREN exprs = separated_nonempty_list(COMMA, expression) RIGHT_PAREN {Expr.ApexMethodCall(no_loc, id, exprs)}
 ;
 
-(* So what do we need here? *)
 annotation
     : ATSIGN ID {ApexAnnotation.IsTest(no_loc)}
 ;
