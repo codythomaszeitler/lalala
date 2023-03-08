@@ -16,13 +16,13 @@ let suite =
            let apex =
              ApexClassDeclaration
                ( no_loc,
-                 Some (IsTest(no_loc)),
+                 Some (IsTest no_loc),
                  [ Private no_loc ],
                  ApexIdentifier (no_loc, "TestClass"),
                  [
                    ApexMethodDeclaration
                      ( no_loc,
-                       Some (IsTest(no_loc)),
+                       Some (IsTest no_loc),
                        [ Private no_loc ],
                        ApexType (no_loc, "void"),
                        ApexIdentifier (no_loc, "testMethod"),

@@ -15,6 +15,14 @@ type modifier =
   | WithoutSharing of Location.location
   | InheritedSharing of Location.location
 
+let is_access_modifier apex_modifier =
+  match apex_modifier with
+  | Global _ -> true
+  | Public _ -> true
+  | Protected _ -> true
+  | Private _ -> true
+  | _ -> false
+
 let pr_modifier (ppf : Format.formatter) (modifier : modifier) : unit =
   match modifier with
   | Global location ->

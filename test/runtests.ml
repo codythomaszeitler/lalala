@@ -1,5 +1,5 @@
 open OUnit2
-(* open Lalala.Apexlexer
+open Lalala.Apexlexer
 open Lalala.Apexparser
 open Lexing
 open Lalala.Ast
@@ -7,12 +7,12 @@ open Lalala.Location
 open Lalala.ApexModifier
 open Lalala.ApexIdentifier
 open Lalala.ApexAnnotation
-open Lalala.Expr *)
+open Lalala.Expr
 
 let suite =
   "RunTests"
   >::: [
-         (* ( "parse apex class definition empty ast" >:: fun _ ->
+         ( "parse apex class definition empty ast" >:: fun _ ->
            let buffer = from_string "@IsTest public class TestClass {}" in
            let ast = compilationUnit read_token buffer in
            assert_equal ~printer:to_string
@@ -116,11 +116,13 @@ let suite =
          ApexIdentifierTest.suite;
          ApexVariableDeclTest.suite;
          ApexLocalVarDeclTest.suite;
+         TranspilerTest.suite;
          AstTest.suite;
-         TranspilerTest.suite; *)
          ApexParserTest.suite;
-         (* JavaPrinterTest.suite;
-         ApexAnnotationTest.suite; *)
+         JavaPrinterTest.suite;
+         UtilityTest.suite;
+         TranspileModifierTest.suite;
+         ApexAnnotationTest.suite;
        ]
 
 let _ = run_test_tt_main suite
