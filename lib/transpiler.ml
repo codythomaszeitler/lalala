@@ -45,7 +45,7 @@ let rec transpile_decls (top_level_class : compilationUnit)
         JavaMethodDecl
           ( transpile_method_annotation annotation,
             (* To do fix this thing *)
-            TranspilerModifier.get_method_access_modifier apex_decl,
+            TranspilerModifier.transpile_method_access_modifier apex_decl,
             transpile_type apex_type,
             transpile_identifier identifier,
             transpile_stmts stmts )
@@ -62,6 +62,6 @@ let transpile (apex : compilationUnit) : java =
         ( TranspilerImport.transpile apex,
           JavaClassDecl
             ( None,
-              TranspilerModifier.get_class_access_modifier apex,
+              TranspilerModifier.transpile_class_access_modifier apex,
               transpile_identifier identifier,
               transpile_decls apex decls ) )

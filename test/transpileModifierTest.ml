@@ -20,7 +20,7 @@ let suite =
                  [] )
            in
            let javaAccessModifier =
-             get_class_access_modifier top_level_apex_class
+             transpile_class_access_modifier top_level_apex_class
            in
            assert_equal javaAccessModifier (Some JavaPublic) );
          ( "it should be able to get a no class access modifier" >:: fun _ ->
@@ -33,7 +33,7 @@ let suite =
                  [] )
            in
            let javaAccessModifier =
-             get_class_access_modifier top_level_apex_class
+             transpile_class_access_modifier top_level_apex_class
            in
            assert_equal javaAccessModifier None );
          ( "it should be able to convert a tests class top level modifier from \
@@ -48,7 +48,7 @@ let suite =
                  [] )
            in
            let javaAccessModifier =
-             get_class_access_modifier top_level_apex_class
+             transpile_class_access_modifier top_level_apex_class
            in
            assert_equal javaAccessModifier (Some JavaPublic) );
          ( "it should throw an exception if there are multiple access \
@@ -62,7 +62,7 @@ let suite =
                  ApexIdentifier (no_loc, "TestClass"),
                  [] )
            in
-           let f () = get_class_access_modifier top_level_apex_class in
+           let f () = transpile_class_access_modifier top_level_apex_class in
            assert_raises
              (ModifierTranspilerException
                 ( "Too many access modifiers found",
@@ -81,7 +81,7 @@ let suite =
                  [] )
            in
            let javaAccessModifier =
-             get_method_access_modifier apex_test_method
+             transpile_method_access_modifier apex_test_method
            in
            assert_equal javaAccessModifier (Some JavaPublic) );
        ]
