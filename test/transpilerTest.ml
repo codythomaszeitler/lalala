@@ -51,7 +51,7 @@ let suite =
                      JavaIdentifier "TestClass",
                      [
                        JavaMethodDecl
-                         ( Some (JavaAnnotation "Test"),
+                         ( Some (JavaTest),
                            Some JavaPublic,
                            JavaType "void",
                            JavaIdentifier "testMethod",

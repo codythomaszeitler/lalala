@@ -9,7 +9,7 @@ open Expr
 let transpile_method_annotation (apex_annotation : apexAnnotation option) :
     javaAnnotation option =
   match apex_annotation with
-  | Some (IsTest _) -> Some (JavaAnnotation "Test")
+  | Some (IsTest _) -> Some (JavaTest)
   | _ -> None
 
 let transpile_identifier (apex_identifer : apexIdentifier) : javaIdentifier =
@@ -44,7 +44,6 @@ let rec transpile_decls (top_level_class : compilationUnit)
     | ApexMethodDeclaration (_, annotation, _, apex_type, identifier, stmts) ->
         JavaMethodDecl
           ( transpile_method_annotation annotation,
-            (* To do fix this thing *)
             TranspilerModifier.transpile_method_access_modifier apex_decl,
             transpile_type apex_type,
             transpile_identifier identifier,
