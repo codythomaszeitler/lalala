@@ -1,3 +1,11 @@
+include ApexDecl
+include ApexIdentifier
+include ApexAnnotation
+include ApexLocalVarDecl
+include ApexType
+include ApexModifier
+include ApexVariableDecl
+
 type compilationUnit =
   | ApexClassDeclaration of
       Location.location
@@ -38,5 +46,5 @@ let to_string (compilation_unit : compilationUnit) : string =
 
 let is_test_class (apex : compilationUnit) : bool =
   match apex with
-  | ApexClassDeclaration (_, annotation, _, _, _) -> (
-      match annotation with Some (IsTest _) -> true | _ -> false)
+  | ApexClassDeclaration (_, Some(IsTest _), _, _, _) -> true 
+  | _ -> false

@@ -1,6 +1,5 @@
 open Java
 open Ast
-open ApexModifier
 open ApexDecl
 open ApexAnnotation
 open ApexIdentifier
@@ -12,35 +11,6 @@ let transpile_method_annotation (apex_annotation : apexAnnotation option) :
   match apex_annotation with
   | Some (IsTest _) -> Some (JavaAnnotation "Test")
   | _ -> None
-
-let rec transpile_modifiers (top_level_class : compilationUnit)
-    (modifiers : modifier list) : javaModifier list =
-  let transpile_modifier (modifier : modifier) : javaModifier option =
-    match top_level_class with
-    | ApexClassDeclaration (_, Some (IsTest _), _, _, _) -> (
-        match modifier with
-        | Private _ -> Some JavaPublic
-        | Public _ -> Some JavaPublic
-        | Static _ -> Some JavaStatic
-        | _ -> None)
-    | _ -> failwith "a"
-  in
-  match modifiers with
-  | h :: t ->
-      let modi = transpile_modifier h in
-      if Option.is_some modi then
-        Option.get modi :: transpile_modifiers top_level_class t
-      else transpile_modifiers top_level_class t
-  | [] -> []
-
-let get_access_modifier (top_level_class : compilationUnit)
-    (modifiers : modifier list) : javaModifier option =
-  let modifiers = transpile_modifiers top_level_class modifiers in
-  match modifiers with
-  | h :: [] -> Some h
-  | _ :: _ ->
-      failwith "get_access_modifier: There were too many modifiers found"
-  | [] -> None
 
 let transpile_identifier (apex_identifer : apexIdentifier) : javaIdentifier =
   match apex_identifer with ApexIdentifier (_, name) -> JavaIdentifier name
@@ -71,11 +41,11 @@ let rec transpile_decls (top_level_class : compilationUnit)
     (decls : apexDecl list) : javaDecl list =
   let transpile_decl (apex_decl : apexDecl) : javaDecl =
     match apex_decl with
-    | ApexMethodDeclaration
-        (_, annotation, modifiers, apex_type, identifier, stmts) ->
+    | ApexMethodDeclaration (_, annotation, _, apex_type, identifier, stmts) ->
         JavaMethodDecl
           ( transpile_method_annotation annotation,
-            get_access_modifier top_level_class modifiers,
+            (* To do fix this thing *)
+            TranspilerModifier.get_method_access_modifier apex_decl,
             transpile_type apex_type,
             transpile_identifier identifier,
             transpile_stmts stmts )
@@ -86,13 +56,12 @@ let rec transpile_decls (top_level_class : compilationUnit)
   | [] -> []
 
 let transpile (apex : compilationUnit) : java =
-  let transpile_mods = get_access_modifier apex in
   match apex with
-  | ApexClassDeclaration (_, _, modifiers, identifier, decls) ->
+  | ApexClassDeclaration (_, _, _, identifier, decls) ->
       JavaFile
         ( TranspilerImport.transpile apex,
           JavaClassDecl
             ( None,
-              transpile_mods modifiers,
+              TranspilerModifier.get_class_access_modifier apex,
               transpile_identifier identifier,
               transpile_decls apex decls ) )
