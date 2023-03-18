@@ -33,7 +33,7 @@ open Location
 
 %%
 compilationUnit: 
-    | decl = typeDeclaration {print_string "we are in compilation unit"; decl}
+    | decl = typeDeclaration {decl}
 ;
 
 typeDeclaration :

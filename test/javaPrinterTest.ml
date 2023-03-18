@@ -15,10 +15,34 @@ let suite =
                    JavaImport "org.junit.jupiter.api.Test";
                    JavaImport "org.junit.jupiter.api.Assertions.assertEquals";
                  ],
-                 JavaClassDecl (None, None, JavaIdentifier "TestClass", [
-                 ]) )
+                 JavaClassDecl
+                   ( None,
+                     None,
+                     JavaIdentifier "TestClass",
+                     [
+                       JavaMethodDecl
+                         ( Some JavaTest,
+                           Some JavaPublic,
+                           JavaType "void",
+                           JavaIdentifier "methodFoo",
+                           [
+                             JavaExprStmt
+                               (JavaMethodCall
+                                  ( JavaIdentifier "System.assertEquals",
+                                    [
+                                      JavaIntegerLiteral 2; JavaIntegerLiteral 2;
+                                    ] ));
+                           ] );
+                     ] ) )
            in
            print formatter java;
            Format.pp_print_flush formatter ();
-           assert_equal ~printer:(fun x -> x) "" (Buffer.contents buffer) );
+           assert_equal
+             ~printer:(fun x -> x)
+             "import org.junit.jupiter.api.Test;\n\
+              import org.junit.jupiter.api.Assertions.assertEquals;\n\n\
+              class TestClass {\n\
+             \  @Test public void methodFoo() { System.assertEquals(2,2);}\n\
+              }\n"
+             (Buffer.contents buffer) );
        ]
