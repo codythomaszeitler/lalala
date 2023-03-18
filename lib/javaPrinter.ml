@@ -38,9 +38,12 @@ let print_statement (ppf : Format.formatter) (java_stmt : javaStmt) : unit =
 
 let rec print_decl (ppf : Format.formatter) (decl : javaDecl) : unit =
   match decl with
-  | JavaClassDecl (_, _, identifier, decls) ->
-      Format.fprintf ppf "@[<v 2>class %a {@;%a@]@.}" print_identifier
-        identifier
+  | JavaClassDecl (annotation, modifier, identifier, decls) ->
+      Format.fprintf ppf "@[<v 2>%a@ %a@ class %a {@;%a@]@.}"
+        (Format.pp_print_option print_annotation)
+        annotation
+        (Format.pp_print_option print_modifier)
+        modifier print_identifier identifier
         (Format.pp_print_list print_decl)
         decls
   | JavaMethodDecl (annotation, modifier, java_type, identifier, stmts) ->
@@ -61,3 +64,10 @@ let print (ppf : Format.formatter) (java : java) : unit =
       Format.fprintf ppf "@[<v>%a@;@;%a@;@]"
         (Format.pp_print_list ~pp_sep:print_newline print_import)
         imports print_decl decl
+
+let to_string (java : java) : string =
+  let buffer = Buffer.create 5 in
+  let formatter = Format.formatter_of_buffer buffer in
+  print formatter java;
+  Format.pp_print_flush formatter ();
+  Buffer.contents buffer

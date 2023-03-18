@@ -8,12 +8,12 @@ open Expr
 
 let transpile_method_annotation (apex_annotation : apexAnnotation option) :
     javaAnnotation option =
-  match apex_annotation with
-  | Some (IsTest _) -> Some (JavaTest)
-  | _ -> None
+  match apex_annotation with Some (IsTest _) -> Some JavaTest | _ -> None
 
 let transpile_identifier (apex_identifer : apexIdentifier) : javaIdentifier =
-  match apex_identifer with ApexIdentifier (_, name) -> JavaIdentifier name
+  match apex_identifer with
+  | ApexIdentifier (_, "System.assertEquals") -> JavaIdentifier "assertEquals"
+  | ApexIdentifier (_, name) -> JavaIdentifier name
 
 let transpile_type (apex_type : apexType) : javaType =
   match apex_type with ApexType (_, name) -> JavaType name
@@ -54,6 +54,10 @@ let rec transpile_decls (top_level_class : compilationUnit)
   | h :: t -> transpile_decl h :: transpile_decls top_level_class t
   | [] -> []
 
+let transpile_class_identifier _ identifier =
+  let (ApexIdentifier (_, name)) = identifier in
+  JavaIdentifier name
+
 let transpile (apex : compilationUnit) : java =
   match apex with
   | ApexClassDeclaration (_, _, _, identifier, decls) ->
@@ -62,5 +66,5 @@ let transpile (apex : compilationUnit) : java =
           JavaClassDecl
             ( None,
               TranspilerModifier.transpile_class_access_modifier apex,
-              transpile_identifier identifier,
+              transpile_class_identifier apex identifier,
               transpile_decls apex decls ) )

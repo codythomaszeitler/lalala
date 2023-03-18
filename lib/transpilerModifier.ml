@@ -19,6 +19,7 @@ let get_access_modifier is_test_check context modifiers =
     List.map (transpile_modifier is_test_check context) access_modifiers
   in
   match transpiled with
+  | [] when is_test_check context -> Some JavaPublic
   | [] -> None
   | [ h ] -> h
   | _ ->

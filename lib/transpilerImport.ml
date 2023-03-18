@@ -7,9 +7,8 @@ let transpile (apex : compilationUnit) : javaImport list =
     match apex with
     | ApexClassDeclaration (_, _, _, _, decls)
       when ApexDecl.has_test_method decls ->
-        [ JavaImport "org.junit.jupiter.api.Assertions.assertEquals" ]
+        [ JavaImport "static org.junit.Assert.assertEquals" ]
     | _ -> []
   in
-  (if is_test_class apex then [ JavaImport "org.junit.jupiter.api.Test" ]
-  else [])
+  (if is_test_class apex then [ JavaImport "org.junit.Test" ] else [])
   @ annotations
